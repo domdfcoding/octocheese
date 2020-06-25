@@ -1,8 +1,7 @@
 FROM python:slim
 LABEL "maintainer"="Dominic Davis-Foster <dominic@davis-foster.co.uk>"
 
-ADD copy_pypi_2_github /copy_pypi_2_github
-ADD requirements.txt /requirements.txt
-RUN python3 -m pip install -r /requirements.txt
+ADD . /copy_pypi_2_github
+RUN python3 -m pip install /copy_pypi_2_github
 
-ENTRYPOINT ["/copy_pypi_2_github/action.py"]
+ENTRYPOINT ["/copy_pypi_2_github/copy_pypi_2_github/action.py"]
