@@ -41,8 +41,8 @@ if __name__ == "__main__":
 
 	gh_token = os.environ["GITHUB_TOKEN"]
 
-	if "INPUT_GITHUB_REPOSITORY" in os.environ:
-		github_username, repo_name = os.environ["INPUT_GITHUB_REPOSITORY"].split("/")
+	if "INPUT_REPOSITORY" in os.environ:
+		github_username, repo_name = os.environ["INPUT_REPOSITORY"].split("/")
 	else:
 		github_username, repo_name = os.environ["GITHUB_REPOSITORY"].split("/")
 
