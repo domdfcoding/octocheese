@@ -1,0 +1,34 @@
+modname: copy_pypi_2_github
+copyright_years: "2020"
+author: "Dominic Davis-Foster"
+email: "dominic@davis-foster.co.uk"
+version: "0.0.1"
+username: "domdfcoding"
+license: 'LGPLv3+'
+short_desc: 'Copy PyPI Packages to GitHub Releases'
+
+enable_tests: False
+enable_conda: False
+
+console_scripts:
+  - "copy_pypi_2_github = copy_pypi_2_github.__main__:main"
+
+python_deploy_version: 3.6
+
+# Versions to run tests for
+python_versions:
+  - '3.6'
+  - '3.7'
+  - '3.8'
+
+# travis secure password for PyPI
+#travis_pypi_secure:
+
+classifiers:
+  - 'Development Status :: 4 - Beta'
+#  - "Development Status :: 5 - Production/Stable"
+#  - "Development Status :: 6 - Mature"
+#  - "Development Status :: 7 - Inactive"
+  - 'Intended Audience :: Developers'
+  - 'Operating System :: OS Independent'
+  - 'Topic :: Utilities'
