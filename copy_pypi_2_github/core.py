@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 #
 #  core.py
 """
@@ -23,7 +22,6 @@ The main logic of copy_pypi_2_github
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
 #
-#
 
 # stdlib
 import json
@@ -35,6 +33,7 @@ import urllib.parse
 # 3rd party
 import github
 import requests
+
 
 def get_pypi_releases(project_name):
 
@@ -142,4 +141,3 @@ https://pypi.org/project/{pypi_name}/{version}
 					release.upload_asset(str(tmpdir / filename))
 				else:
 					continue
-

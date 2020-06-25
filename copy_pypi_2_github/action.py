@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 #
 #  action.py
 """
@@ -38,20 +37,24 @@ import github
 from copy_pypi_2_github.core import copy_pypi_2_github
 
 if __name__ == "__main__":
-    print("[copy_pypi_2_github] Starting copy_pypi_2_github.")
+	print("[copy_pypi_2_github] Starting copy_pypi_2_github.")
 
-    github_username = os.environ["GITHUB_ACTOR"]
-    gh_token = os.environ["GITHUB_TOKEN"]
-    repo_name = os.environ["GITHUB_REPOSITORY"].split("/")[1]
-    pypi_name = os.environ["INPUT_PYPI_NAME"]
-    g = github.Github(gh_token)
+	gh_token = os.environ["GITHUB_TOKEN"]
 
-    rate = g.get_rate_limit()
-    remaining_requests = rate.core.remaining
-    print(rate)
+	if "INPUT_GITHUB_REPOSITORY" in os.environ:
+		github_username, repo_name = os.environ["INPUT_GITHUB_REPOSITORY"].split("/")
+	else:
+		github_username, repo_name = os.environ["GITHUB_REPOSITORY"].split("/")
 
-    copy_pypi_2_github(g, repo_name, github_username, pypi_name=pypi_name)
+	pypi_name = os.environ["INPUT_PYPI_NAME"]
+	g = github.Github(gh_token)
 
-    rate = g.get_rate_limit()
-    used_requests = remaining_requests - rate.core.remaining
-    print(f"Used {used_requests} requests. {rate.core.remaining} remaining. Resets at {rate.core.reset}")
+	rate = g.get_rate_limit()
+	remaining_requests = rate.core.remaining
+	print(rate)
+
+	copy_pypi_2_github(g, repo_name, github_username, pypi_name=pypi_name)
+
+	rate = g.get_rate_limit()
+	used_requests = remaining_requests - rate.core.remaining
+	print(f"Used {used_requests} requests. {rate.core.remaining} remaining. Resets at {rate.core.reset}")

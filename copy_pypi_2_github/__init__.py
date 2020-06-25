@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 #
 #  __init__.py
 """
@@ -25,9 +24,9 @@ Copy PyPI Packages to GitHub Releases
 #
 #
 
-__author__ = "Dominic Davis-Foster"
-__copyright__ = "2020 Dominic Davis-Foster"
+__author__: str = "Dominic Davis-Foster"
+__copyright__: str = "2020 Dominic Davis-Foster"
 
-__license__ = "GNU Lesser General Public License v3 or later (LGPLv3+)"
-__version__ = "0.0.1"
-__email__ = "dominic@davis-foster.co.uk"
+__license__: str = "GNU Lesser General Public License v3 or later (LGPLv3+)"
+__version__: str = "0.0.1"
+__email__: str = "dominic@davis-foster.co.uk"
