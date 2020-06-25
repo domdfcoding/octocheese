@@ -49,6 +49,8 @@ if __name__ == "__main__":
 	pypi_name = os.environ["INPUT_PYPI_NAME"]
 	g = github.Github(gh_token)
 
+	print(f"Running for repo {github_username}/{repo_name}")
+
 	rate = g.get_rate_limit()
 	remaining_requests = rate.core.remaining
 	print(rate)
