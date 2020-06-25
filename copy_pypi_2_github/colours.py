@@ -20,55 +20,9 @@
 #  MA 02110-1301, USA.
 #
 
-# stdlib
-import sys
-
 # 3rd party
-import colorama  # type: ignore
-
-
-def stderr_writer(*args, **kwargs):
-	"""
-	Write to stderr, flushing stdout beforehand and stderr afterwards.
-	"""
-
-	sys.stdout.flush()
-	kwargs["file"] = sys.stderr
-	print(*args, **kwargs)
-	sys.stderr.flush()
-
-
-def red(text) -> str:
-	"""
-	Makes the given text red when printed.
-
-	:param text:
-	:type text:
-	"""
-
-	return f"{colorama.Fore.RED}{text}{colorama.Fore.RESET}"
-
-
-def yellow(text) -> str:
-	"""
-	Makes the given text yellow when printed.
-
-	:param text:
-	:type text:
-	"""
-
-	return f"{colorama.Fore.YELLOW}{text}{colorama.Fore.RESET}"
-
-
-def green(text) -> str:
-	"""
-	Makes the given text green when printed.
-
-	:param text:
-	:type text:
-	"""
-
-	return f"{colorama.Fore.GREEN}{text}{colorama.Fore.RESET}"
+from domdf_python_tools.terminal_colours import Fore
+from domdf_python_tools.utils import stderr_writer
 
 
 def success(text) -> None:
@@ -79,7 +33,7 @@ def success(text) -> None:
 	:type text:
 	"""
 
-	print(green(text))
+	print(Fore.GREEN(text))
 
 
 def warning(text) -> None:
@@ -90,7 +44,7 @@ def warning(text) -> None:
 	:type text:
 	"""
 
-	stderr_writer(yellow(text))
+	stderr_writer(Fore.YELLOW(text))
 
 
 def error(text) -> None:
@@ -101,4 +55,4 @@ def error(text) -> None:
 	:type text:
 	"""
 
-	stderr_writer(red(text))
+	stderr_writer(Fore.RED(text))

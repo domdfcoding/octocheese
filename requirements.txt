@@ -1,4 +1,4 @@
-PyGithub
-requests
-dulwich
-colorama
+PyGithub >=1.51
+requests >=2.24.0
+dulwich >=0.20.5
+domdf_python_tools >=0.3.8
