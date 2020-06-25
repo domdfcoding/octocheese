@@ -12,7 +12,7 @@ This project is in a very early stage of development and as such probably should
 
 This is a GitHub action that copies package files from PyPI and adds them to the relevant tag in GitHub Releases.
 
-.. start shields
+.. start shields 
 
 .. list-table::
 	:stub-columns: 1

@@ -50,7 +50,7 @@ pypi_name = "copy_pypi_2_github"
 import_name = "copy_pypi_2_github"
 py_modules = []
 entry_points = {
-		"console_scripts": ['copy_pypi_2_github = copy_pypi_2_github.__main__:main']
+		"console_scripts": []
 		}
 
 __license__ = "GNU Lesser General Public License v3 or later (LGPLv3+)"
