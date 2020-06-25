@@ -29,34 +29,19 @@ action code in isolation.
 
 # stdlib
 import os
-
-# 3rd party
-import github
+import sys
 
 # this package
-from copy_pypi_2_github.core import copy_pypi_2_github
+from copy_pypi_2_github.__main__ import run
+from copy_pypi_2_github.core import Secret
 
 if __name__ == "__main__":
 	print("[copy_pypi_2_github] Starting copy_pypi_2_github.")
 
-	gh_token = os.environ["GITHUB_TOKEN"]
-
-	if "INPUT_REPOSITORY" in os.environ:
-		github_username, repo_name = os.environ["INPUT_REPOSITORY"].split("/")
-	else:
-		github_username, repo_name = os.environ["GITHUB_REPOSITORY"].split("/")
-
+	gh_token = Secret(os.environ["GITHUB_TOKEN"])
+	github_username, repo_name = os.environ["GITHUB_REPOSITORY"].split("/")
 	pypi_name = os.environ["INPUT_PYPI_NAME"]
-	g = github.Github(gh_token)
 
-	print(f"Running for repo {github_username}/{repo_name}")
+	run(gh_token, github_username, repo_name, pypi_name)
 
-	rate = g.get_rate_limit()
-	remaining_requests = rate.core.remaining
-	print(rate)
-
-	copy_pypi_2_github(g, repo_name, github_username, pypi_name=pypi_name)
-
-	rate = g.get_rate_limit()
-	used_requests = remaining_requests - rate.core.remaining
-	print(f"Used {used_requests} requests. {rate.core.remaining} remaining. Resets at {rate.core.reset}")
+	sys.exit(0)

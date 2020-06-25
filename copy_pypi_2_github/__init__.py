@@ -2,7 +2,7 @@
 #
 #  __init__.py
 """
-Copy PyPI Packages to GitHub Releases
+Copy PyPI Packages to GitHub Releases.
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>

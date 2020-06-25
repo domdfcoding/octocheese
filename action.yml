@@ -9,10 +9,6 @@ inputs:
     description:
       The name of the project on PyPI.
     required: true
-  repository:
-    description:
-      The GitHub repository to copy the files to. By default this is the repository running the action. Must be in the format <username>/<repo_name>
-    required: false
 runs:
   using: 'docker'
   image: 'Dockerfile'

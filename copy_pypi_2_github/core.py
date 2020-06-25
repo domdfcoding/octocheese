@@ -26,13 +26,34 @@ The main logic of copy_pypi_2_github
 # stdlib
 import json
 import pathlib
-import sys
 import tempfile
 import urllib.parse
 
 # 3rd party
 import github
 import requests
+
+# this package
+from .colours import error, success, warning
+
+
+class Secret(str):
+	"""
+	Subclass of :py:class:`str: that guards against accidentally printing a secret to the terminal.
+
+	The actual value of the secret is accessed via the ``.value`` attribute.
+	"""
+
+	def __new__(cls, value):
+		cls = super().__new__(cls, value)
+		cls.value = str(value)
+		return cls
+
+	def __str__(self) -> str:
+		return "<SECRET>"
+
+	def __repr__(self) -> str:
+		return "<SECRET>"
 
 
 def get_pypi_releases(project_name):
@@ -42,7 +63,7 @@ def get_pypi_releases(project_name):
 	# Parse PyPI data
 	r = requests.get(f"https://pypi.org/pypi/{project_name}/json")
 	if r.status_code != 200:
-		print(f"Unable to get package data from PyPI for '{project_name}'", file=sys.stderr)
+		error(f"Unable to get package data from PyPI for '{project_name}'")
 
 	else:
 		pkg_info = json.loads(r.content)
@@ -82,7 +103,7 @@ def get_file_from_pypi(url, tmpdir):
 
 	r = requests.get(url)
 	if r.status_code != 200:
-		print(f"Unable to download '{filename}' from PyPI. Skipping.", file=sys.stderr)
+		error(f"Unable to download '{filename}' from PyPI. Skipping.")
 		return False
 
 	(tmpdir / filename).write_bytes(r.content)
@@ -101,7 +122,6 @@ def copy_pypi_2_github(g, repo_name, github_username, *, release_message='', pyp
 	pypi_releases = get_pypi_releases(pypi_name)
 
 	repo = g.get_repo(f"{github_username}/{repo_name}")
-	print(repo.name)
 
 	with tempfile.TemporaryDirectory() as tmpdir:
 		tmpdir = pathlib.Path(tmpdir)
@@ -109,9 +129,7 @@ def copy_pypi_2_github(g, repo_name, github_username, *, release_message='', pyp
 		for tag in repo.get_tags():
 			version = tag.name.lstrip("v")
 			if version not in pypi_releases:
-				sys.stdout.flush()
-				print(f"No PyPI release found for tag '{tag.name}'. Skipping.", file=sys.stderr)
-				sys.stderr.flush()
+				warning(f"No PyPI release found for tag '{tag.name}'. Skipping.")
 				continue
 
 			print(f"Processing release for {version}")
@@ -131,13 +149,11 @@ https://pypi.org/project/{pypi_name}/{version}
 				# print(filename)
 
 				if filename in current_assets:
-					sys.stdout.flush()
-					print(f"File '{filename}' already exists for release '{tag.name}'. Skipping.", file=sys.stderr)
-					sys.stderr.flush()
+					warning(f"File '{filename}' already exists for release '{tag.name}'. " f"Skipping.")
 					continue
 
 				if get_file_from_pypi(pypi_url, tmpdir):
-					print(f"Copying {filename} from PyPi to GitHub Releases")
+					success(f"Copying {filename} from PyPi to GitHub Releases.")
 					release.upload_asset(str(tmpdir / filename))
 				else:
 					continue

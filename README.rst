@@ -10,7 +10,9 @@ copy_pypi_2_github
 
 This project is in a very early stage of development and as such probably should not be used.
 
-.. start shields 
+This is a GitHub action that copies package files from PyPI and adds them to the relevant tag in GitHub Releases.
+
+.. start shields
 
 .. list-table::
 	:stub-columns: 1
@@ -92,6 +94,28 @@ This project is in a very early stage of development and as such probably should
 .. end shields
 
 |
+
+GitHub Actions Usage
+---------------------
+
+In a GitHub Workflow:
+
+.. code-block:: yaml
+
+    name: "Copy PyPI to Releases"
+    on:
+    - push
+
+    jobs:
+      releases:
+        runs-on: ubuntu-latest
+        steps:
+        - uses: domdfcoding/copy_pypi_2_github@master
+          with:
+            pypi_name: "domdf_python_tools"
+          env:
+            GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
 
 Installation
 --------------
