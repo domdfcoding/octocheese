@@ -10,8 +10,8 @@ short_desc: 'Copy PyPI Packages to GitHub Releases'
 enable_tests: False
 enable_conda: False
 
-console_scripts:
-  - "copy_pypi_2_github = copy_pypi_2_github.__main__:main"
+#console_scripts:
+#  - "copy_pypi_2_github = copy_pypi_2_github.__main__:main"
 
 python_deploy_version: 3.6
 

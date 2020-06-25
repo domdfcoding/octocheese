@@ -1,8 +1,8 @@
-FROM sphinxdoc/sphinx:2.4.4
-
+FROM python:slim
 LABEL "maintainer"="Dominic Davis-Foster <dominic@davis-foster.co.uk>"
 
-ADD entrypoint.py /entrypoint.py
 ADD copy_pypi_2_github /copy_pypi_2_github
+ADD requirements.txt /requirements.txt
+RUN python3 -m pip install -r /requirements.txt
 
-ENTRYPOINT ["/entrypoint.py"]
+ENTRYPOINT ["/copy_pypi_2_github/action.py"]
