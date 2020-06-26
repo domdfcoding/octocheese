@@ -8,7 +8,7 @@ octocheese
 
 .. end short_desc
 
-This is a GitHub action, Python package and command line script that copies distribution files from PyPI and adds them to the relevant tag in GitHub Releases.
+This is a GitHub action, Python package and command line script that copies distribution files from PyPI ("The Cheese Shop") and adds them to the relevant tag in GitHub Releases.
 
 .. start shields 
 
