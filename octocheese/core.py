@@ -2,7 +2,7 @@
 #
 #  core.py
 """
-The main logic of copy_pypi_2_github
+The main logic of octocheese
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -161,7 +161,7 @@ def copy_pypi_2_github(
 		pypi_name: Optional[str] = None,
 		) -> None:
 	"""
-	The main function for ``copy_pypi_2_github``.
+	The main function for ``octocheese``.
 
 	:param g:
 	:param repo_name: The name of the GitHub repository.

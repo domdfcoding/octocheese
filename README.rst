@@ -1,6 +1,6 @@
-###################
-copy_pypi_2_github
-###################
+#############
+octocheese
+#############
 
 .. start short_desc
 
@@ -10,7 +10,7 @@ copy_pypi_2_github
 
 This project is in a very early stage of development and as such probably should not be used.
 
-This is a GitHub action that copies package files from PyPI and adds them to the relevant tag in GitHub Releases.
+This is a GitHub action, Python package and command line script that copies distribution files from PyPI and adds them to the relevant tag in GitHub Releases.
 
 .. start shields 
 
@@ -29,63 +29,63 @@ This is a GitHub action that copies package files from PyPI and adds them to the
 	* - Other
 	  - |license| |language| |requires|
 
-.. |docs| image:: https://img.shields.io/readthedocs/copy_pypi_2_github/latest?logo=read-the-docs
-	:target: https://copy_pypi_2_github.readthedocs.io/en/latest/?badge=latest
+.. |docs| image:: https://img.shields.io/readthedocs/octocheese/latest?logo=read-the-docs
+	:target: https://octocheese.readthedocs.io/en/latest/?badge=latest
 	:alt: Documentation Status
 	
-.. |docs_check| image:: https://github.com/domdfcoding/copy_pypi_2_github/workflows/Docs%20Check/badge.svg
-	:target: https://github.com/domdfcoding/copy_pypi_2_github/actions?query=workflow%3A%22Docs+Check%22
+.. |docs_check| image:: https://github.com/domdfcoding/octocheese/workflows/Docs%20Check/badge.svg
+	:target: https://github.com/domdfcoding/octocheese/actions?query=workflow%3A%22Docs+Check%22
 	:alt: Docs Check Status
 
-.. |travis| image:: https://img.shields.io/travis/com/domdfcoding/copy_pypi_2_github/master?logo=travis
-	:target: https://travis-ci.com/domdfcoding/copy_pypi_2_github
+.. |travis| image:: https://img.shields.io/travis/com/domdfcoding/octocheese/master?logo=travis
+	:target: https://travis-ci.com/domdfcoding/octocheese
 	:alt: Travis Build Status
 
-.. |actions_windows| image:: https://github.com/domdfcoding/copy_pypi_2_github/workflows/Windows%20Tests/badge.svg
-	:target: https://github.com/domdfcoding/copy_pypi_2_github/actions?query=workflow%3A%22Windows+Tests%22
+.. |actions_windows| image:: https://github.com/domdfcoding/octocheese/workflows/Windows%20Tests/badge.svg
+	:target: https://github.com/domdfcoding/octocheese/actions?query=workflow%3A%22Windows+Tests%22
 	:alt: Windows Tests Status
 
-.. |actions_macos| image:: https://github.com/domdfcoding/copy_pypi_2_github/workflows/macOS%20Tests/badge.svg
-	:target: https://github.com/domdfcoding/copy_pypi_2_github/actions?query=workflow%3A%22macOS+Tests%22
+.. |actions_macos| image:: https://github.com/domdfcoding/octocheese/workflows/macOS%20Tests/badge.svg
+	:target: https://github.com/domdfcoding/octocheese/actions?query=workflow%3A%22macOS+Tests%22
 	:alt: macOS Tests Status
 
-.. |requires| image:: https://requires.io/github/domdfcoding/copy_pypi_2_github/requirements.svg?branch=master
-	:target: https://requires.io/github/domdfcoding/copy_pypi_2_github/requirements/?branch=master
+.. |requires| image:: https://requires.io/github/domdfcoding/octocheese/requirements.svg?branch=master
+	:target: https://requires.io/github/domdfcoding/octocheese/requirements/?branch=master
 	:alt: Requirements Status
 
-.. |codefactor| image:: https://img.shields.io/codefactor/grade/github/domdfcoding/copy_pypi_2_github?logo=codefactor
-	:target: https://www.codefactor.io/repository/github/domdfcoding/copy_pypi_2_github
+.. |codefactor| image:: https://img.shields.io/codefactor/grade/github/domdfcoding/octocheese?logo=codefactor
+	:target: https://www.codefactor.io/repository/github/domdfcoding/octocheese
 	:alt: CodeFactor Grade
 
-.. |pypi-version| image:: https://img.shields.io/pypi/v/copy_pypi_2_github
-	:target: https://pypi.org/project/copy_pypi_2_github/
+.. |pypi-version| image:: https://img.shields.io/pypi/v/octocheese
+	:target: https://pypi.org/project/octocheese/
 	:alt: PyPI - Package Version
 
-.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/copy_pypi_2_github
-	:target: https://pypi.org/project/copy_pypi_2_github/
+.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/octocheese
+	:target: https://pypi.org/project/octocheese/
 	:alt: PyPI - Supported Python Versions
 
-.. |supported-implementations| image:: https://img.shields.io/pypi/implementation/copy_pypi_2_github
-	:target: https://pypi.org/project/copy_pypi_2_github/
+.. |supported-implementations| image:: https://img.shields.io/pypi/implementation/octocheese
+	:target: https://pypi.org/project/octocheese/
 	:alt: PyPI - Supported Implementations
 
-.. |wheel| image:: https://img.shields.io/pypi/wheel/copy_pypi_2_github
-	:target: https://pypi.org/project/copy_pypi_2_github/
+.. |wheel| image:: https://img.shields.io/pypi/wheel/octocheese
+	:target: https://pypi.org/project/octocheese/
 	:alt: PyPI - Wheel
 
-.. |license| image:: https://img.shields.io/github/license/domdfcoding/copy_pypi_2_github
+.. |license| image:: https://img.shields.io/github/license/domdfcoding/octocheese
 	:alt: License
-	:target: https://github.com/domdfcoding/copy_pypi_2_github/blob/master/LICENSE
+	:target: https://github.com/domdfcoding/octocheese/blob/master/LICENSE
 
-.. |language| image:: https://img.shields.io/github/languages/top/domdfcoding/copy_pypi_2_github
+.. |language| image:: https://img.shields.io/github/languages/top/domdfcoding/octocheese
 	:alt: GitHub top language
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/domdfcoding/copy_pypi_2_github/v0.0.1
-	:target: https://github.com/domdfcoding/copy_pypi_2_github/pulse
+.. |commits-since| image:: https://img.shields.io/github/commits-since/domdfcoding/octocheese/v0.0.1
+	:target: https://github.com/domdfcoding/octocheese/pulse
 	:alt: GitHub commits since tagged version
 
-.. |commits-latest| image:: https://img.shields.io/github/last-commit/domdfcoding/copy_pypi_2_github
-	:target: https://github.com/domdfcoding/copy_pypi_2_github/commit/master
+.. |commits-latest| image:: https://img.shields.io/github/last-commit/domdfcoding/octocheese
+	:target: https://github.com/domdfcoding/octocheese/commit/master
 	:alt: GitHub last commit
 
 .. |maintained| image:: https://img.shields.io/maintenance/yes/2020
@@ -110,7 +110,7 @@ In a GitHub Workflow:
       releases:
         runs-on: ubuntu-latest
         steps:
-        - uses: domdfcoding/copy_pypi_2_github@master
+        - uses: domdfcoding/octocheese@master
           with:
             pypi_name: "domdf_python_tools"
           env:
@@ -122,12 +122,12 @@ Installing as a Python package and script
 
 .. start installation
 
-``copy_pypi_2_github`` can be installed from PyPI.
+``octocheese`` can be installed from PyPI.
 
 To install with ``pip``:
 
 .. code-block:: bash
 
-	$ python -m pip install copy_pypi_2_github
+	$ python -m pip install octocheese
 
 .. end installation

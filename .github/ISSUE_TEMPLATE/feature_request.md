@@ -22,7 +22,7 @@ INSUFFICIENT INFO WILL GET THE ISSUE CLOSED. IT WILL ONLY BE REOPENED AFTER SUFF
 
   * Operating System:
   * Python:
-  * copy_pypi_2_github:
+  * octocheese:
 
 
 ## Other Additional Information:

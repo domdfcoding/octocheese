@@ -15,13 +15,13 @@ if [ -z "$(git status --porcelain --untracked-files=no)" ] || [ "$1" == "-f" ]; 
 
   echo "Running autopep8"
 
-  autopep8 --in-place --select "$errors" -a --recursive copy_pypi_2_github/
-  autopep8 --in-place --select "$belligerent" -a -a -a -a -a --recursive copy_pypi_2_github/
+  autopep8 --in-place --select "$errors" -a --recursive octocheese/
+  autopep8 --in-place --select "$belligerent" -a -a -a -a -a --recursive octocheese/
 
 
   echo "Running flake8"
 
-    >&2 flake8 copy_pypi_2_github/
+    >&2 flake8 octocheese/
 
     >&2 flake8 tests/
 

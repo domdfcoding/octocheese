@@ -1,7 +1,4 @@
-modname: Copy from PyPI to GitHub Releases
-import_name: copy_pypi_2_github
-pypi_name: copy_pypi_2_github
-repo_name: copy_pypi_2_github
+modname: octocheese
 
 copyright_years: "2020"
 author: "Dominic Davis-Foster"
@@ -14,8 +11,8 @@ short_desc: 'Copy PyPI Packages to GitHub Releases'
 enable_tests: False
 enable_conda: False
 
-#console_scripts:
-#  - "copy_pypi_2_github = copy_pypi_2_github.__main__:main"
+console_scripts:
+  - "octocheese = octocheese.__main__:main"
 
 python_deploy_version: 3.6
 
@@ -26,7 +23,7 @@ python_versions:
   - '3.8'
 
 # travis secure password for PyPI
-#travis_pypi_secure:
+travis_pypi_secure: "YKkBhXfskrAOLYCSA6rAEVm3F0kkCxNEl075TnYdoA56rabZQhGMrSBx9dGDz4c1Aj/gM7uomVgQ/Sv1t9nU1zIwC2FS7+qH4S7K/hsdi3T6IX8P65yPxOtGz4G99vbVoEc9u6U+aJmvJReuE2xtc1vidAWE3OLIF3KcO5gU/FkfWmcheVyem9WCNZocWoUYfMeEvayrMvl4HqlP+6lR3q0opuCrQCvZt6R857ncTgbj0nbMoG+6dWCC1FJ6Jq9/cgVfYPIhaDsRdbyzNWlutDrKw2vqIDAU2GDRa0ekIhMTHuVXI+yA9XIyHL4q02UQ/mcEg+t58rt7jqcKUyuQ2y/bD2YkaFFc+eptcWEeKn7IW2h/y4Hunzd30pggQt0a4SSGuGo5vpF+2D/m3128rd2vI3IQT2kNqpbl6jCTtJWSTX9eZhQdXJQpywjxLVT2kU32pZru7eIpNVHI1fhkcQl6tJhZUKyQRfpgPBCovzo6HadEav+4fSGSL/+BL+FkXTWf8TzP89M3YISbGy7As1hezoLszzxmm/VLGXUwJV2S3tLVUX1i92J5IoXQ/Ifvu3vybtZOtBz85SPSSfZZ3RDlZbaH4abT8+pMCqE8XN6X7sEA0VirNgKJRS1sLhuVq1YfVbNTjO/Xyi9UZrHGAzjtQImL6NxF+Eyql2juXu0="
 
 classifiers:
   - 'Development Status :: 4 - Beta'

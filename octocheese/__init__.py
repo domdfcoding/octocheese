@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 #
-#  action.py
+#  __init__.py
 """
-GitHub Actions entry point.
-
-All the GitHub specific setup is performed here.
+Copy PyPI Packages to GitHub Releases.
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -26,21 +24,14 @@ All the GitHub specific setup is performed here.
 #
 #
 
-# stdlib
-import os
-import sys
-
 # this package
-from copy_pypi_2_github.__main__ import run
-from copy_pypi_2_github.core import Secret
+from octocheese.core import (
+		Secret, copy_pypi_2_github, get_file_from_pypi, get_pypi_releases, update_github_release,
+		)
 
-if __name__ == "__main__":
-	print("[copy_pypi_2_github] Starting copy_pypi_2_github.")
+__author__: str = "Dominic Davis-Foster"
+__copyright__: str = "2020 Dominic Davis-Foster"
 
-	gh_token = Secret(os.environ["GITHUB_TOKEN"])
-	github_username, repo_name = os.environ["GITHUB_REPOSITORY"].split("/")
-	pypi_name = os.environ["INPUT_PYPI_NAME"]
-
-	run(gh_token, github_username, repo_name, pypi_name)
-
-	sys.exit(0)
+__license__: str = "GNU Lesser General Public License v3 or later (LGPLv3+)"
+__version__: str = "0.0.1"
+__email__: str = "dominic@davis-foster.co.uk"

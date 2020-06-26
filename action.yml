@@ -1,4 +1,4 @@
-name: 'copy_pypi_2_github'
+name: 'octocheese'
 description: 'Copy PyPI Packages to GitHub Releases'
 author: 'Dominic Davis-Foster'
 branding:

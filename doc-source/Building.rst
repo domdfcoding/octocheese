@@ -2,7 +2,7 @@
 Building from source
 *********************
 
-To build the ``copy_pypi_2_github`` package from source using ``setuptools``, run the following command:
+To build the ``octocheese`` package from source using ``setuptools``, run the following command:
 
 .. code-block:: bash
 

@@ -5,29 +5,29 @@ API Reference
 .. contents:: Table of Contents
 
 
-:mod:`copy_pypi_2_github.__main__`
+:mod:`octocheese.__main__`
 ------------------------------------
 
-.. automodule:: copy_pypi_2_github.__main__
+.. automodule:: octocheese.__main__
 	:members:
 
 
-:mod:`copy_pypi_2_github.action`
+:mod:`octocheese.action`
 ------------------------------------
 
-.. automodule:: copy_pypi_2_github.action
+.. automodule:: octocheese.action
 	:members:
 
 
-:mod:`copy_pypi_2_github.colours`
+:mod:`octocheese.colours`
 ------------------------------------
 
-.. automodule:: copy_pypi_2_github.colours
+.. automodule:: octocheese.colours
 	:members:
 
 
-:mod:`copy_pypi_2_github.core`
+:mod:`octocheese.core`
 ------------------------------------
 
-.. automodule:: copy_pypi_2_github.core
+.. automodule:: octocheese.core
 	:members:

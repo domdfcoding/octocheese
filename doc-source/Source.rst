@@ -2,15 +2,15 @@
 Downloading source code
 *******************************
 
-The ``copy_pypi_2_github`` source code resides on publicly accessible GitHub servers,
-and can be accessed from the following URL: https://github.com/domdfcoding/copy_pypi_2_github"
+The ``octocheese`` source code resides on publicly accessible GitHub servers,
+and can be accessed from the following URL: https://github.com/domdfcoding/octocheese"
 
 If you have ``git`` installed, you can clone the repository with the following command:
 
 .. code-block:: bash
 
-    $ git clone https://github.com/domdfcoding/copy_pypi_2_github"
-    > Cloning into 'copy_pypi_2_github'...
+    $ git clone https://github.com/domdfcoding/octocheese"
+    > Cloning into 'octocheese'...
     > remote: Enumerating objects: 47, done.
     > remote: Counting objects: 100% (47/47), done.
     > remote: Compressing objects: 100% (41/41), done.

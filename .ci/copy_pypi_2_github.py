@@ -135,7 +135,7 @@ if __name__ == '__main__':
 
 	github_username = "domdfcoding"
 
-	copy_pypi_2_github(g, "copy_pypi_2_github", "domdfcoding", pypi_name="copy_pypi_2_github")
+	copy_pypi_2_github(g, "octocheese", "domdfcoding", pypi_name="octocheese")
 
 	rate = g.get_rate_limit()
 	used_requests = remaining_requests - rate.core.remaining

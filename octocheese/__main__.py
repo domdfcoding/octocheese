@@ -36,7 +36,7 @@ import github
 from dulwich.repo import Repo  # type: ignore
 
 # this package
-from copy_pypi_2_github.core import Secret, copy_pypi_2_github
+from octocheese.core import Secret, copy_pypi_2_github
 
 
 def main(argv: Optional[Sequence[str]] = None) -> int:

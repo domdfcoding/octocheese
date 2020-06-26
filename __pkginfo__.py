@@ -45,9 +45,9 @@ __copyright__ = """
 
 __version__ = "0.0.1"
 
-modname = "copy_pypi_2_github"
-pypi_name = "copy_pypi_2_github"
-import_name = "copy_pypi_2_github"
+modname = "octocheese"
+pypi_name = "octocheese"
+import_name = "octocheese"
 py_modules = []
 entry_points = {
 		"console_scripts": []
@@ -60,9 +60,9 @@ short_desc = "Copy PyPI Packages to GitHub Releases"
 __author__ = author = "Dominic Davis-Foster"
 author_email = "dominic@davis-foster.co.uk"
 github_username = "domdfcoding"
-web = github_url = f"https://github.com/domdfcoding/copy_pypi_2_github"
+web = github_url = f"https://github.com/domdfcoding/octocheese"
 project_urls = {
-		"Documentation": f"https://copy_pypi_2_github.readthedocs.io",
+		"Documentation": f"https://octocheese.readthedocs.io",
 		"Issue Tracker": f"{github_url}/issues",
 		"Source Code": github_url,
 		}

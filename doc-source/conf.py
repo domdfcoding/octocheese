@@ -19,20 +19,20 @@ from __pkginfo__ import __version__
 
 
 
-github_url = f"https://github.com/domdfcoding/copy_pypi_2_github"
+github_url = f"https://github.com/domdfcoding/octocheese"
 
-rst_prolog = f""".. |pkgname| replace:: copy_pypi_2_github
-.. |pkgname2| replace:: ``copy_pypi_2_github``
+rst_prolog = f""".. |pkgname| replace:: octocheese
+.. |pkgname2| replace:: ``octocheese``
 .. |browse_github| replace:: `Browse the GitHub Repository <{github_url}>`__
 """
 
 author = "Dominic Davis-Foster"
-project = "copy_pypi_2_github"
+project = "octocheese"
 slug = re.sub(r'\W+', '-', project.lower())
 release = version = __version__
 copyright = "2020 Dominic Davis-Foster"  # pylint: disable=redefined-builtin
 language = 'en'
-package_root = "copy_pypi_2_github"
+package_root = "octocheese"
 
 extensions = [
 		'sphinx.ext.intersphinx',
@@ -87,7 +87,7 @@ html_show_sourcelink = False  # True will show link to source
 html_context = {
 		'display_github': True,
 		'github_user': 'domdfcoding',
-		'github_repo': 'cawdrey',
+		'github_repo': 'octocheese',
 		'github_version': 'master',
 		'conf_py_path': '/',
 		}
