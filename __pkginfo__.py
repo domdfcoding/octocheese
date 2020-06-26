@@ -50,7 +50,7 @@ pypi_name = "octocheese"
 import_name = "octocheese"
 py_modules = []
 entry_points = {
-		"console_scripts": []
+		"console_scripts": ['octocheese = octocheese.__main__:main']
 		}
 
 __license__ = "GNU Lesser General Public License v3 or later (LGPLv3+)"
