@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 #
 #  colours.py
+"""
+Functions for printing coloured text.
+"""
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
@@ -29,7 +32,7 @@ def success(text) -> None:
 	"""
 	Prints the given text in green to stdout.
 
-	:param text:
+	:param text: The text to print.
 	:type text:
 	"""
 
@@ -40,7 +43,7 @@ def warning(text) -> None:
 	"""
 	Prints the given text in yellow to stderr.
 
-	:param text:
+	:param text: The text to print.
 	:type text:
 	"""
 
@@ -51,7 +54,7 @@ def error(text) -> None:
 	"""
 	Prints the given text in red to stderr.
 
-	:param text:
+	:param text: The text to print.
 	:type text:
 	"""
 

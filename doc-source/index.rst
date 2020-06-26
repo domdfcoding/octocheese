@@ -89,8 +89,11 @@ copy_pypi_2_github
 
 .. end shields
 
-Installation
----------------
+|
+
+
+Installing as a Python package and script
+------------------------------------------
 
 .. start installation
 
@@ -121,6 +124,7 @@ Installation
 	:caption: Documentation
 
 	API Reference<docs>
+	action
 	Source
 	Building
 

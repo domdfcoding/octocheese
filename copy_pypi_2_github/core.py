@@ -25,12 +25,16 @@ The main logic of copy_pypi_2_github
 
 # stdlib
 import json
+import os
 import pathlib
 import tempfile
 import urllib.parse
+from typing import Dict, List, Optional, Tuple
 
 # 3rd party
 import github
+import github.GitRelease
+import github.Repository
 import requests
 
 # this package
@@ -39,7 +43,7 @@ from .colours import error, success, warning
 
 class Secret(str):
 	"""
-	Subclass of :py:class:`str: that guards against accidentally printing a secret to the terminal.
+	Subclass of :py:class:`str`: that guards against accidentally printing a secret to the terminal.
 
 	The actual value of the secret is accessed via the ``.value`` attribute.
 	"""
@@ -56,20 +60,28 @@ class Secret(str):
 		return "<SECRET>"
 
 
-def get_pypi_releases(project_name):
+def get_pypi_releases(pypi_name: str) -> Dict[str, List[str]]:
+	"""
+	Returns a dictionary mapping PyPI release versions to download URLs.
+
+	:param pypi_name: The name of the project on PyPI.
+	:type pypi_name: str
+	"""
 
 	pypi_releases = {}
 
 	# Parse PyPI data
-	r = requests.get(f"https://pypi.org/pypi/{project_name}/json")
+	r = requests.get(f"https://pypi.org/pypi/{pypi_name}/json")
 	if r.status_code != 200:
-		error(f"Unable to get package data from PyPI for '{project_name}'")
+		error(f"Unable to get package data from PyPI for '{pypi_name}'")
 
 	else:
 		pkg_info = json.loads(r.content)
 
 		for release, release_data in pkg_info["releases"].items():
-			release_urls = []
+
+			release_urls: List[str] = []
+
 			for file in release_data:
 				release_urls.append(file["url"])
 			pypi_releases[release] = release_urls
@@ -77,7 +89,25 @@ def get_pypi_releases(project_name):
 	return pypi_releases
 
 
-def update_github_release(repo, tag_name, release_name, release_message):
+def update_github_release(
+		repo: github.Repository.Repository,
+		tag_name: str,
+		release_name: str,
+		release_message: str,
+		) -> Tuple[github.GitRelease.GitRelease, List[str]]:
+	"""
+
+	:param repo:
+	:param tag_name:
+	:type tag_name: str
+	:param release_name:
+	:type release_name: str
+	:param release_message:
+	:type release_message: str
+
+	:return: The release, and a list of URLs for the current assets.
+	"""
+
 	current_assets = []
 
 	try:
@@ -98,7 +128,18 @@ def update_github_release(repo, tag_name, release_name, release_message):
 	return release, current_assets
 
 
-def get_file_from_pypi(url, tmpdir):
+def get_file_from_pypi(url: str, tmpdir: pathlib.Path) -> bool:
+	"""
+	Download the file with the given URL into the given (temporary) directory.
+
+	:param url: The URL to download the file from.
+	:type url: str
+	:param tmpdir: The (temporary) directory to store the downloaded file in.
+
+	:return: Whether the file was downloaded successfully.
+	:rtype: bool
+	"""
+
 	filename = pathlib.PosixPath(urllib.parse.urlparse(url).path).name
 
 	r = requests.get(url)
@@ -111,7 +152,28 @@ def get_file_from_pypi(url, tmpdir):
 	return True
 
 
-def copy_pypi_2_github(g, repo_name, github_username, *, release_message='', pypi_name=None):
+def copy_pypi_2_github(
+		g: github.Github,
+		repo_name: str,
+		github_username: str,
+		*,
+		release_message: str = '',
+		pypi_name: Optional[str] = None,
+		) -> None:
+	"""
+	The main function for ``copy_pypi_2_github``.
+
+	:param g:
+	:param repo_name: The name of the GitHub repository.
+	:type repo_name: str
+	:param github_username: The username of the GitHub account that owns the repository.
+	:type github_username: str
+	:param release_message:
+	:type release_message: str
+	:param pypi_name: The name of the project on PyPI.
+	:type pypi_name: str, optional
+	"""
+
 	repo_name = str(repo_name)
 	github_username = str(github_username)
 
@@ -124,8 +186,6 @@ def copy_pypi_2_github(g, repo_name, github_username, *, release_message='', pyp
 	repo = g.get_repo(f"{github_username}/{repo_name}")
 
 	with tempfile.TemporaryDirectory() as tmpdir:
-		tmpdir = pathlib.Path(tmpdir)
-
 		for tag in repo.get_tags():
 			version = tag.name.lstrip("v")
 			if version not in pypi_releases:
@@ -152,8 +212,8 @@ https://pypi.org/project/{pypi_name}/{version}
 					warning(f"File '{filename}' already exists for release '{tag.name}'. " f"Skipping.")
 					continue
 
-				if get_file_from_pypi(pypi_url, tmpdir):
+				if get_file_from_pypi(pypi_url, pathlib.Path(tmpdir)):
 					success(f"Copying {filename} from PyPi to GitHub Releases.")
-					release.upload_asset(str(tmpdir / filename))
+					release.upload_asset(os.path.join(tmpdir, filename))
 				else:
 					continue

@@ -117,8 +117,8 @@ In a GitHub Workflow:
             GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
 
-Installation
---------------
+Installing as a Python package and script
+------------------------------------------
 
 .. start installation
 

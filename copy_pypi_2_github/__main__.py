@@ -2,7 +2,7 @@
 #
 #  __main__.py
 """
-Copy PyPI Packages to GitHub Releases.
+Entry points when running as a script
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -103,10 +103,12 @@ def run(github_token: Secret, github_username: str, repo_name: str, pypi_name: s
 	"""
 	Helper function for when running as script or action.
 
-	:param github_token:
-	:param github_username:
-	:param repo_name:
-	:param pypi_name:
+	:param github_token: The token to authenticate with the GitHub API with.
+		See https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token
+		for instructions on generating a token.
+	:param github_username: The username of the GitHub account that owns the repository.
+	:param repo_name: The name of the GitHub repository.
+	:param pypi_name: The name of the package on PyPI.
 	"""
 
 	g = github.Github(github_token.value)
