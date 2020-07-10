@@ -10,7 +10,7 @@ octocheese
 
 This is a GitHub action, Python package and command line script that copies distribution files from PyPI ("The Cheese Shop") and adds them to the relevant tag in GitHub Releases.
 
-.. start shields 
+.. start shields
 
 .. list-table::
 	:stub-columns: 1
@@ -30,7 +30,7 @@ This is a GitHub action, Python package and command line script that copies dist
 .. |docs| image:: https://img.shields.io/readthedocs/octocheese/latest?logo=read-the-docs
 	:target: https://octocheese.readthedocs.io/en/latest/?badge=latest
 	:alt: Documentation Status
-	
+
 .. |docs_check| image:: https://github.com/domdfcoding/octocheese/workflows/Docs%20Check/badge.svg
 	:target: https://github.com/domdfcoding/octocheese/actions?query=workflow%3A%22Docs+Check%22
 	:alt: Docs Check Status
@@ -59,7 +59,7 @@ This is a GitHub action, Python package and command line script that copies dist
 	:target: https://pypi.org/project/octocheese/
 	:alt: PyPI - Package Version
 
-.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/octocheese
+.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/octocheese?logo=python&logoColor=white
 	:target: https://pypi.org/project/octocheese/
 	:alt: PyPI - Supported Python Versions
 
@@ -72,8 +72,8 @@ This is a GitHub action, Python package and command line script that copies dist
 	:alt: PyPI - Wheel
 
 .. |license| image:: https://img.shields.io/github/license/domdfcoding/octocheese
-	:alt: License
 	:target: https://github.com/domdfcoding/octocheese/blob/master/LICENSE
+	:alt: License
 
 .. |language| image:: https://img.shields.io/github/languages/top/domdfcoding/octocheese
 	:alt: GitHub top language
