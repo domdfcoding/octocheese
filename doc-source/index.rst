@@ -25,7 +25,7 @@ This is a GitHub action, Python package and command line script that copies dist
 	* - Activity
 	  - |commits-latest| |commits-since| |maintained|
 	* - Other
-	  - |license| |language| |requires|
+	  - |license| |language| |requires| |pre_commit|
 
 .. |docs| image:: https://img.shields.io/readthedocs/octocheese/latest?logo=read-the-docs
 	:target: https://octocheese.readthedocs.io/en/latest/?badge=latest
@@ -88,6 +88,10 @@ This is a GitHub action, Python package and command line script that copies dist
 
 .. |maintained| image:: https://img.shields.io/maintenance/yes/2020
 	:alt: Maintenance
+
+.. |pre_commit| image:: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white
+	:target: https://github.com/pre-commit/pre-commit
+	:alt: pre-commit
 
 .. end shields
 
