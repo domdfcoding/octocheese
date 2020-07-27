@@ -2,5 +2,5 @@ include __pkginfo__.py
 include LICENSE
 include requirements.txt
 recursive-exclude **/__pycache__ *
-recursive-include octocheese/ *.pyi
+recursive-include octocheese *.pyi
 include octocheese/py.typed
