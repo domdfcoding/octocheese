@@ -15,7 +15,7 @@ from __pkginfo__ import *  # pylint: disable=wildcard-import
 
 
 setup(
-		description="Copy PyPI Packages to GitHub Releases",
+		description='Copy PyPI Packages to GitHub Releases',
 		extras_require=extras_require,
 		install_requires=install_requires,
 		py_modules=[],
