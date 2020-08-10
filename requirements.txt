@@ -1,4 +1,4 @@
-domdf_python_tools >=0.3.8
+domdf_python_tools >=0.4.5
 dulwich >=0.20.5
 PyGithub >=1.51
 requests >=2.24.0

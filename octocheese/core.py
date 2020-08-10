@@ -29,7 +29,7 @@ import os
 import pathlib
 import tempfile
 import urllib.parse
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple, Union
 
 # 3rd party
 import github
@@ -46,18 +46,31 @@ class Secret(str):
 	Subclass of :py:class:`str`: that guards against accidentally printing a secret to the terminal.
 
 	The actual value of the secret is accessed via the ``.value`` attribute.
+
+	The protection should be maintained even when the secret is in a list, tuple, set or dict,
+	but you should still refrain from printing objects containing the secret.
+
+	The secret overrides the :meth:`~.__eq__` method of :class:`str`, so:
+
+		.. code-block python
+
+			>>> Secret("Barry as FLUFL") == "Barry as FLUFL"
+			True
+
 	"""
 
-	def __new__(cls, value):
-		cls = super().__new__(cls, value)
-		cls.value = str(value)
-		return cls
+	value: str
 
-	def __str__(self) -> str:
-		return "<SECRET>"
+	def __new__(cls, value) -> "Secret":
+		obj: Secret = super().__new__(cls, "<SECRET>")  # type: ignore
+		obj.value = str(value)
+		return obj
 
-	def __repr__(self) -> str:
-		return "<SECRET>"
+	def __eq__(self, other) -> bool:
+		return self.value == other
+
+	def __hash__(self):
+		return hash(self.value)
 
 
 def get_pypi_releases(pypi_name: str) -> Dict[str, List[str]]:
@@ -72,7 +85,7 @@ def get_pypi_releases(pypi_name: str) -> Dict[str, List[str]]:
 
 	# Parse PyPI data
 	r = requests.get(f"https://pypi.org/pypi/{pypi_name}/json")
-	if r.status_code != 200:
+	if r.status_code != 200:  # pragma: no cover
 		error(f"Unable to get package data from PyPI for '{pypi_name}'")
 
 	else:
@@ -143,7 +156,7 @@ def get_file_from_pypi(url: str, tmpdir: pathlib.Path) -> bool:
 	filename = pathlib.PosixPath(urllib.parse.urlparse(url).path).name
 
 	r = requests.get(url)
-	if r.status_code != 200:
+	if r.status_code != 200:  # pragma: no cover
 		error(f"Unable to download '{filename}' from PyPI. Skipping.")
 		return False
 
@@ -157,7 +170,7 @@ def copy_pypi_2_github(
 		repo_name: str,
 		github_username: str,
 		*,
-		release_message: str = '',
+		changelog: str = '',
 		pypi_name: Optional[str] = None,
 		) -> None:
 	"""
@@ -165,13 +178,10 @@ def copy_pypi_2_github(
 
 	:param g:
 	:param repo_name: The name of the GitHub repository.
-	:type repo_name: str
 	:param github_username: The username of the GitHub account that owns the repository.
-	:type github_username: str
-	:param release_message:
-	:type release_message: str
+	:param changelog:
 	:param pypi_name: The name of the project on PyPI.
-	:type pypi_name: str, optional
+	:default pypi_name: The value of ``repo_name``.
 	"""
 
 	repo_name = str(repo_name)
@@ -179,6 +189,7 @@ def copy_pypi_2_github(
 
 	if not pypi_name:
 		pypi_name = repo_name
+
 	pypi_name = str(pypi_name)
 
 	pypi_releases = get_pypi_releases(pypi_name)
@@ -193,20 +204,17 @@ def copy_pypi_2_github(
 				continue
 
 			print(f"Processing release for {version}")
-			release_name = f"Version {version}"
-			release_message += f"""
-Automatically copied from PyPI.
-https://pypi.org/project/{pypi_name}/{version}
-"""
 
-			release, current_assets = update_github_release(repo, tag.name, release_name, release_message)
+			release, current_assets = update_github_release(
+				repo=repo,
+				tag_name=tag.name,
+				release_name=f"Version {version}",
+				release_message=make_release_message(pypi_name, version, changelog),
+				)
 
-			# pprint(pypi_releases[version])
 			# Copy the files from PyPI
-
 			for pypi_url in pypi_releases[version]:
 				filename = pathlib.PosixPath(urllib.parse.urlparse(pypi_url).path).name
-				# print(filename)
 
 				if filename in current_assets:
 					warning(f"File '{filename}' already exists for release '{tag.name}'. " f"Skipping.")
@@ -217,3 +225,25 @@ https://pypi.org/project/{pypi_name}/{version}
 					release.upload_asset(os.path.join(tmpdir, filename))
 				else:
 					continue
+
+
+def make_release_message(name: str, version: Union[str, float], changelog: str = '') -> str:
+	"""
+	Create a release message.
+
+	:param name: The name of the software.
+	:param version: The version number of the new release.
+	:param changelog: Optional block of text detailing changes made since the previous release.
+	:no-default changelog:
+
+	:return: The release message
+	"""
+
+	buf: List[str] = []
+
+	if changelog:
+		buf.extend(("### Changelog", changelog, ''))
+
+	buf.extend(("Automatically copied from PyPI.", f"https://pypi.org/project/{name}/{version}"))
+
+	return "\n".join(buf)

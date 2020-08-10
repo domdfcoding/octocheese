@@ -19,7 +19,7 @@ This is a GitHub action, Python package and command line script that copies dist
 	* - Docs
 	  - |docs| |docs_check|
 	* - Tests
-	  - |travis| |actions_windows| |actions_macos| |codefactor|
+	  - |travis| |actions_windows| |actions_macos| |coveralls| |codefactor|
 	* - PyPI
 	  - |pypi-version| |supported-versions| |supported-implementations| |wheel|
 	* - Activity
@@ -50,6 +50,10 @@ This is a GitHub action, Python package and command line script that copies dist
 .. |requires| image:: https://requires.io/github/domdfcoding/octocheese/requirements.svg?branch=master
 	:target: https://requires.io/github/domdfcoding/octocheese/requirements/?branch=master
 	:alt: Requirements Status
+
+.. |coveralls| image:: https://img.shields.io/coveralls/github/domdfcoding/octocheese/master?logo=coveralls
+	:target: https://coveralls.io/github/domdfcoding/octocheese?branch=master
+	:alt: Coverage
 
 .. |codefactor| image:: https://img.shields.io/codefactor/grade/github/domdfcoding/octocheese?logo=codefactor
 	:target: https://www.codefactor.io/repository/github/domdfcoding/octocheese

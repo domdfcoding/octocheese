@@ -32,11 +32,15 @@ import sys
 from typing import Optional, Sequence
 
 # 3rd party
+import dulwich.errors
 import github
 from dulwich.repo import Repo  # type: ignore
+from github.GithubException import BadCredentialsException
 
 # this package
 from octocheese.core import Secret, copy_pypi_2_github
+
+token_var = "GITHUB_TOKEN"
 
 
 def main(argv: Optional[Sequence[str]] = None) -> int:
@@ -46,7 +50,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 	:rtype: int
 	"""
 
-	parser = argparse.ArgumentParser()
+	parser = argparse.ArgumentParser(prog="octocheese")
 	parser.add_argument("pypi_name", type=str, help="The project name on PyPI.")
 	parser.add_argument(
 			"-t",
@@ -55,7 +59,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 			default=None,
 			help=(
 					"The token to authenticate with the GitHub API. "
-					"Can also be provided via the `GITHUB_TOKEN` environment variable."
+					f"Can also be provided via the '{token_var}' environment variable."
 					),
 			)
 	parser.add_argument(
@@ -68,25 +72,24 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 	args = parser.parse_args(argv)
 
 	if args.token is None:
-		if "GITHUB_TOKEN" in os.environ:
-			gh_token = Secret(os.environ["GITHUB_TOKEN"])
+		if token_var in os.environ:
+			gh_token = Secret(os.environ[token_var])
 		else:
-			sys.stdout.flush()
-			print(
-					"Please supply a GitHub token with the `-t` / `--token` argument, "
-					"or via the environment variable `GITHUB_TOKEN`.",
-					file=sys.stderr,
+			parser.error(
+					"Please supply a GitHub token with the '-t' / '--token' argument, "
+					f"or via the environment variable '{token_var}'.",
 					)
-			sys.stderr.flush()
-			return 1
 	else:
 		gh_token = Secret(args.token)
 
 	repo = args.repo
 
 	if repo is None:
-		config = Repo('.').get_config()
-		repo = pathlib.Path(config.get(("remote", "origin"), "url").decode("UTF-8"))
+		try:
+			config = Repo('.').get_config()
+			repo = pathlib.Path(config.get(("remote", "origin"), "url").decode("UTF-8"))
+		except dulwich.errors.NotGitRepository as e:
+			parser.error(str(e))
 
 	if repo.suffix == ".git":
 		repo = repo.with_suffix('')
@@ -94,7 +97,12 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 	repo_name = repo.name
 	github_username = repo.parent.name
 
-	run(gh_token, github_username, repo_name, args.pypi_name)
+	try:
+		run(gh_token, github_username, repo_name, args.pypi_name)
+	except BadCredentialsException:
+		parser.error("Invalid credentials for GitHub REST API.")
+	except Exception as e:
+		parser.error(str(e))
 
 	return 0
 
