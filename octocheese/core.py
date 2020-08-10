@@ -153,7 +153,7 @@ def get_file_from_pypi(url: str, tmpdir: pathlib.Path) -> bool:
 	:rtype: bool
 	"""
 
-	filename = pathlib.PosixPath(urllib.parse.urlparse(url).path).name
+	filename = pathlib.PurePosixPath(urllib.parse.urlparse(url).path).name
 
 	r = requests.get(url)
 	if r.status_code != 200:  # pragma: no cover
@@ -214,7 +214,7 @@ def copy_pypi_2_github(
 
 			# Copy the files from PyPI
 			for pypi_url in pypi_releases[version]:
-				filename = pathlib.PosixPath(urllib.parse.urlparse(pypi_url).path).name
+				filename = pathlib.PurePosixPath(urllib.parse.urlparse(pypi_url).path).name
 
 				if filename in current_assets:
 					warning(f"File '{filename}' already exists for release '{tag.name}'. " f"Skipping.")
