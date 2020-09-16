@@ -30,9 +30,11 @@ All the GitHub specific setup is performed here.
 import os
 import sys
 
+# 3rd party
+from domdf_python_tools.secrets import Secret
+
 # this package
 from octocheese.__main__ import run
-from octocheese.core import Secret
 
 if __name__ == "__main__":
 	print("[octocheese] Starting octocheese.")

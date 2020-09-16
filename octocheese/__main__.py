@@ -34,11 +34,12 @@ from typing import Optional, Sequence
 # 3rd party
 import dulwich.errors  # type: ignore
 import github
+from domdf_python_tools.secrets import Secret
 from dulwich.repo import Repo  # type: ignore
 from github.GithubException import BadCredentialsException
 
 # this package
-from octocheese.core import Secret, copy_pypi_2_github
+from octocheese.core import copy_pypi_2_github
 
 __all__ = ["main", "run", "token_var"]
 

@@ -36,41 +36,18 @@ import github
 import github.GitRelease
 import github.Repository
 import requests
+from domdf_python_tools.stringlist import StringList
 
 # this package
 from .colours import error, success, warning
 
-
-class Secret(str):
-	"""
-	Subclass of :py:class:`str`: that guards against accidentally printing a secret to the terminal.
-
-	The actual value of the secret is accessed via the ``.value`` attribute.
-
-	The protection should be maintained even when the secret is in a list, tuple, set or dict,
-	but you should still refrain from printing objects containing the secret.
-
-	The secret overrides the :meth:`~.__eq__` method of :class:`str`, so:
-
-		.. code-block python
-
-			>>> Secret("Barry as FLUFL") == "Barry as FLUFL"
-			True
-
-	"""
-
-	value: str
-
-	def __new__(cls, value) -> "Secret":
-		obj: Secret = super().__new__(cls, "<SECRET>")  # type: ignore
-		obj.value = str(value)
-		return obj
-
-	def __eq__(self, other) -> bool:
-		return self.value == other
-
-	def __hash__(self):
-		return hash(self.value)
+__all__ = [
+		"get_pypi_releases",
+		"update_github_release",
+		"get_file_from_pypi",
+		"copy_pypi_2_github",
+		"make_release_message"
+		]
 
 
 def get_pypi_releases(pypi_name: str) -> Dict[str, List[str]]:
@@ -239,11 +216,29 @@ def make_release_message(name: str, version: Union[str, float], changelog: str =
 	:return: The release message.
 	"""
 
-	buf: List[str] = []
+	buf = StringList()
 
 	if changelog:
-		buf.extend(("### Changelog", changelog, ''))
+		buf.extend(("### Changelog", changelog))
+		buf.blankline(ensure_single=True)
 
-	buf.extend(("Automatically copied from PyPI.", f"https://pypi.org/project/{name}/{version}"))
+	buf.append(f"Automatically copied from [PyPI](https://pypi.org/project/{name}/{version}).")
+	buf.blankline(ensure_single=True)
+
+	buf.append("---")
+	buf.blankline(ensure_single=True)
+
+	buf.append("Powered by OctoCheese\\")
+
+	buf.append(
+			" | ".join((
+					"[📝 docs](https://octocheese.readthedocs.io)",
+					"[:octocat: repo](https://github.com/domdfcoding/octocheese)",
+					"[🙋 issues](https://github.com/domdfcoding/octocheese/issues)",
+					"[🏪 marketplace](https://github.com/marketplace/octocheese)",
+					))
+			)
+
+	buf.blankline(ensure_single=True)
 
 	return "\n".join(buf)

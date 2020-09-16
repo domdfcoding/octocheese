@@ -7,33 +7,15 @@ import zipfile
 from urllib.parse import urlparse
 
 # 3rd party
-import pytest
-from domdf_python_tools.words import get_words_list
+from pytest_regressions.file_regression import FileRegressionFixture  # type: ignore
 
 # this package
-from octocheese import Secret, get_file_from_pypi, get_pypi_releases
-
-
-@pytest.mark.parametrize("value", get_words_list())
-def test_secret(value):
-	the_secret = Secret(value)
-	assert isinstance(the_secret, str)
-	assert isinstance(the_secret.value, str)
-	assert the_secret.value == value
-	assert the_secret == value
-	assert str(the_secret) == "<SECRET>"
-	assert repr(the_secret) == "'<SECRET>'"
-	assert str([the_secret]) == "['<SECRET>']"
-	assert str((the_secret, )) == "('<SECRET>',)"
-	assert str({
-			the_secret,
-			}) == "{'<SECRET>'}"
-	assert str({"token": the_secret}) == "{'token': '<SECRET>'}"
-	assert hash(the_secret) == hash(value)
+from octocheese import get_file_from_pypi, get_pypi_releases
+from octocheese.core import make_release_message
 
 
 def uri_validator(x):
-	# Based on https://stackoverflow.com/a/38020041/3092681
+	# Based on https://stackoverflow.com/a/38020041
 	# By https://stackoverflow.com/users/1668293/alemol and https://stackoverflow.com/users/953553/andilabs
 	result = urlparse(x)
 	return all([result.scheme, result.netloc, result.path])
@@ -100,3 +82,8 @@ def test_get_file_from_pypi():
 							"octocheese-0.0.2/setup.cfg",
 							"octocheese-0.0.2/setup.py",
 							}
+
+
+def test_make_release_message(file_regression: FileRegressionFixture):
+	release_message = make_release_message("octocat", "1.2.3")
+	file_regression.check(release_message, extension=".md")
