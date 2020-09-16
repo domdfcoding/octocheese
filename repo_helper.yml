@@ -1,4 +1,7 @@
-modname: octocheese
+modname: OctoCheese
+import_name: octocheese
+repo_name: octocheese
+pypi_name: octocheese
 
 copyright_years: "2020"
 author: "Dominic Davis-Foster"
@@ -6,7 +9,7 @@ email: "dominic@davis-foster.co.uk"
 version: "0.0.2"
 username: "domdfcoding"
 license: 'LGPLv3+'
-short_desc: 'Copy PyPI Packages to GitHub Releases'
+short_desc: '🐙 🧀 – Copy PyPI Packages to GitHub Releases'
 
 enable_conda: False
 

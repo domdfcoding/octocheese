@@ -1,10 +1,10 @@
 #############
-octocheese
+OctoCheese
 #############
 
 .. start short_desc
 
-**Copy PyPI Packages to GitHub Releases**
+**🐙 🧀 – Copy PyPI Packages to GitHub Releases**
 
 .. end short_desc
 
@@ -29,7 +29,7 @@ This is a GitHub action, Python package and command line script that copies dist
 
 .. |docs| image:: https://img.shields.io/readthedocs/octocheese/latest?logo=read-the-docs
 	:target: https://octocheese.readthedocs.io/en/latest/?badge=latest
-	:alt: Documentation Status
+	:alt: Documentation Build Status
 
 .. |docs_check| image:: https://github.com/domdfcoding/octocheese/workflows/Docs%20Check/badge.svg
 	:target: https://github.com/domdfcoding/octocheese/actions?query=workflow%3A%22Docs+Check%22
@@ -128,7 +128,7 @@ Installing as a Python package and script
 
 .. start installation
 
-``octocheese`` can be installed from PyPI.
+``OctoCheese`` can be installed from PyPI.
 
 To install with ``pip``:
 

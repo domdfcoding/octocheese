@@ -40,11 +40,11 @@ __copyright__ = """
 """
 
 __version__ = "0.0.2"
-modname = "octocheese"
+modname = "OctoCheese"
 pypi_name = "octocheese"
 import_name = "octocheese"
 __license__ = "GNU Lesser General Public License v3 or later (LGPLv3+)"
-short_desc = 'Copy PyPI Packages to GitHub Releases'
+short_desc = '🐙 🧀 – Copy PyPI Packages to GitHub Releases'
 __author__ = author = 'Dominic Davis-Foster'
 author_email = 'dominic@davis-foster.co.uk'
 github_username = "domdfcoding"
