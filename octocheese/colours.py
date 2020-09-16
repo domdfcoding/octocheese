@@ -27,6 +27,8 @@ Functions for printing coloured text.
 from domdf_python_tools.terminal_colours import Fore
 from domdf_python_tools.utils import stderr_writer
 
+__all__ = ["success", "warning", "error"]
+
 
 def success(text) -> None:
 	"""

@@ -30,7 +30,7 @@ from octocheese.core import (
 		copy_pypi_2_github,
 		get_file_from_pypi,
 		get_pypi_releases,
-		update_github_release,
+		update_github_release
 		)
 
 __author__: str = "Dominic Davis-Foster"

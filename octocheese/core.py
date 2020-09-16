@@ -174,7 +174,7 @@ def copy_pypi_2_github(
 		pypi_name: Optional[str] = None,
 		) -> None:
 	"""
-	The main function for ``octocheese``.
+	The main function for ``OctoCheese``.
 
 	:param g:
 	:param repo_name: The name of the GitHub repository.
@@ -236,7 +236,7 @@ def make_release_message(name: str, version: Union[str, float], changelog: str =
 	:param changelog: Optional block of text detailing changes made since the previous release.
 	:no-default changelog:
 
-	:return: The release message
+	:return: The release message.
 	"""
 
 	buf: List[str] = []
