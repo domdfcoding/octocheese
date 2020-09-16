@@ -48,7 +48,7 @@ token_var = "GITHUB_TOKEN"
 
 def main(argv: Optional[Sequence[str]] = None) -> int:
 	"""
-	Entry point for ``copy_pypi_2_github``.
+	Entry point for ``OctoCheese``.
 
 	:rtype: int
 	"""

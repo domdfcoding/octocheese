@@ -122,8 +122,10 @@ Installing as a Python package and script
 	:maxdepth: 3
 	:caption: Documentation
 
-	API Reference<docs>
 	action
+	usage
+	API Reference<docs>
+
 
 .. toctree::
 	:maxdepth: 3
