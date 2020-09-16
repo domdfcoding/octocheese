@@ -2,7 +2,7 @@
 Downloading source code
 =========================
 
-The ``octocheese`` source code is available on GitHub,
+The ``OctoCheese`` source code is available on GitHub,
 and can be accessed from the following URL: https://github.com/domdfcoding/octocheese"
 
 If you have ``git`` installed, you can clone the repository with the following command:
@@ -30,7 +30,7 @@ If you have ``git`` installed, you can clone the repository with the following c
 Building from source
 -----------------------
 
-The recommended way to build ``octocheese`` is to use `tox <https://tox.readthedocs.io/en/latest/>`_:
+The recommended way to build ``OctoCheese`` is to use `tox <https://tox.readthedocs.io/en/latest/>`_:
 
 .. prompt:: bash
 

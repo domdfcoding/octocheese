@@ -1,10 +1,9 @@
+Overview
+---------
+
 .. This file based on https://github.com/PyGithub/PyGithub/blob/master/CONTRIBUTING.md
 
-==============
-Contributing
-==============
-
-``octocheese`` uses `tox <https://tox.readthedocs.io>`_ to automate testing and packaging, and `pre-commit <https://pre-commit.com>`_ to maintain code quality.
+``OctoCheese`` uses `tox <https://tox.readthedocs.io>`_ to automate testing and packaging, and `pre-commit <https://pre-commit.com>`_ to maintain code quality.
 
 Install ``pre-commit`` with ``pip`` and install the git hook:
 
