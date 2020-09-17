@@ -15,7 +15,7 @@ def test_main(monkeypatch, tmpdir, capsys):
 
 	assert captured.out.splitlines() == []
 	assert captured.err.splitlines() == [
-			"usage: octocheese [-h] [-t TOKEN] [-r REPO] pypi_name",
+			"usage: octocheese [-h] [-t TOKEN] [-r REPO] [--no-self-promotion] pypi_name",
 			"octocheese: error: the following arguments are required: pypi_name",
 			]
 
@@ -25,7 +25,7 @@ def test_main(monkeypatch, tmpdir, capsys):
 	captured = capsys.readouterr()
 
 	assert captured.out.splitlines() == [
-			"usage: octocheese [-h] [-t TOKEN] [-r REPO] pypi_name",
+			"usage: octocheese [-h] [-t TOKEN] [-r REPO] [--no-self-promotion] pypi_name",
 			'',
 			"positional arguments:",
 			"  pypi_name             The project name on PyPI.",
@@ -37,7 +37,10 @@ def test_main(monkeypatch, tmpdir, capsys):
 			"                        also be provided via the 'GITHUB_TOKEN' environment",
 			"                        variable.",
 			"  -r REPO, --repo REPO  The repository name (in the format",
-			"                        <username>/<repository>) or the complete GitHub URL."
+			"                        <username>/<repository>) or the complete GitHub URL.",
+			"  --no-self-promotion   Don't show information about OctoCheese at the bottom",
+			"                        of the release message. Default False."
+
 			]
 	assert captured.err.splitlines() == []
 
@@ -48,7 +51,7 @@ def test_main(monkeypatch, tmpdir, capsys):
 
 	assert captured.out.splitlines() == []
 	assert captured.err.splitlines() == [
-			"usage: octocheese [-h] [-t TOKEN] [-r REPO] pypi_name",
+			"usage: octocheese [-h] [-t TOKEN] [-r REPO] [--no-self-promotion] pypi_name",
 			"octocheese: error: Please supply a GitHub token with the '-t' / '--token' argument, "
 			"or via the environment variable 'GITHUB_TOKEN'."
 			]
@@ -85,7 +88,7 @@ def test_main_invalid_credentials(monkeypatch, tmpdir, capsys, pypi_name, dash_t
 
 	assert captured.out.splitlines() == ['Running for repo github/choosealicense.com']
 	assert captured.err.splitlines() == [
-			'usage: octocheese [-h] [-t TOKEN] [-r REPO] pypi_name',
+			'usage: octocheese [-h] [-t TOKEN] [-r REPO] [--no-self-promotion] pypi_name',
 			'octocheese: error: Invalid credentials for GitHub REST API.'
 			]
 
@@ -96,7 +99,7 @@ def test_main_invalid_credentials(monkeypatch, tmpdir, capsys, pypi_name, dash_t
 
 	assert captured.out.splitlines() == ['Running for repo github/choosealicense.com']
 	assert captured.err.splitlines() == [
-			'usage: octocheese [-h] [-t TOKEN] [-r REPO] pypi_name',
+			'usage: octocheese [-h] [-t TOKEN] [-r REPO] [--no-self-promotion] pypi_name',
 			'octocheese: error: Invalid credentials for GitHub REST API.'
 			]
 
@@ -128,7 +131,7 @@ def test_main_invalid_credentials_env(monkeypatch, tmpdir, capsys, pypi_name, da
 
 	assert captured.out.splitlines() == ['Running for repo github/choosealicense.com']
 	assert captured.err.splitlines() == [
-			'usage: octocheese [-h] [-t TOKEN] [-r REPO] pypi_name',
+			'usage: octocheese [-h] [-t TOKEN] [-r REPO] [--no-self-promotion] pypi_name',
 			'octocheese: error: Invalid credentials for GitHub REST API.'
 			]
 
@@ -146,6 +149,6 @@ def test_main_not_git_repo(monkeypatch, tmpdir, capsys, pypi_name):
 
 	assert captured.out.splitlines() == []
 	assert captured.err.splitlines() == [
-			'usage: octocheese [-h] [-t TOKEN] [-r REPO] pypi_name',
+			'usage: octocheese [-h] [-t TOKEN] [-r REPO] [--no-self-promotion] pypi_name',
 			'octocheese: error: No git repository was found at .'
 			]

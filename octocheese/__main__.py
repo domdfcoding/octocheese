@@ -72,6 +72,12 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 			default=None,
 			help="The repository name (in the format <username>/<repository>) or the complete GitHub URL.",
 			)
+	parser.add_argument(
+			"--no-self-promotion",
+			action="store_true",
+			default=False,
+			help="Don't show information about OctoCheese at the bottom of the release message. Default %(default)s.",
+			)
 	args = parser.parse_args(argv)
 
 	if args.token is None:
@@ -101,7 +107,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 	github_username = repo.parent.name
 
 	try:
-		run(gh_token, github_username, repo_name, args.pypi_name)
+		run(gh_token, github_username, repo_name, args.pypi_name, self_promotion=not args.no_self_promotion)
 	except BadCredentialsException:
 		parser.error("Invalid credentials for GitHub REST API.")
 	except Exception as e:
@@ -110,7 +116,13 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 	return 0
 
 
-def run(github_token: Secret, github_username: str, repo_name: str, pypi_name: str) -> None:
+def run(
+		github_token: Secret,
+		github_username: str,
+		repo_name: str,
+		pypi_name: str,
+		self_promotion=True,
+		):
 	"""
 	Helper function for when running as script or action.
 
@@ -120,6 +132,11 @@ def run(github_token: Secret, github_username: str, repo_name: str, pypi_name: s
 	:param github_username: The username of the GitHub account that owns the repository.
 	:param repo_name: The name of the GitHub repository.
 	:param pypi_name: The name of the package on PyPI.
+	:param self_promotion: Show information about OctoCheese at the bottom of the release message.
+
+	.. versionchanged:: 0.1.0
+
+		Added the ``self_promotion`` option.
 	"""
 
 	g = github.Github(github_token.value)
@@ -130,7 +147,7 @@ def run(github_token: Secret, github_username: str, repo_name: str, pypi_name: s
 	remaining_requests = rate.core.remaining
 	print(f"{remaining_requests} requests available.")
 
-	copy_pypi_2_github(g, repo_name, github_username, pypi_name=pypi_name)
+	copy_pypi_2_github(g, repo_name, github_username, pypi_name=pypi_name, self_promotion=self_promotion)
 
 	rate = g.get_rate_limit()
 	used_requests = remaining_requests - rate.core.remaining

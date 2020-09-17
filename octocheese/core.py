@@ -149,7 +149,8 @@ def copy_pypi_2_github(
 		*,
 		changelog: str = '',
 		pypi_name: Optional[str] = None,
-		) -> None:
+		self_promotion=True,
+		):
 	"""
 	The main function for ``OctoCheese``.
 
@@ -159,6 +160,11 @@ def copy_pypi_2_github(
 	:param changelog:
 	:param pypi_name: The name of the project on PyPI.
 	:default pypi_name: The value of ``repo_name``.
+	:param self_promotion: Show information about OctoCheese at the bottom of the release message.
+
+	.. versionchanged:: 0.1.0
+
+		Added the ``self_promotion`` option.
 	"""
 
 	repo_name = str(repo_name)
@@ -186,7 +192,7 @@ def copy_pypi_2_github(
 				repo=repo,
 				tag_name=tag.name,
 				release_name=f"Version {version}",
-				release_message=make_release_message(pypi_name, version, changelog),
+				release_message=make_release_message(pypi_name, version, changelog, self_promotion=self_promotion),
 				)
 
 			# Copy the files from PyPI
@@ -204,7 +210,7 @@ def copy_pypi_2_github(
 					continue
 
 
-def make_release_message(name: str, version: Union[str, float], changelog: str = '') -> str:
+def make_release_message(name: str, version: Union[str, float], changelog: str = '', self_promotion=True) -> str:
 	"""
 	Create a release message.
 
@@ -212,8 +218,13 @@ def make_release_message(name: str, version: Union[str, float], changelog: str =
 	:param version: The version number of the new release.
 	:param changelog: Optional block of text detailing changes made since the previous release.
 	:no-default changelog:
+	:param self_promotion: Show information about OctoCheese at the bottom of the release message.
 
 	:return: The release message.
+
+	.. versionchanged:: 0.1.0
+
+		Added the ``self_promotion`` option.
 	"""
 
 	buf = StringList()
@@ -225,20 +236,21 @@ def make_release_message(name: str, version: Union[str, float], changelog: str =
 	buf.append(f"Automatically copied from [PyPI](https://pypi.org/project/{name}/{version}).")
 	buf.blankline(ensure_single=True)
 
-	buf.append("---")
-	buf.blankline(ensure_single=True)
+	if self_promotion:
+		buf.append("---")
+		buf.blankline(ensure_single=True)
 
-	buf.append("Powered by OctoCheese\\")
+		buf.append("Powered by OctoCheese\\")
 
-	buf.append(
-			" | ".join((
-					"[📝 docs](https://octocheese.readthedocs.io)",
-					"[:octocat: repo](https://github.com/domdfcoding/octocheese)",
-					"[🙋 issues](https://github.com/domdfcoding/octocheese/issues)",
-					"[🏪 marketplace](https://github.com/marketplace/octocheese)",
-					))
-			)
+		buf.append(
+				" | ".join((
+						"[📝 docs](https://octocheese.readthedocs.io)",
+						"[:octocat: repo](https://github.com/domdfcoding/octocheese)",
+						"[🙋 issues](https://github.com/domdfcoding/octocheese/issues)",
+						"[🏪 marketplace](https://github.com/marketplace/octocheese)",
+						))
+				)
 
-	buf.blankline(ensure_single=True)
+		buf.blankline(ensure_single=True)
 
 	return "\n".join(buf)
