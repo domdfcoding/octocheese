@@ -13,7 +13,7 @@ runs:
   using: composite
   steps:
   - name: Install octocheese and dependencies
-    run: python3 -m pip install ${{ github.action_path }}/octocheese
+    run: python3 -m pip install ${{ github.action_path }}
     shell: bash
   - name: Run octocheese
     run: ${{ github.action_path }}/octocheese/octocheese/action.py
