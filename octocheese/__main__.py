@@ -32,10 +32,10 @@ import sys
 from typing import Optional, Sequence
 
 # 3rd party
-import dulwich.errors  # type: ignore
+import dulwich.errors
 import github
 from domdf_python_tools.secrets import Secret
-from dulwich.repo import Repo  # type: ignore
+from dulwich.repo import Repo
 from github.GithubException import BadCredentialsException
 
 # this package
@@ -72,11 +72,12 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 			default=None,
 			help="The repository name (in the format <username>/<repository>) or the complete GitHub URL.",
 			)
+	self_promption_help = "Don't show information about OctoCheese at the bottom of the release message. Default %(default)s."
 	parser.add_argument(
 			"--no-self-promotion",
 			action="store_true",
 			default=False,
-			help="Don't show information about OctoCheese at the bottom of the release message. Default %(default)s.",
+			help=self_promption_help,
 			)
 	args = parser.parse_args(argv)
 
