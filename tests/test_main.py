@@ -40,7 +40,6 @@ def test_main(monkeypatch, tmpdir, capsys):
 			"                        <username>/<repository>) or the complete GitHub URL.",
 			"  --no-self-promotion   Don't show information about OctoCheese at the bottom",
 			"                        of the release message. Default False."
-
 			]
 	assert captured.err.splitlines() == []
 
