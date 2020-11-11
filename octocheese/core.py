@@ -35,6 +35,7 @@ import github
 import github.GitRelease
 import github.Repository
 import requests
+from apeye import RequestsURL
 from domdf_python_tools.stringlist import StringList
 
 # this package
@@ -48,6 +49,8 @@ __all__ = [
 		"make_release_message"
 		]
 
+PYPI_API = RequestsURL("https://pypi.org/pypi")
+
 
 def get_pypi_releases(pypi_name: str) -> Dict[str, List[str]]:
 	"""
@@ -59,7 +62,7 @@ def get_pypi_releases(pypi_name: str) -> Dict[str, List[str]]:
 	pypi_releases = {}
 
 	# Parse PyPI data
-	r = requests.get(f"https://pypi.org/pypi/{pypi_name}/json")
+	r = (PYPI_API / pypi_name / "json").get()
 	if r.status_code != 200:  # pragma: no cover
 		error(f"Unable to get package data from PyPI for '{pypi_name}'")
 
