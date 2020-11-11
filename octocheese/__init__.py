@@ -29,7 +29,13 @@ from octocheese.core import copy_pypi_2_github, get_file_from_pypi, get_pypi_rel
 
 __author__: str = "Dominic Davis-Foster"
 __copyright__: str = "2020 Dominic Davis-Foster"
-
 __license__: str = "GNU Lesser General Public License v3 or later (LGPLv3+)"
 __version__: str = "0.1.0"
 __email__: str = "dominic@davis-foster.co.uk"
+
+__all__ = [
+		"copy_pypi_2_github",
+		"get_file_from_pypi",
+		"get_pypi_releases",
+		"update_github_release",
+		]
