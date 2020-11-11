@@ -244,10 +244,10 @@ def make_release_message(name: str, version: Union[str, float], changelog: str =
 
 		buf.append(
 				" | ".join((
-						"[\ud83d\udcdd docs](https://octocheese.readthedocs.io)",
+						"[📝 docs](https://octocheese.readthedocs.io)",
 						"[:octocat: repo](https://github.com/domdfcoding/octocheese)",
-						"[\ud83d\ude4b issues](https://github.com/domdfcoding/octocheese/issues)",
-						"[\ud83c\udfea marketplace](https://github.com/marketplace/octocheese)",
+						"[🙋 issues](https://github.com/domdfcoding/octocheese/issues)",
+						"[🏪 marketplace](https://github.com/marketplace/octocheese)",
 						))
 				)
 
