@@ -103,6 +103,7 @@ def test_main_invalid_credentials(monkeypatch, tmpdir, capsys, pypi_name, dash_t
 			]
 
 
+@pytest.mark.usefixtures("fake_token")
 @pytest.mark.parametrize("pypi_name", ["hello_world"])
 @pytest.mark.parametrize(
 		"dash_r",
@@ -121,7 +122,6 @@ def test_main_invalid_credentials(monkeypatch, tmpdir, capsys, pypi_name, dash_t
 def test_main_invalid_credentials_env(monkeypatch, tmpdir, capsys, pypi_name, dash_r):
 	argv = ["hello_world", *dash_r]
 	monkeypatch.chdir(str(tmpdir))
-	monkeypatch.setenv("GITHUB_TOKEN", "1234")
 
 	with pytest.raises(SystemExit):
 		main(argv)
@@ -135,11 +135,11 @@ def test_main_invalid_credentials_env(monkeypatch, tmpdir, capsys, pypi_name, da
 			]
 
 
+@pytest.mark.usefixtures("fake_token")
 @pytest.mark.parametrize("pypi_name", ["hello_world"])
 def test_main_not_git_repo(monkeypatch, tmpdir, capsys, pypi_name):
 	argv = ["hello_world"]
 	monkeypatch.chdir(str(tmpdir))
-	monkeypatch.setenv("GITHUB_TOKEN", "1234")
 
 	with pytest.raises(SystemExit):
 		main(argv)

@@ -3,12 +3,6 @@ import sys
 
 # 3rd party
 import pytest
-from domdf_python_tools.paths import PathPlus
-
-
-@pytest.fixture()
-def repo_root():
-	return PathPlus(__file__).parent.parent
 
 
 def test_building(repo_root, docker_client):
