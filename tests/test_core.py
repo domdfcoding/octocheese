@@ -8,7 +8,7 @@ from urllib.parse import urlparse
 
 # 3rd party
 import pytest
-from pytest_regressions.file_regression import FileRegressionFixture  # type: ignore
+from pytest_regressions.file_regression import FileRegressionFixture
 
 # this package
 from octocheese import get_file_from_pypi, get_pypi_releases

@@ -76,21 +76,21 @@ token_var = "GITHUB_TOKEN"
 		show_default=True,
 		)
 @click_command()
-def main(pypi_name: str, token: str, repo: PathLike = '.', no_self_promotion: bool = False):
+def main(pypi_name: str, token: str, repo: str, no_self_promotion: bool = False):
 	"""
 	Copy PyPI Packages to GitHub Releases.
 	"""
 
 	gh_token = Secret(token)
 
-	repo = URL(repo)
-
 	if repo is None:
 		try:
 			config = Repo('.').get_config()
-			repo = pathlib.Path(config.get(("remote", "origin"), "url").decode("UTF-8"))
+			repo = URL(config.get(("remote", "origin"), "url").decode("UTF-8"))
 		except dulwich.errors.NotGitRepository as e:
 			raise click.UsageError(str(e))
+	else:
+		repo = URL(repo)
 
 	if repo.suffix == ".git":
 		repo = repo.with_suffix('')
