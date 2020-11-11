@@ -24,7 +24,6 @@ The main logic of octocheese
 #
 
 # stdlib
-import json
 import os
 import pathlib
 import tempfile
@@ -39,7 +38,7 @@ import requests
 from domdf_python_tools.stringlist import StringList
 
 # this package
-from .colours import error, success, warning
+from octocheese.colours import error, success, warning
 
 __all__ = [
 		"get_pypi_releases",
@@ -55,7 +54,6 @@ def get_pypi_releases(pypi_name: str) -> Dict[str, List[str]]:
 	Returns a dictionary mapping PyPI release versions to download URLs.
 
 	:param pypi_name: The name of the project on PyPI.
-	:type pypi_name: str
 	"""
 
 	pypi_releases = {}
@@ -66,7 +64,7 @@ def get_pypi_releases(pypi_name: str) -> Dict[str, List[str]]:
 		error(f"Unable to get package data from PyPI for '{pypi_name}'")
 
 	else:
-		pkg_info = json.loads(r.content)
+		pkg_info = r.json()
 
 		for release, release_data in pkg_info["releases"].items():
 
@@ -89,11 +87,8 @@ def update_github_release(
 
 	:param repo:
 	:param tag_name:
-	:type tag_name: str
 	:param release_name:
-	:type release_name: str
 	:param release_message:
-	:type release_message: str
 
 	:return: The release, and a list of URLs for the current assets.
 	"""
@@ -123,11 +118,9 @@ def get_file_from_pypi(url: str, tmpdir: pathlib.Path) -> bool:
 	Download the file with the given URL into the given (temporary) directory.
 
 	:param url: The URL to download the file from.
-	:type url: str
 	:param tmpdir: The (temporary) directory to store the downloaded file in.
 
 	:return: Whether the file was downloaded successfully.
-	:rtype: bool
 	"""
 
 	filename = pathlib.PurePosixPath(urllib.parse.urlparse(url).path).name
