@@ -14,7 +14,7 @@ def test_success(capsys):
 	captured = capsys.readouterr()
 	assert captured.out == "\033[32mhello world\033[39m\n\033[32msomething else\033[39m\n"
 
-	colours.success(1234)
+	colours.success("1234")
 
 	captured = capsys.readouterr()
 	assert captured.out == "\033[32m1234\033[39m\n"
@@ -32,7 +32,7 @@ def test_warning(capsys):
 	captured = capsys.readouterr()
 	assert captured.err == "\033[33mhello world\033[39m\n\033[33msomething else\033[39m\n"
 
-	colours.warning(1234)
+	colours.warning("1234")
 
 	captured = capsys.readouterr()
 	assert captured.err == "\033[33m1234\033[39m\n"
@@ -50,7 +50,7 @@ def test_error(capsys):
 	captured = capsys.readouterr()
 	assert captured.err == "\033[31mhello world\033[39m\n\033[31msomething else\033[39m\n"
 
-	colours.error(1234)
+	colours.error("1234")
 
 	captured = capsys.readouterr()
 	assert captured.err == "\033[31m1234\033[39m\n"
