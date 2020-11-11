@@ -4,6 +4,7 @@ from pathlib import Path
 
 # 3rd party
 import pytest
+from domdf_python_tools.paths import PathPlus
 
 pytest_plugins = ("pytest_docker_tools", "domdf_python_tools.testing")
 
@@ -17,3 +18,8 @@ def original_datadir(request):
 @pytest.fixture()
 def fake_token(monkeypatch):
 	monkeypatch.setenv("GITHUB_TOKEN", "1234")
+
+
+@pytest.fixture()
+def repo_root():
+	return PathPlus(__file__).parent.parent
