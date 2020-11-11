@@ -1,68 +1,27 @@
+# stdlib
+import tempfile
+
 # 3rd party
 import pytest
+from click.testing import CliRunner, Result
+from domdf_python_tools.paths import in_directory
+from pytest_regressions.file_regression import FileRegressionFixture
 
 # this package
 from octocheese.__main__ import main
 
 
-def test_main(monkeypatch, tmpdir, capsys):
-	monkeypatch.chdir(str(tmpdir))
+def run_test(file_regression: FileRegressionFixture, exit_code: int, *args: str, extension: str = ".txt"):
+	with tempfile.TemporaryDirectory() as tmpdir:
+		with in_directory(tmpdir):
+			runner = CliRunner()
+			result: Result = runner.invoke(main, catch_exceptions=False, args=args)
 
-	with pytest.raises(SystemExit):
-		main([])
-
-	captured = capsys.readouterr()
-
-	assert captured.out.splitlines() == []
-	assert captured.err.splitlines() == [
-			"usage: octocheese [-h] [-t TOKEN] [-r REPO] [--no-self-promotion] pypi_name",
-			"octocheese: error: the following arguments are required: pypi_name",
-			]
-
-	with pytest.raises(SystemExit):
-		main(["-h"])
-
-	captured = capsys.readouterr()
-
-	assert captured.out.splitlines() == [
-			"usage: octocheese [-h] [-t TOKEN] [-r REPO] [--no-self-promotion] pypi_name",
-			'',
-			"positional arguments:",
-			"  pypi_name             The project name on PyPI.",
-			'',
-			"optional arguments:",
-			"  -h, --help            show this help message and exit",
-			"  -t TOKEN, --token TOKEN",
-			"                        The token to authenticate with the GitHub API. Can",
-			"                        also be provided via the 'GITHUB_TOKEN' environment",
-			"                        variable.",
-			"  -r REPO, --repo REPO  The repository name (in the format",
-			"                        <username>/<repository>) or the complete GitHub URL.",
-			"  --no-self-promotion   Don't show information about OctoCheese at the bottom",
-			"                        of the release message. Default False."
-			]
-	assert captured.err.splitlines() == []
-
-	with pytest.raises(SystemExit):
-		main(["hello_world"])
-
-	captured = capsys.readouterr()
-
-	assert captured.out.splitlines() == []
-	assert captured.err.splitlines() == [
-			"usage: octocheese [-h] [-t TOKEN] [-r REPO] [--no-self-promotion] pypi_name",
-			"octocheese: error: Please supply a GitHub token with the '-t' / '--token' argument, "
-			"or via the environment variable 'GITHUB_TOKEN'."
-			]
+			assert result.exit_code == exit_code
+			file_regression.check(result.stdout.rstrip(), encoding="UTF-8", extension=extension)
 
 
-@pytest.mark.parametrize("pypi_name", ["hello_world"])
-@pytest.mark.parametrize("dash_t", [
-		["-t", "1234"],
-		["-t1234"],
-		["--token", "1234"],
-		])
-@pytest.mark.parametrize(
+dash_r = pytest.mark.parametrize(
 		"dash_r",
 		[
 				["-r", "https://github.com/github/choosealicense.com.git"],
@@ -76,78 +35,37 @@ def test_main(monkeypatch, tmpdir, capsys):
 				["--repo", "github/choosealicense.com"],
 				]
 		)
-def test_main_invalid_credentials(monkeypatch, tmpdir, capsys, pypi_name, dash_t, dash_r):
-	argv = ["hello_world", *dash_t, *dash_r]
-	monkeypatch.chdir(str(tmpdir))
 
-	with pytest.raises(SystemExit):
-		main(argv)
 
-	captured = capsys.readouterr()
+def test_main_no_args(file_regression: FileRegressionFixture):
+	run_test(file_regression, 2)
 
-	assert captured.out.splitlines() == ["Running for repo github/choosealicense.com"]
-	assert captured.err.splitlines() == [
-			"usage: octocheese [-h] [-t TOKEN] [-r REPO] [--no-self-promotion] pypi_name",
-			"octocheese: error: Invalid credentials for GitHub REST API."
-			]
 
-	with pytest.raises(SystemExit):
-		main(["hello_world", *dash_r, *dash_t])
+@pytest.mark.parametrize("args", [["-h"], ["--help"]])
+def test_main_help(args, file_regression: FileRegressionFixture):
+	run_test(file_regression, 0, *args)
 
-	captured = capsys.readouterr()
 
-	assert captured.out.splitlines() == ["Running for repo github/choosealicense.com"]
-	assert captured.err.splitlines() == [
-			"usage: octocheese [-h] [-t TOKEN] [-r REPO] [--no-self-promotion] pypi_name",
-			"octocheese: error: Invalid credentials for GitHub REST API."
-			]
+def test_main_missing_token(file_regression: FileRegressionFixture):
+	run_test(file_regression, 2, "octocat/hello_world")
 
 
 @pytest.mark.parametrize("pypi_name", ["hello_world"])
-@pytest.mark.parametrize(
-		"dash_r",
-		[
-				["-r", "https://github.com/github/choosealicense.com.git"],
-				["-r", "https://github.com/github/choosealicense.com"],
-				["-r", "github/choosealicense.com"],
-				["-rhttps://github.com/github/choosealicense.com.git"],
-				["-rhttps://github.com/github/choosealicense.com"],
-				["-rgithub/choosealicense.com"],
-				["--repo", "https://github.com/github/choosealicense.com.git"],
-				["--repo", "https://github.com/github/choosealicense.com"],
-				["--repo", "github/choosealicense.com"],
-				]
-		)
-def test_main_invalid_credentials_env(monkeypatch, tmpdir, capsys, pypi_name, dash_r):
-	argv = ["hello_world", *dash_r]
-	monkeypatch.chdir(str(tmpdir))
-	monkeypatch.setenv("GITHUB_TOKEN", "1234")
-
-	with pytest.raises(SystemExit):
-		main(argv)
-
-	captured = capsys.readouterr()
-
-	assert captured.out.splitlines() == ["Running for repo github/choosealicense.com"]
-	assert captured.err.splitlines() == [
-			"usage: octocheese [-h] [-t TOKEN] [-r REPO] [--no-self-promotion] pypi_name",
-			"octocheese: error: Invalid credentials for GitHub REST API."
-			]
+@pytest.mark.parametrize("dash_t", [["-t", "1234"], ["-t1234"], ["--token", "1234"]])
+@dash_r
+def test_main_invalid_credentials(pypi_name, dash_t, dash_r, file_regression: FileRegressionFixture):
+	run_test(file_regression, 2, "octocat/hello_world", *dash_t, *dash_r, extension="._t_r.txt")
+	run_test(file_regression, 2, "octocat/hello_world", *dash_r, *dash_t, extension="._r_t.txt")
 
 
+@pytest.mark.usefixtures("fake_token")
 @pytest.mark.parametrize("pypi_name", ["hello_world"])
-def test_main_not_git_repo(monkeypatch, tmpdir, capsys, pypi_name):
-	argv = ["hello_world"]
-	monkeypatch.chdir(str(tmpdir))
-	monkeypatch.setenv("GITHUB_TOKEN", "1234")
+@dash_r
+def test_main_invalid_credentials_env(pypi_name: str, dash_r, file_regression: FileRegressionFixture):
+	run_test(file_regression, 2, "octocat/hello_world", *dash_r)
 
-	with pytest.raises(SystemExit):
-		main(argv)
 
-	captured = capsys.readouterr()
-
-	assert captured.out.splitlines() == []
-	assert captured.err.splitlines() == [
-			"usage: octocheese [-h] [-t TOKEN] [-r REPO] [--no-self-promotion] pypi_name",
-			"octocheese: error: No git repository was found at ."
-			]
+@pytest.mark.usefixtures("fake_token")
+@pytest.mark.parametrize("pypi_name", ["hello_world"])
+def test_main_not_git_repo(pypi_name: str, file_regression: FileRegressionFixture):
+	run_test(file_regression, 2, "octocat/hello_world")
