@@ -85,10 +85,10 @@ def test_main_invalid_credentials(monkeypatch, tmpdir, capsys, pypi_name, dash_t
 
 	captured = capsys.readouterr()
 
-	assert captured.out.splitlines() == ['Running for repo github/choosealicense.com']
+	assert captured.out.splitlines() == ["Running for repo github/choosealicense.com"]
 	assert captured.err.splitlines() == [
-			'usage: octocheese [-h] [-t TOKEN] [-r REPO] [--no-self-promotion] pypi_name',
-			'octocheese: error: Invalid credentials for GitHub REST API.'
+			"usage: octocheese [-h] [-t TOKEN] [-r REPO] [--no-self-promotion] pypi_name",
+			"octocheese: error: Invalid credentials for GitHub REST API."
 			]
 
 	with pytest.raises(SystemExit):
@@ -96,10 +96,10 @@ def test_main_invalid_credentials(monkeypatch, tmpdir, capsys, pypi_name, dash_t
 
 	captured = capsys.readouterr()
 
-	assert captured.out.splitlines() == ['Running for repo github/choosealicense.com']
+	assert captured.out.splitlines() == ["Running for repo github/choosealicense.com"]
 	assert captured.err.splitlines() == [
-			'usage: octocheese [-h] [-t TOKEN] [-r REPO] [--no-self-promotion] pypi_name',
-			'octocheese: error: Invalid credentials for GitHub REST API.'
+			"usage: octocheese [-h] [-t TOKEN] [-r REPO] [--no-self-promotion] pypi_name",
+			"octocheese: error: Invalid credentials for GitHub REST API."
 			]
 
 
@@ -128,10 +128,10 @@ def test_main_invalid_credentials_env(monkeypatch, tmpdir, capsys, pypi_name, da
 
 	captured = capsys.readouterr()
 
-	assert captured.out.splitlines() == ['Running for repo github/choosealicense.com']
+	assert captured.out.splitlines() == ["Running for repo github/choosealicense.com"]
 	assert captured.err.splitlines() == [
-			'usage: octocheese [-h] [-t TOKEN] [-r REPO] [--no-self-promotion] pypi_name',
-			'octocheese: error: Invalid credentials for GitHub REST API.'
+			"usage: octocheese [-h] [-t TOKEN] [-r REPO] [--no-self-promotion] pypi_name",
+			"octocheese: error: Invalid credentials for GitHub REST API."
 			]
 
 
@@ -148,6 +148,6 @@ def test_main_not_git_repo(monkeypatch, tmpdir, capsys, pypi_name):
 
 	assert captured.out.splitlines() == []
 	assert captured.err.splitlines() == [
-			'usage: octocheese [-h] [-t TOKEN] [-r REPO] [--no-self-promotion] pypi_name',
-			'octocheese: error: No git repository was found at .'
+			"usage: octocheese [-h] [-t TOKEN] [-r REPO] [--no-self-promotion] pypi_name",
+			"octocheese: error: No git repository was found at ."
 			]

@@ -40,7 +40,7 @@ if __name__ == "__main__":
 	print("[octocheese] Starting octocheese.")
 
 	gh_token = Secret(os.environ["GITHUB_TOKEN"])
-	github_username, repo_name = os.environ["GITHUB_REPOSITORY"].split("/")
+	github_username, repo_name = os.environ["GITHUB_REPOSITORY"].split('/')
 	pypi_name = os.environ["INPUT_PYPI_NAME"]
 
 	run(gh_token, github_username, repo_name, pypi_name)

@@ -181,7 +181,7 @@ def copy_pypi_2_github(
 
 	with tempfile.TemporaryDirectory() as tmpdir:
 		for tag in repo.get_tags():
-			version = tag.name.lstrip("v")
+			version = tag.name.lstrip('v')
 			if version not in pypi_releases:
 				warning(f"No PyPI release found for tag '{tag.name}'. Skipping.")
 				continue
@@ -244,13 +244,13 @@ def make_release_message(name: str, version: Union[str, float], changelog: str =
 
 		buf.append(
 				" | ".join((
-						"[📝 docs](https://octocheese.readthedocs.io)",
+						"[\ud83d\udcdd docs](https://octocheese.readthedocs.io)",
 						"[:octocat: repo](https://github.com/domdfcoding/octocheese)",
-						"[🙋 issues](https://github.com/domdfcoding/octocheese/issues)",
-						"[🏪 marketplace](https://github.com/marketplace/octocheese)",
+						"[\ud83d\ude4b issues](https://github.com/domdfcoding/octocheese/issues)",
+						"[\ud83c\udfea marketplace](https://github.com/marketplace/octocheese)",
 						))
 				)
 
 		buf.blankline(ensure_single=True)
 
-	return "\n".join(buf)
+	return '\n'.join(buf)
