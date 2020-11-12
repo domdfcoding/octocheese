@@ -5,6 +5,7 @@ import tempfile
 import pytest
 from click.testing import CliRunner, Result
 from domdf_python_tools.paths import in_directory
+from domdf_python_tools.testing import check_file_regression
 from pytest_regressions.file_regression import FileRegressionFixture
 
 # this package
@@ -18,7 +19,7 @@ def run_test(file_regression: FileRegressionFixture, exit_code: int, *args: str,
 			result: Result = runner.invoke(main, catch_exceptions=False, args=args)
 
 			assert result.exit_code == exit_code
-			file_regression.check(result.stdout.rstrip(), encoding="UTF-8", extension=extension)
+			check_file_regression(result.stdout.rstrip(), file_regression, extension=extension)
 
 
 dash_r = pytest.mark.parametrize(

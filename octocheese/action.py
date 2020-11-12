@@ -4,7 +4,7 @@
 """
 GitHub Actions entry point.
 
-All the GitHub specific setup is performed here.
+All the GitHub-specific setup is performed here.
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
