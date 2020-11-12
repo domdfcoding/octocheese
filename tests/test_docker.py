@@ -30,7 +30,7 @@ def not_docker(reason: str = "Not required on Docker.", ) -> MarkDecorator:
 	return pytest.mark.skipif(condition=is_docker(), reason=reason)
 
 
-@not_docker(reason="Can't run is already in Docker.")
+@not_docker(reason="Can't run if already in Docker.")
 @not_mac(reason="Docker does not work correctly on macOS.")
 @not_windows(reason="Docker does not work correctly on Windows.")
 def test_building(repo_root, docker_client):
