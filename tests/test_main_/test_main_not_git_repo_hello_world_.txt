@@ -1,4 +1,3 @@
-Running for repo /
 Usage: main [OPTIONS] PYPI_NAME
 
-Error: Invalid credentials for GitHub REST API.
+Error: No git repository was found at .
