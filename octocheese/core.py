@@ -2,7 +2,7 @@
 #
 #  core.py
 """
-The main logic of octocheese
+The main logic of octocheese.
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -87,6 +87,7 @@ def update_github_release(
 		release_message: str,
 		) -> Tuple[github.GitRelease.GitRelease, List[str]]:
 	"""
+	Update the given release on GitHub with the new name and message.
 
 	:param repo:
 	:param tag_name:

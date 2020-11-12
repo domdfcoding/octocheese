@@ -2,7 +2,7 @@
 #
 #  __main__.py
 """
-Entry points when running as a script
+Entry points when running as a script.
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
