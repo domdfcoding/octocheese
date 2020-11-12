@@ -25,8 +25,8 @@ Entry points when running as a script
 #
 
 # stdlib
-import pathlib
 import sys
+from typing import Union
 
 # 3rd party
 import click
@@ -76,7 +76,7 @@ token_var = "GITHUB_TOKEN"
 		show_default=True,
 		)
 @click_command()
-def main(pypi_name: str, token: str, repo: str, no_self_promotion: bool = False):
+def main(pypi_name: str, token: str, repo: Union[str, URL], no_self_promotion: bool = False):
 	"""
 	Copy PyPI Packages to GitHub Releases.
 	"""
