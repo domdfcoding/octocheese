@@ -5,23 +5,32 @@ import sys
 import pytest
 from _pytest.mark import MarkDecorator
 from domdf_python_tools.testing import not_windows
+from jaraco.docker import is_docker
 
 
-def not_mac(reason: str = "Not required on Windows.", ) -> MarkDecorator:
+def not_mac(reason: str = "Not required on macOS.", ) -> MarkDecorator:
 	"""
 	Factory function to return a ``@pytest.mark.skipif`` decorator that will
 	skip a test if the current platform is macOS.
 
 	:param reason: The reason to display when skipping.
-
-	:rtype:
-
-	.. versionadded:: 0.9.0
 	"""  # noqa D400
 
 	return pytest.mark.skipif(condition=sys.platform == "darwin", reason=reason)
 
 
+def not_docker(reason: str = "Not required on Docker.", ) -> MarkDecorator:
+	"""
+	Factory function to return a ``@pytest.mark.skipif`` decorator that will
+	skip a test if running on Docker.
+
+	:param reason: The reason to display when skipping.
+	"""  # noqa D400
+
+	return pytest.mark.skipif(condition=is_docker(), reason=reason)
+
+
+@not_docker(reason="Can't run is already in Docker.")
 @not_mac(reason="Docker does not work correctly on macOS.")
 @not_windows(reason="Docker does not work correctly on Windows.")
 def test_building(repo_root, docker_client):
