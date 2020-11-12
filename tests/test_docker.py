@@ -5,7 +5,7 @@ import sys
 import pytest
 from _pytest.mark import MarkDecorator
 from domdf_python_tools.testing import not_windows
-from jaraco.docker import is_docker
+from jaraco.docker import is_docker  # type: ignore
 
 
 def not_mac(reason: str = "Not required on macOS.", ) -> MarkDecorator:
