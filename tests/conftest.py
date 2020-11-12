@@ -15,7 +15,7 @@ def original_datadir(request):
 	return Path(os.path.splitext(request.module.__file__)[0] + '_')
 
 
-@pytest.fixture()  # noqa: PT004
+@pytest.fixture()
 def fake_token(monkeypatch):
 	monkeypatch.setenv("GITHUB_TOKEN", "1234")
 
