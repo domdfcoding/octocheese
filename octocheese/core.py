@@ -41,13 +41,7 @@ from shippinglabel.pypi import get_pypi_releases
 # this package
 from octocheese.colours import error, success, warning
 
-__all__ = [
-		"get_pypi_releases",
-		"update_github_release",
-		"get_file_from_pypi",
-		"copy_pypi_2_github",
-		"make_release_message"
-		]
+__all__ = ["update_github_release", "get_file_from_pypi", "copy_pypi_2_github", "make_release_message"]
 
 
 def update_github_release(

@@ -25,7 +25,7 @@ Copy PyPI Packages to GitHub Releases.
 #
 
 # this package
-from octocheese.core import copy_pypi_2_github, get_file_from_pypi, get_pypi_releases, update_github_release
+from octocheese.core import copy_pypi_2_github, get_file_from_pypi, update_github_release
 
 __author__: str = "Dominic Davis-Foster"
 __copyright__: str = "2020 Dominic Davis-Foster"
@@ -36,6 +36,5 @@ __email__: str = "dominic@davis-foster.co.uk"
 __all__ = [
 		"copy_pypi_2_github",
 		"get_file_from_pypi",
-		"get_pypi_releases",
 		"update_github_release",
 		]
