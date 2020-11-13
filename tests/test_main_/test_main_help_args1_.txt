@@ -1,0 +1,16 @@
+Usage: main [OPTIONS] PYPI_NAME
+
+  Copy PyPI Packages to GitHub Releases.
+
+Options:
+  --no-self-promotion  Don't show information about OctoCheese at the bottom of
+                       the release message.  [default: False]
+
+  -r, --repo TEXT      The repository name (in the format
+                       <username>/<repository>) or the complete GitHub URL.
+
+  -t, --token TEXT     The token to authenticate with the GitHub API. Can also
+                       be provided via the 'GITHUB_TOKEN' environment variable.
+                       [required]
+
+  -h, --help           Show this message and exit.
