@@ -1,0 +1,3 @@
+Usage: main [OPTIONS] PYPI_NAME
+
+Error: No git repository was found at .

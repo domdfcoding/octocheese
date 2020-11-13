@@ -4,7 +4,6 @@ import pathlib
 import tarfile
 import tempfile
 import zipfile
-from urllib.parse import urlparse
 
 # 3rd party
 import pytest
@@ -13,8 +12,7 @@ from pytest_regressions.data_regression import DataRegressionFixture
 from pytest_regressions.file_regression import FileRegressionFixture
 
 # this package
-from octocheese import get_file_from_pypi
-from octocheese.core import make_release_message
+from octocheese.core import get_file_from_pypi, make_release_message
 
 
 def test_get_file_from_pypi(data_regression: DataRegressionFixture):

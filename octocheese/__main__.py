@@ -25,15 +25,16 @@ Entry points when running as a script.
 #
 
 # stdlib
-import argparse
-import os
 import sys
-from typing import Optional, Sequence
+from typing import Union
 
 # 3rd party
+import click
 import dulwich.errors
 import github
 from apeye import URL
+from consolekit import click_command
+from consolekit.utils import abort
 from domdf_python_tools.secrets import Secret
 from dulwich.repo import Repo
 from github.GithubException import BadCredentialsException
@@ -46,60 +47,48 @@ __all__ = ["main", "run", "token_var"]
 token_var = "GITHUB_TOKEN"
 
 
-def main(argv: Optional[Sequence[str]] = None) -> int:
+@click.argument("pypi_name", type=click.STRING)
+@click.option(
+		"-t",
+		"--token",
+		type=click.STRING,
+		help=(
+				"The token to authenticate with the GitHub API. "
+				f"Can also be provided via the '{token_var}' environment variable."
+				),
+		envvar=token_var,
+		required=True,
+		show_default=True,
+		)
+@click.option(
+		"-r",
+		"--repo",
+		type=click.STRING,
+		default=None,
+		help="The repository name (in the format <username>/<repository>) or the complete GitHub URL.",
+		)
+@click.option(
+		"--no-self-promotion",
+		is_flag=True,
+		default=False,
+		help="Don't show information about OctoCheese at the bottom of the release message.",
+		show_default=True,
+		)
+@click_command()
+def main(pypi_name: str, token: str, repo: Union[str, URL], no_self_promotion: bool = False):
 	"""
-	Entry point for ``OctoCheese``.
-
-	:rtype: int
+	Copy PyPI Packages to GitHub Releases.
 	"""
 
-	parser = argparse.ArgumentParser(prog="octocheese")
-	parser.add_argument("pypi_name", type=str, help="The project name on PyPI.")
-	parser.add_argument(
-			"-t",
-			"--token",
-			type=str,
-			default=None,
-			help=(
-					"The token to authenticate with the GitHub API. "
-					f"Can also be provided via the '{token_var}' environment variable."
-					),
-			)
-	parser.add_argument(
-			"-r",
-			"--repo",
-			type=str,
-			default=None,
-			help="The repository name (in the format <username>/<repository>) or the complete GitHub URL.",
-			)
-	self_promption_help = "Don't show information about OctoCheese at the bottom of the release message. Default %(default)s."
-	parser.add_argument(
-			"--no-self-promotion",
-			action="store_true",
-			default=False,
-			help=self_promption_help,
-			)
-	args = parser.parse_args(argv)
 
-	if args.token is None:
-		if token_var in os.environ:
-			gh_token = Secret(os.environ[token_var])
-		else:
-			parser.error(
-					"Please supply a GitHub token with the '-t' / '--token' argument, "
-					f"or via the environment variable '{token_var}'.",
-					)
-	else:
-		gh_token = Secret(args.token)
-
-	repo = args.repo
+	gh_token = Secret(token)
 
 	if repo is None:
 		try:
 			config = Repo('.').get_config()
 			repo = URL(config.get(("remote", "origin"), "url").decode("UTF-8"))
 		except dulwich.errors.NotGitRepository as e:
-			parser.error(str(e))
+			raise click.UsageError(str(e))
 	else:
 		repo = URL(repo)
 
@@ -110,13 +99,11 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 	github_username = repo.parent.name or repo.domain.domain  # first case is for full url, second for github/hello_world
 
 	try:
-		run(gh_token, github_username, repo_name, args.pypi_name, self_promotion=not args.no_self_promotion)
+		run(gh_token, github_username, repo_name, pypi_name, self_promotion=not no_self_promotion)
 	except BadCredentialsException:
-		parser.error("Invalid credentials for GitHub REST API.")
+		raise click.UsageError("Invalid credentials for GitHub REST API.")
 	except Exception as e:
-		parser.error(str(e))
-
-	return 0
+		raise abort(f"An error occurred: {e}")
 
 
 def run(
@@ -144,17 +131,17 @@ def run(
 
 	g = github.Github(github_token.value)
 
-	print(f"Running for repo {github_username}/{repo_name}")
+	click.echo(f"Running for repo {github_username}/{repo_name}")
 
 	rate = g.get_rate_limit()
 	remaining_requests = rate.core.remaining
-	print(f"{remaining_requests} requests available.")
+	click.echo(f"{remaining_requests} requests available.")
 
 	copy_pypi_2_github(g, repo_name, github_username, pypi_name=pypi_name, self_promotion=self_promotion)
 
 	rate = g.get_rate_limit()
 	used_requests = remaining_requests - rate.core.remaining
-	print(f"Used {used_requests} requests. {rate.core.remaining} remaining. Resets at {rate.core.reset}")
+	click.echo(f"Used {used_requests} requests. {rate.core.remaining} remaining. Resets at {rate.core.reset}")
 
 
 if __name__ == "__main__":
