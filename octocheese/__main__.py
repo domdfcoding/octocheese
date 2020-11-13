@@ -107,7 +107,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 		repo = repo.with_suffix('')
 
 	repo_name = repo.name
-	github_username = repo.parent.name
+	github_username = repo.parent.name or repo.domain.domain  # first case is for full url, second for github/hello_world
 
 	try:
 		run(gh_token, github_username, repo_name, args.pypi_name, self_promotion=not args.no_self_promotion)

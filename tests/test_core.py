@@ -13,28 +13,8 @@ from pytest_regressions.data_regression import DataRegressionFixture
 from pytest_regressions.file_regression import FileRegressionFixture
 
 # this package
-from octocheese import get_file_from_pypi, get_pypi_releases
+from octocheese import get_file_from_pypi
 from octocheese.core import make_release_message
-
-
-def uri_validator(x):
-	# Based on https://stackoverflow.com/a/38020041
-	# By https://stackoverflow.com/users/1668293/alemol and https://stackoverflow.com/users/953553/andilabs
-	result = urlparse(x)
-	return all([result.scheme, result.netloc, result.path])
-
-
-def test_get_pypi_releases():
-	releases = get_pypi_releases("octocheese")
-	assert isinstance(releases, dict)
-
-	release_url_list = releases["0.0.2"]
-	assert isinstance(release_url_list, list)
-
-	for url in release_url_list:
-		print(url)
-		assert isinstance(url, str)
-		assert uri_validator(url)
 
 
 def test_get_file_from_pypi(data_regression: DataRegressionFixture):
