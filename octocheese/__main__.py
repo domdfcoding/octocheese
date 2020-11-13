@@ -80,7 +80,6 @@ def main(pypi_name: str, token: str, repo: Union[str, URL], no_self_promotion: b
 	Copy PyPI Packages to GitHub Releases.
 	"""
 
-
 	gh_token = Secret(token)
 
 	if repo is None:

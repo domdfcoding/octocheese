@@ -33,5 +33,4 @@ __license__: str = "GNU Lesser General Public License v3 or later (LGPLv3+)"
 __version__: str = "0.1.0"
 __email__: str = "dominic@davis-foster.co.uk"
 
-
 __all__ = ["copy_pypi_2_github", "get_file_from_pypi", "update_github_release"]
