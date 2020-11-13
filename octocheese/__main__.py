@@ -32,11 +32,10 @@ from typing import Union
 import click
 import dulwich.errors
 import github
-from apeye.url import URL
+from apeye import URL
 from consolekit import click_command
 from consolekit.utils import abort
 from domdf_python_tools.secrets import Secret
-from domdf_python_tools.typing import PathLike
 from dulwich.repo import Repo
 from github.GithubException import BadCredentialsException
 
@@ -96,7 +95,7 @@ def main(pypi_name: str, token: str, repo: Union[str, URL], no_self_promotion: b
 		repo = repo.with_suffix('')
 
 	repo_name = repo.name
-	github_username = repo.parent.name
+	github_username = repo.parent.name or repo.domain.domain  # first case is for full url, second for github/hello_world
 
 	try:
 		run(gh_token, github_username, repo_name, pypi_name, self_promotion=not no_self_promotion)
