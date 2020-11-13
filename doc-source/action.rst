@@ -14,7 +14,7 @@ In a GitHub Workflow:
 	  releases:
 		runs-on: ubuntu-latest
 		steps:
-		- uses: domdfcoding/octocheese@v0.1.0
+		- uses: domdfcoding/octocheese@v0.2.0
 		  with:
 			pypi_name: "domdf_python_tools"
 		  env:
