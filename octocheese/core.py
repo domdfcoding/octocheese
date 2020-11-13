@@ -2,7 +2,7 @@
 #
 #  core.py
 """
-The main logic of octocheese
+The main logic of octocheese.
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -28,56 +28,20 @@ import os
 import pathlib
 import tempfile
 import urllib.parse
-from typing import Dict, List, Optional, Tuple, Union
+from typing import List, Optional, Tuple, Union
 
 # 3rd party
 import github
 import github.GitRelease
 import github.Repository
 import requests
-from apeye import RequestsURL
 from domdf_python_tools.stringlist import StringList
+from shippinglabel.pypi import get_pypi_releases
 
 # this package
 from octocheese.colours import error, success, warning
 
-__all__ = [
-		"get_pypi_releases",
-		"update_github_release",
-		"get_file_from_pypi",
-		"copy_pypi_2_github",
-		"make_release_message"
-		]
-
-PYPI_API = RequestsURL("https://pypi.org/pypi")
-
-
-def get_pypi_releases(pypi_name: str) -> Dict[str, List[str]]:
-	"""
-	Returns a dictionary mapping PyPI release versions to download URLs.
-
-	:param pypi_name: The name of the project on PyPI.
-	"""
-
-	pypi_releases = {}
-
-	# Parse PyPI data
-	r = (PYPI_API / pypi_name / "json").get()
-	if r.status_code != 200:  # pragma: no cover
-		error(f"Unable to get package data from PyPI for '{pypi_name}'")
-
-	else:
-		pkg_info = r.json()
-
-		for release, release_data in pkg_info["releases"].items():
-
-			release_urls: List[str] = []
-
-			for file in release_data:
-				release_urls.append(file["url"])
-			pypi_releases[release] = release_urls
-
-	return pypi_releases
+__all__ = ["update_github_release", "get_file_from_pypi", "copy_pypi_2_github", "make_release_message"]
 
 
 def update_github_release(
@@ -87,6 +51,7 @@ def update_github_release(
 		release_message: str,
 		) -> Tuple[github.GitRelease.GitRelease, List[str]]:
 	"""
+	Update the given release on GitHub with the new name and message.
 
 	:param repo:
 	:param tag_name:

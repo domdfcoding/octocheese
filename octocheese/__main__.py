@@ -2,7 +2,7 @@
 #
 #  __main__.py
 """
-Entry points when running as a script
+Entry points when running as a script.
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -27,13 +27,13 @@ Entry points when running as a script
 # stdlib
 import argparse
 import os
-import pathlib
 import sys
 from typing import Optional, Sequence
 
 # 3rd party
 import dulwich.errors
 import github
+from apeye import URL
 from domdf_python_tools.secrets import Secret
 from dulwich.repo import Repo
 from github.GithubException import BadCredentialsException
@@ -68,7 +68,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 	parser.add_argument(
 			"-r",
 			"--repo",
-			type=pathlib.Path,
+			type=str,
 			default=None,
 			help="The repository name (in the format <username>/<repository>) or the complete GitHub URL.",
 			)
@@ -97,9 +97,11 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 	if repo is None:
 		try:
 			config = Repo('.').get_config()
-			repo = pathlib.Path(config.get(("remote", "origin"), "url").decode("UTF-8"))
+			repo = URL(config.get(("remote", "origin"), "url").decode("UTF-8"))
 		except dulwich.errors.NotGitRepository as e:
 			parser.error(str(e))
+	else:
+		repo = URL(repo)
 
 	if repo.suffix == ".git":
 		repo = repo.with_suffix('')
