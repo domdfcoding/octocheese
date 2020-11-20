@@ -58,7 +58,6 @@ token_var = "GITHUB_TOKEN"
 				),
 		envvar=token_var,
 		required=True,
-		show_default=True,
 		)
 @click.option(
 		"-r",
