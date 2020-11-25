@@ -30,14 +30,10 @@ from typing import Union
 
 # 3rd party
 import click
-import dulwich.errors
 import github
 from apeye import URL
 from consolekit import click_command
-from consolekit.utils import abort
 from domdf_python_tools.secrets import Secret
-from dulwich.repo import Repo
-from github.GithubException import BadCredentialsException
 
 # this package
 from octocheese.core import copy_pypi_2_github
@@ -74,10 +70,22 @@ token_var = "GITHUB_TOKEN"
 		show_default=True,
 		)
 @click_command()
-def main(pypi_name: str, token: str, repo: Union[str, URL], no_self_promotion: bool = False):
+def main(
+		pypi_name: str,
+		token: str,
+		repo: Union[str, URL, None] = None,
+		no_self_promotion: bool = False,
+		):
 	"""
 	Copy PyPI Packages to GitHub Releases.
 	"""
+
+	# 3rd party
+	import click
+	import dulwich.errors
+	from consolekit.utils import abort
+	from dulwich.repo import Repo
+	from github.GithubException import BadCredentialsException
 
 	gh_token = Secret(token)
 
@@ -94,7 +102,9 @@ def main(pypi_name: str, token: str, repo: Union[str, URL], no_self_promotion: b
 		repo = repo.with_suffix('')
 
 	repo_name = repo.name
-	github_username = repo.parent.name or repo.domain.domain  # first case is for full url, second for github/hello_world
+
+	# first case is for full url, second for github/hello_world
+	github_username = repo.parent.name or repo.domain.domain
 
 	try:
 		run(gh_token, github_username, repo_name, pypi_name, self_promotion=not no_self_promotion)
