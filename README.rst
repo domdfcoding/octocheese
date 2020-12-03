@@ -28,7 +28,7 @@ This is a GitHub action, Python package and command line script that copies dist
 	  - |license| |language| |requires| |pre_commit|
 
 .. |docs| image:: https://img.shields.io/readthedocs/octocheese/latest?logo=read-the-docs
-	:target: https://octocheese.readthedocs.io/en/latest/?badge=latest
+	:target: https://octocheese.readthedocs.io/en/latest
 	:alt: Documentation Build Status
 
 .. |docs_check| image:: https://github.com/domdfcoding/octocheese/workflows/Docs%20Check/badge.svg
