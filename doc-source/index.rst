@@ -85,7 +85,7 @@ This is a GitHub action, Python package and command line script that copies dist
 	:alt: GitHub top language
 
 .. |commits-since| github-shield::
-	:commits-since: v0.2.0
+	:commits-since: v0.2.1
 	:alt: GitHub commits since tagged version
 
 .. |commits-latest| github-shield::

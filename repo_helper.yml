@@ -6,7 +6,7 @@ pypi_name: octocheese
 copyright_years: "2020"
 author: "Dominic Davis-Foster"
 email: "dominic@davis-foster.co.uk"
-version: "0.2.0"
+version: "0.2.1"
 username: "domdfcoding"
 license: 'LGPLv3+'
 short_desc: '🐙 🧀 – Copy PyPI Packages to GitHub Releases'
