@@ -12,7 +12,7 @@ from pytest_regressions.data_regression import DataRegressionFixture
 from pytest_regressions.file_regression import FileRegressionFixture
 
 # this package
-from octocheese.core import get_file_from_pypi, make_release_message
+import octocheese.core
 
 
 def test_get_file_from_pypi(data_regression: DataRegressionFixture):
@@ -24,7 +24,7 @@ def test_get_file_from_pypi(data_regression: DataRegressionFixture):
 				"/d301018af3f22bdbf34b624037e851561914c244a26add8278e4e7273578/octocheese-0.0.2.tar.gz"
 				)
 
-		assert get_file_from_pypi(url, tmpdir)
+		assert octocheese.core.get_file_from_pypi(url, tmpdir)
 
 		the_file = tmpdir / "octocheese-0.0.2.tar.gz"
 		assert the_file.is_file()
@@ -68,6 +68,7 @@ def test_get_file_from_pypi(data_regression: DataRegressionFixture):
 
 
 @pytest.mark.parametrize("self_promotion", [True, False])
-def test_make_release_message(file_regression: FileRegressionFixture, self_promotion):
-	release_message = make_release_message("octocat", "1.2.3", self_promotion=self_promotion)
+def test_make_release_message(file_regression: FileRegressionFixture, self_promotion, monkeypatch):
+	monkeypatch.setattr(octocheese.core, "today", lambda: "2020:12:04")
+	release_message = octocheese.core.make_release_message("octocat", "1.2.3", self_promotion=self_promotion)
 	check_file_regression(release_message, file_regression, extension=".md")

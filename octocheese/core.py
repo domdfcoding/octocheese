@@ -26,8 +26,10 @@ The main logic of octocheese.
 # stdlib
 import os
 import pathlib
+import re
 import tempfile
 import urllib.parse
+from datetime import date, datetime, timedelta
 from typing import List, Optional, Tuple, Union
 
 # 3rd party
@@ -64,10 +66,22 @@ def update_github_release(
 	current_assets = []
 
 	try:
-		release = repo.get_release(tag_name)
+		release: github.GitRelease.GitRelease = repo.get_release(tag_name)
 
-		# Update existing release
-		release.update_release(name=release_name, message=release_message)
+		# Check if and when last updated.
+		m = re.match("<!-- Octocheese: Last Updated (.*) -->", release.body)
+
+		should_update = True
+
+		if m:
+			last_updated = datetime.strptime(m.group(1), format="%Y:%m:%d")
+			if last_updated > (datetime.now() - timedelta(days=7)):
+				# Don't update release message if last touched more than 7 days ago.
+				should_update = False
+
+		if should_update:
+			# Update existing release
+			release.update_release(name=release_name, message=release_message)
 
 		# Get list of current assets for release
 		for asset in release.get_assets():
@@ -214,4 +228,11 @@ def make_release_message(name: str, version: Union[str, float], changelog: str =
 
 		buf.blankline(ensure_single=True)
 
+	buf.append(f"<!-- Octocheese: Last Updated {today()} -->")
+	buf.blankline(ensure_single=True)
+
 	return '\n'.join(buf)
+
+
+def today() -> str:
+	return date.today().strftime("%Y:%m:%d")
