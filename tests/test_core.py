@@ -69,6 +69,6 @@ def test_get_file_from_pypi(data_regression: DataRegressionFixture):
 
 @pytest.mark.parametrize("self_promotion", [True, False])
 def test_make_release_message(file_regression: FileRegressionFixture, self_promotion, monkeypatch):
-	monkeypatch.setattr(octocheese.core, "today", lambda: "2020:12:04")
+	monkeypatch.setattr(octocheese.core, "today", lambda: "2020-12-04")
 	release_message = octocheese.core.make_release_message("octocat", "1.2.3", self_promotion=self_promotion)
 	check_file_regression(release_message, file_regression, extension=".md")

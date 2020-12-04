@@ -74,7 +74,7 @@ def update_github_release(
 		should_update = True
 
 		if m:
-			last_updated = datetime.strptime(m.group(1), format="%Y:%m:%d")
+			last_updated = datetime.strptime(m.group(1), format="%Y-%m-%d")
 			if last_updated > (datetime.now() - timedelta(days=7)):
 				# Don't update release message if last touched more than 7 days ago.
 				should_update = False
@@ -235,4 +235,4 @@ def make_release_message(name: str, version: Union[str, float], changelog: str =
 
 
 def today() -> str:
-	return date.today().strftime("%Y:%m:%d")
+	return date.today().strftime("%Y-%m-%d")
