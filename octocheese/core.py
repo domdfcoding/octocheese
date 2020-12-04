@@ -30,7 +30,7 @@ import re
 import tempfile
 import urllib.parse
 from datetime import date, datetime, timedelta
-from typing import List, Optional, Tuple, Union
+from typing import Iterable, Optional, Union
 
 # 3rd party
 import github
@@ -51,16 +51,23 @@ def update_github_release(
 		tag_name: str,
 		release_name: str,
 		release_message: str,
-		) -> Tuple[github.GitRelease.GitRelease, List[str]]:
+		file_urls: Iterable[str] = ()
+		) -> github.GitRelease.GitRelease:
 	"""
-	Update the given release on GitHub with the new name and message.
+	Update the given release on GitHub with the new name, message, and files.
 
 	:param repo:
 	:param tag_name:
 	:param release_name:
 	:param release_message:
+	:param file_urls: The files to download from PyPI and add to the release.
 
 	:return: The release, and a list of URLs for the current assets.
+
+	.. versionchanged:: 0.3.0
+
+		* Added the optional ``file_urls`` parameter.
+		* Now returns only the :class:`github.GitRelease.GitRelease` object.
 	"""
 
 	current_assets = []
@@ -71,28 +78,42 @@ def update_github_release(
 		# Check if and when last updated.
 		m = re.match("<!-- Octocheese: Last Updated (.*) -->", release.body)
 
-		should_update = True
-
 		if m:
 			last_updated = datetime.strptime(m.group(1), format="%Y-%m-%d")
 			if last_updated > (datetime.now() - timedelta(days=7)):
 				# Don't update release message if last touched more than 7 days ago.
-				should_update = False
+				return release
 
-		if should_update:
-			# Update existing release
-			release.update_release(name=release_name, message=release_message)
+		# Update existing release
+		release.update_release(name=release_name, message=release_message)
 
 		# Get list of current assets for release
 		for asset in release.get_assets():
 			current_assets.append(asset.name)
 
 	except github.UnknownObjectException:
-
 		# Create the release
 		release = repo.create_git_release(tag=tag_name, name=release_name, message=release_message)
 
-	return release, current_assets
+	if not file_urls:
+		return release
+
+	with tempfile.TemporaryDirectory() as tmpdir:
+
+		for pypi_url in file_urls:
+			filename = pathlib.PurePosixPath(urllib.parse.urlparse(pypi_url).path).name
+
+			if filename in current_assets:
+				warning(f"File '{filename}' already exists for release '{tag_name}'. Skipping.")
+				continue
+
+			if get_file_from_pypi(pypi_url, pathlib.Path(tmpdir)):
+				success(f"Copying {filename} from PyPI to GitHub Releases.")
+				release.upload_asset(os.path.join(tmpdir, filename))
+			else:
+				continue
+
+	return release
 
 
 def get_file_from_pypi(url: str, tmpdir: pathlib.Path) -> bool:
@@ -154,35 +175,21 @@ def copy_pypi_2_github(
 
 	repo = g.get_repo(f"{github_username}/{repo_name}")
 
-	with tempfile.TemporaryDirectory() as tmpdir:
-		for tag in repo.get_tags():
-			version = tag.name.lstrip('v')
-			if version not in pypi_releases:
-				warning(f"No PyPI release found for tag '{tag.name}'. Skipping.")
-				continue
+	for tag in repo.get_tags():
+		version = tag.name.lstrip('v')
+		if version not in pypi_releases:
+			warning(f"No PyPI release found for tag '{tag.name}'. Skipping.")
+			continue
 
-			print(f"Processing release for {version}")
+		print(f"Processing release for {version}")
 
-			release, current_assets = update_github_release(
-				repo=repo,
-				tag_name=tag.name,
-				release_name=f"Version {version}",
-				release_message=make_release_message(pypi_name, version, changelog, self_promotion=self_promotion),
-				)
-
-			# Copy the files from PyPI
-			for pypi_url in pypi_releases[version]:
-				filename = pathlib.PurePosixPath(urllib.parse.urlparse(pypi_url).path).name
-
-				if filename in current_assets:
-					warning(f"File '{filename}' already exists for release '{tag.name}'. " f"Skipping.")
-					continue
-
-				if get_file_from_pypi(pypi_url, pathlib.Path(tmpdir)):
-					success(f"Copying {filename} from PyPi to GitHub Releases.")
-					release.upload_asset(os.path.join(tmpdir, filename))
-				else:
-					continue
+		update_github_release(
+			repo=repo,
+			tag_name=tag.name,
+			release_name=f"Version {version}",
+			release_message=make_release_message(pypi_name, version, changelog, self_promotion=self_promotion),
+			file_urls=pypi_releases[version],
+			)
 
 
 def make_release_message(name: str, version: Union[str, float], changelog: str = '', self_promotion=True) -> str:
