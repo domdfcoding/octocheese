@@ -184,12 +184,12 @@ def copy_pypi_2_github(
 		print(f"Processing release for {version}")
 
 		update_github_release(
-			repo=repo,
-			tag_name=tag.name,
-			release_name=f"Version {version}",
-			release_message=make_release_message(pypi_name, version, changelog, self_promotion=self_promotion),
-			file_urls=pypi_releases[version],
-			)
+				repo=repo,
+				tag_name=tag.name,
+				release_name=f"Version {version}",
+				release_message=make_release_message(pypi_name, version, changelog, self_promotion=self_promotion),
+				file_urls=pypi_releases[version],
+				)
 
 
 def make_release_message(name: str, version: Union[str, float], changelog: str = '', self_promotion=True) -> str:
@@ -224,14 +224,24 @@ def make_release_message(name: str, version: Union[str, float], changelog: str =
 
 		buf.append("Powered by OctoCheese\\")
 
-		buf.append(
-				" | ".join((
-						"[📝 docs](https://octocheese.readthedocs.io)",
-						"[:octocat: repo](https://github.com/domdfcoding/octocheese)",
-						"[🙋 issues](https://github.com/domdfcoding/octocheese/issues)",
-						"[🏪 marketplace](https://github.com/marketplace/octocheese)",
-						))
-				)
+		if TODAY.month == 12:
+			buf.append(
+					" | ".join((
+							"[🎄 docs](https://octocheese.readthedocs.io)",
+							"[☃️ repo](https://github.com/domdfcoding/octocheese)",
+							"[🎅 issues](https://github.com/domdfcoding/octocheese/issues)",
+							"[🎁 marketplace](https://github.com/marketplace/octocheese)",
+							))
+					)
+		else:
+			buf.append(
+					" | ".join((
+							"[📝 docs](https://octocheese.readthedocs.io)",
+							"[:octocat: repo](https://github.com/domdfcoding/octocheese)",
+							"[🙋 issues](https://github.com/domdfcoding/octocheese/issues)",
+							"[🏪 marketplace](https://github.com/marketplace/octocheese)",
+							))
+					)
 
 		buf.blankline(ensure_single=True)
 
@@ -241,5 +251,9 @@ def make_release_message(name: str, version: Union[str, float], changelog: str =
 	return '\n'.join(buf)
 
 
+#: Under normal circumstances returns :meth:`datetime.date.today`.
+TODAY: date = date.today()
+
+
 def today() -> str:
-	return date.today().strftime("%Y-%m-%d")
+	return TODAY.strftime("%Y-%m-%d")
