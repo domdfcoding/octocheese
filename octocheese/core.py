@@ -224,24 +224,24 @@ def make_release_message(name: str, version: Union[str, float], changelog: str =
 
 		buf.append("Powered by OctoCheese\\")
 
-		# if TODAY.month == 12:
-		# 	buf.append(
-		# 			" | ".join((
-		# 					"[🎄 docs](https://octocheese.readthedocs.io)",
-		# 					"[☃️ repo](https://github.com/domdfcoding/octocheese)",
-		# 					"[🎅 issues](https://github.com/domdfcoding/octocheese/issues)",
-		# 					"[🎁 marketplace](https://github.com/marketplace/octocheese)",
-		# 					))
-		# 			)
-		# else:
-		buf.append(
-				" | ".join((
-						"[📝 docs](https://octocheese.readthedocs.io)",
-						"[:octocat: repo](https://github.com/domdfcoding/octocheese)",
-						"[🙋 issues](https://github.com/domdfcoding/octocheese/issues)",
-						"[🏪 marketplace](https://github.com/marketplace/octocheese)",
-						))
-				)
+		if TODAY.month == 12:
+			buf.append(
+					" | ".join((
+							"[🎄 docs](https://octocheese.readthedocs.io)",
+							"[☃️ repo](https://github.com/domdfcoding/octocheese)",
+							"[🎅 issues](https://github.com/domdfcoding/octocheese/issues)",
+							"[🎁 marketplace](https://github.com/marketplace/octocheese)",
+							))
+					)
+		else:
+			buf.append(
+					" | ".join((
+							"[📝 docs](https://octocheese.readthedocs.io)",
+							"[:octocat: repo](https://github.com/domdfcoding/octocheese)",
+							"[🙋 issues](https://github.com/domdfcoding/octocheese/issues)",
+							"[🏪 marketplace](https://github.com/marketplace/octocheese)",
+							))
+					)
 
 		buf.blankline(ensure_single=True)
 
