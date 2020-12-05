@@ -76,7 +76,7 @@ def update_github_release(
 		release: github.GitRelease.GitRelease = repo.get_release(tag_name)
 
 		# Check if and when last updated.
-		m = re.match("<!-- Octocheese: Last Updated (.*) -->", release.body)
+		m = re.match(".*<!-- Octocheese: Last Updated (.*) -->.*", release.body, re.DOTALL)
 
 		if m:
 			last_updated = datetime.strptime(m.group(1), format="%Y-%m-%d")
