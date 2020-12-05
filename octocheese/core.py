@@ -80,7 +80,7 @@ def update_github_release(
 
 		if m:
 			last_updated = datetime.strptime(m.group(1), format="%Y-%m-%d")
-			if last_updated > (datetime.now() - timedelta(days=7)):
+			if (datetime.now() - timedelta(days=7)) < last_updated >= datetime(year=2020, month=12, day=6):
 				# Don't update release message if last touched more than 7 days ago.
 				return release
 
@@ -224,24 +224,24 @@ def make_release_message(name: str, version: Union[str, float], changelog: str =
 
 		buf.append("Powered by OctoCheese\\")
 
-		# if TODAY.month == 12:
-		# 	buf.append(
-		# 			" | ".join((
-		# 					"[🎄 docs](https://octocheese.readthedocs.io)",
-		# 					"[☃️ repo](https://github.com/domdfcoding/octocheese)",
-		# 					"[🎅 issues](https://github.com/domdfcoding/octocheese/issues)",
-		# 					"[🎁 marketplace](https://github.com/marketplace/octocheese)",
-		# 					))
-		# 			)
-		# else:
-		buf.append(
-				" | ".join((
-						"[📝 docs](https://octocheese.readthedocs.io)",
-						"[:octocat: repo](https://github.com/domdfcoding/octocheese)",
-						"[🙋 issues](https://github.com/domdfcoding/octocheese/issues)",
-						"[🏪 marketplace](https://github.com/marketplace/octocheese)",
-						))
-				)
+		if TODAY.month == 12:
+			buf.append(
+					" | ".join((
+							"[🎄 docs](https://octocheese.readthedocs.io)",
+							"[☃️ repo](https://github.com/domdfcoding/octocheese)",
+							"[🎅 issues](https://github.com/domdfcoding/octocheese/issues)",
+							"[🎁 marketplace](https://github.com/marketplace/octocheese)",
+							))
+					)
+		else:
+			buf.append(
+					" | ".join((
+							"[📝 docs](https://octocheese.readthedocs.io)",
+							"[:octocat: repo](https://github.com/domdfcoding/octocheese)",
+							"[🙋 issues](https://github.com/domdfcoding/octocheese/issues)",
+							"[🏪 marketplace](https://github.com/marketplace/octocheese)",
+							))
+					)
 
 		buf.blankline(ensure_single=True)
 
