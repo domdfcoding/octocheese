@@ -80,7 +80,7 @@ def update_github_release(
 
 		if m:
 			last_updated = datetime.strptime(m.group(1), "%Y-%m-%d")
-			if (datetime.now() - timedelta(days=7)) < last_updated:
+			if last_updated < (datetime.now() - timedelta(days=7)):
 				# Don't update release message if last touched more than 7 days ago.
 				return release
 			# elif last_updated < datetime(year=2020, month=12, day=6):
