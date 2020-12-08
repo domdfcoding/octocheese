@@ -242,10 +242,13 @@ def today() -> str:
 	return TODAY.strftime("%Y-%m-%d")
 
 
+_FooterType = Literal["marketplace", "app"]
+
+
 def make_footer_links(
 		owner: str,
 		name: str,
-		type: Literal["marketplace", "app"] = "marketplace",  # noqa: A002
+		type: _FooterType = "marketplace",  # noqa: A002  # pylint: disable=redefined-builtin
 		) -> str:
 	"""
 	Create the markdown footer links.
