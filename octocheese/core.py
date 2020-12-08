@@ -39,6 +39,7 @@ import github.Repository
 import requests
 from domdf_python_tools.stringlist import StringList
 from shippinglabel.pypi import get_pypi_releases
+from typing_extensions import Literal
 
 # this package
 from octocheese.colours import error, success, warning
@@ -223,28 +224,8 @@ def make_release_message(name: str, version: Union[str, float], changelog: str =
 	if self_promotion:
 		buf.append("---")
 		buf.blankline(ensure_single=True)
-
 		buf.append("Powered by OctoCheese\\")
-
-		if TODAY.month == 12:
-			buf.append(
-					" | ".join((
-							"[🎄 docs](https://octocheese.readthedocs.io)",
-							"[☃️ repo](https://github.com/domdfcoding/octocheese)",
-							"[🎅 issues](https://github.com/domdfcoding/octocheese/issues)",
-							"[🎁 marketplace](https://github.com/marketplace/octocheese)",
-							))
-					)
-		else:
-			buf.append(
-					" | ".join((
-							"[📝 docs](https://octocheese.readthedocs.io)",
-							"[:octocat: repo](https://github.com/domdfcoding/octocheese)",
-							"[🙋 issues](https://github.com/domdfcoding/octocheese/issues)",
-							"[🏪 marketplace](https://github.com/marketplace/octocheese)",
-							))
-					)
-
+		buf.append(make_footer_links("domdfcoding", "octocheese"))
 		buf.blankline(ensure_single=True)
 
 	buf.append(f"<!-- Octocheese: Last Updated {today()} -->")
@@ -259,3 +240,35 @@ TODAY: date = date.today()
 
 def today() -> str:
 	return TODAY.strftime("%Y-%m-%d")
+
+
+def make_footer_links(
+		owner: str,
+		name: str,
+		type: Literal["marketplace", "app"] = "marketplace",  # noqa: A002
+		) -> str:
+	"""
+	Create the markdown footer links.
+
+	:param owner: The owner of the repository.
+	:param name: The name of the repository.
+	:param type:
+	"""
+
+	if TODAY.month == 12:  # pragma: no cover
+		docs_emoji = '🎄'
+		repo_emoji = '☃'
+		issues_emoji = '🎅'
+		marketplace_emoji = '🎁'
+	else:  # pragma: no cover
+		docs_emoji = '📝'
+		repo_emoji = ":octocat:"
+		issues_emoji = '🙋'
+		marketplace_emoji = '🏪'
+
+	return " | ".join((
+			f"[{docs_emoji} docs](https://{name}.readthedocs.io)",
+			f"[{repo_emoji} repo](https://github.com/{owner}/{name})",
+			f"[{issues_emoji} issues](https://github.com/{owner}/{name}/issues)",
+			f"[{marketplace_emoji} marketplace](https://github.com/{type}/{name})",
+			))

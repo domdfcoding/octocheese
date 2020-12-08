@@ -6,3 +6,4 @@ dulwich!=0.20.7,!=0.20.8,>=0.20.5
 pygithub!=1.54,>=1.51
 requests>=2.24.0
 shippinglabel>=0.3.0
+typing-extensions>=3.7.4.3
