@@ -110,7 +110,7 @@ def main(
 		run(gh_token, github_username, repo_name, pypi_name, self_promotion=not no_self_promotion)
 	except BadCredentialsException:
 		raise click.UsageError("Invalid credentials for GitHub REST API.")
-	except Exception as e:
+	except Exception as e:  # pragma: no cover
 		raise abort(f"An error occurred: {e}")
 
 
