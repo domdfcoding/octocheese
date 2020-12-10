@@ -28,7 +28,6 @@ import os
 import pathlib
 import re
 import tempfile
-import urllib.parse
 from datetime import date, datetime, timedelta
 from typing import Iterable, Optional, Union
 
@@ -36,15 +35,21 @@ from typing import Iterable, Optional, Union
 import github
 import github.GitRelease
 import github.Repository
-import requests
+from apeye import URL
 from domdf_python_tools.stringlist import StringList
-from shippinglabel.pypi import get_pypi_releases
-from typing_extensions import Literal
+from shippinglabel.checksum import check_sha256_hash
+from shippinglabel.pypi import get_file_from_pypi, get_releases_with_digests
+from typing_extensions import Literal, TypedDict
 
 # this package
 from octocheese.colours import error, success, warning
 
-__all__ = ["update_github_release", "get_file_from_pypi", "copy_pypi_2_github", "make_release_message"]
+__all__ = ["update_github_release", "copy_pypi_2_github", "make_release_message"]
+
+
+class FileURL(TypedDict):
+	url: str
+	digest: str
 
 
 def update_github_release(
@@ -52,7 +57,7 @@ def update_github_release(
 		tag_name: str,
 		release_name: str,
 		release_message: str,
-		file_urls: Iterable[str] = ()
+		file_urls: Union[Iterable[str], Iterable[FileURL]] = ()
 		) -> github.GitRelease.GitRelease:
 	"""
 	Update the given release on GitHub with the new name, message, and files.
@@ -62,6 +67,7 @@ def update_github_release(
 	:param release_name:
 	:param release_message:
 	:param file_urls: The files to download from PyPI and add to the release.
+		Either the files URLs themselves, or mappings giving the URL and its sha256 checksum.
 
 	:return: The release, and a list of URLs for the current assets.
 
@@ -72,6 +78,8 @@ def update_github_release(
 	"""
 
 	current_assets = []
+
+	# TODO: List checksums in release message.
 
 	try:
 		release: github.GitRelease.GitRelease = repo.get_release(tag_name)
@@ -104,41 +112,32 @@ def update_github_release(
 	with tempfile.TemporaryDirectory() as tmpdir:
 
 		for pypi_url in file_urls:
-			filename = pathlib.PurePosixPath(urllib.parse.urlparse(pypi_url).path).name
+			if isinstance(pypi_url, dict):
+				checksum: Optional[str] = pypi_url["digest"]
+				pypi_url = pypi_url["url"]
+			else:
+				checksum = None
+
+			filename = URL(pypi_url).name
 
 			if filename in current_assets:
 				warning(f"File '{filename}' already exists for release '{tag_name}'. Skipping.")
 				continue
 
-			if get_file_from_pypi(pypi_url, pathlib.Path(tmpdir)):
+			try:
+				get_file_from_pypi(pypi_url, pathlib.Path(tmpdir))
+
+				if checksum is not None and not check_sha256_hash(pathlib.Path(tmpdir) / filename, checksum):
+					raise ValueError(f"The checksums for {filename} do not match!")
+
 				success(f"Copying {filename} from PyPI to GitHub Releases.")
 				release.upload_asset(os.path.join(tmpdir, filename))
-			else:
+
+			except OSError as e:
+				error(f"{e} Skipping.")
 				continue
 
 	return release
-
-
-def get_file_from_pypi(url: str, tmpdir: pathlib.Path) -> bool:
-	"""
-	Download the file with the given URL into the given (temporary) directory.
-
-	:param url: The URL to download the file from.
-	:param tmpdir: The (temporary) directory to store the downloaded file in.
-
-	:return: Whether the file was downloaded successfully.
-	"""
-
-	filename = pathlib.PurePosixPath(urllib.parse.urlparse(url).path).name
-
-	r = requests.get(url)
-	if r.status_code != 200:  # pragma: no cover
-		error(f"Unable to download '{filename}' from PyPI. Skipping.")
-		return False
-
-	(tmpdir / filename).write_bytes(r.content)
-
-	return True
 
 
 def copy_pypi_2_github(
@@ -174,7 +173,7 @@ def copy_pypi_2_github(
 
 	pypi_name = str(pypi_name)
 
-	pypi_releases = get_pypi_releases(pypi_name)
+	pypi_releases = get_releases_with_digests(pypi_name)
 
 	repo = g.get_repo(f"{github_username}/{repo_name}")
 

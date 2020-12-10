@@ -11,6 +11,7 @@ import pytest
 from domdf_python_tools.testing import check_file_regression
 from pytest_regressions.data_regression import DataRegressionFixture
 from pytest_regressions.file_regression import FileRegressionFixture
+from shippinglabel.pypi import get_file_from_pypi
 
 # this package
 import octocheese.core
@@ -25,7 +26,7 @@ def test_get_file_from_pypi(data_regression: DataRegressionFixture):
 				"/d301018af3f22bdbf34b624037e851561914c244a26add8278e4e7273578/octocheese-0.0.2.tar.gz"
 				)
 
-		assert octocheese.core.get_file_from_pypi(url, tmpdir)
+		get_file_from_pypi(url, tmpdir)
 
 		the_file = tmpdir / "octocheese-0.0.2.tar.gz"
 		assert the_file.is_file()
