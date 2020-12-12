@@ -38,18 +38,13 @@ import github.Repository
 from apeye import URL
 from domdf_python_tools.stringlist import StringList
 from shippinglabel.checksum import check_sha256_hash
-from shippinglabel.pypi import get_file_from_pypi, get_releases_with_digests
-from typing_extensions import Literal, TypedDict
+from shippinglabel.pypi import FileURL, get_file_from_pypi, get_releases_with_digests
+from typing_extensions import Literal
 
 # this package
 from octocheese.colours import error, success, warning
 
 __all__ = ["update_github_release", "copy_pypi_2_github", "make_release_message"]
-
-
-class FileURL(TypedDict):
-	url: str
-	digest: str
 
 
 def update_github_release(
