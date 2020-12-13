@@ -24,40 +24,37 @@ Functions for printing coloured text.
 #
 
 # 3rd party
-from domdf_python_tools.terminal_colours import Fore
+from consolekit.terminal_colours import Fore
 from domdf_python_tools.utils import stderr_writer
 
 __all__ = ["success", "warning", "error"]
 
 
-def success(text) -> None:
+def success(text: str) -> None:
 	"""
 	Prints the given text in green to stdout.
 
 	:param text: The text to print.
-	:type text:
 	"""
 
 	print(Fore.GREEN(text))
 
 
-def warning(text) -> None:
+def warning(text: str) -> None:
 	"""
 	Prints the given text in yellow to stderr.
 
 	:param text: The text to print.
-	:type text:
 	"""
 
 	stderr_writer(Fore.YELLOW(text))
 
 
-def error(text) -> None:
+def error(text: str) -> None:
 	"""
 	Prints the given text in red to stderr.
 
 	:param text: The text to print.
-	:type text:
 	"""
 
 	stderr_writer(Fore.RED(text))

@@ -119,7 +119,7 @@ class CLIArgument(GenericObject):
 			result = metadata["metavar"]
 		elif metadata["choices"] is not None:
 			choice_strs = [str(choice) for choice in metadata["choices"]]
-			result = '{%s}' % ','.join(choice_strs)
+			result = f"{{{','.join(choice_strs)}}}"
 		else:
 			result = ''
 
@@ -137,22 +137,22 @@ class CLIArgument(GenericObject):
 		nargs = self.metadata["nargs"]
 
 		if nargs is None:
-			result = ' %s' % get_metavar(1)
+			result = f" {get_metavar(1)}"
 		elif nargs == OPTIONAL:
-			result = ' [%s]' % get_metavar(1)
+			result = f" [{get_metavar(1)}]"
 		elif nargs == ZERO_OR_MORE:
-			result = ' [%s [%s ...]]' % get_metavar(2)
+			result = " [{} [{} ...]]".format(get_metavar(2))
 		elif nargs == ONE_OR_MORE:
-			result = ' %s [%s ...]' % get_metavar(2)
+			result = " {} [{} ...]".format(get_metavar(2))
 		elif nargs == REMAINDER:
-			result = ' ...'
+			result = " ..."
 		elif nargs == PARSER:
-			result = ' %s ...' % get_metavar(1)
+			result = f" {get_metavar(1)} ..."
 		elif nargs == SUPPRESS:
 			result = ''
 		else:
 			try:
-				formats = [' %s' for _ in range(nargs)]
+				formats = [" %s" for _ in range(nargs)]
 			except TypeError:
 				raise ValueError("invalid nargs value") from None
 			result = ' '.join(formats) % get_metavar(nargs)
@@ -172,16 +172,16 @@ class CLIArgument(GenericObject):
 
 		if "type" in self.options:
 			content.append(f"| **Type:** {self.options['type']}")
-			self.metadata["type"] = self.options['type']
+			self.metadata["type"] = self.options["type"]
 
 		if "required" in self.options:
-			required = strtobool(self.options['required'])
+			required = strtobool(self.options["required"])
 			content.append(f"| **Required:** ``{required}``")
 			self.metadata["required"] = required
 
 		if "default" in self.options:
 			content.append(f"| **Default:** {self.options['default']}")
-			self.metadata["default"] = self.options['default']
+			self.metadata["default"] = self.options["default"]
 
 		self.metadata["metavar"] = self.options.get("metavar", '').upper()
 		self.metadata["choices"] = re.split(r"[, ]", self.options.get("metavar", ''))

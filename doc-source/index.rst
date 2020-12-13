@@ -19,7 +19,7 @@ This is a GitHub action, Python package and command line script that copies dist
 	* - Docs
 	  - |docs| |docs_check|
 	* - Tests
-	  - |travis| |actions_windows| |actions_macos| |coveralls| |codefactor|
+	  - |actions_linux| |actions_windows| |actions_macos| |coveralls| |codefactor| |pre_commit_ci|
 	* - PyPI
 	  - |pypi-version| |supported-versions| |supported-implementations| |wheel|
 	* - Activity
@@ -35,17 +35,17 @@ This is a GitHub action, Python package and command line script that copies dist
 	:workflow: Docs Check
 	:alt: Docs Check Status
 
-.. |travis| travis-shield::
-	:travis-site: com
-	:alt: Travis Build Status
+.. |actions_linux| actions-shield::
+	:workflow: Linux Tests
+	:alt: Linux Test Status
 
 .. |actions_windows| actions-shield::
 	:workflow: Windows Tests
-	:alt: Windows Tests Status
+	:alt: Windows Test Status
 
 .. |actions_macos| actions-shield::
 	:workflow: macOS Tests
-	:alt: macOS Tests Status
+	:alt: macOS Test Status
 
 .. |requires| requires-io-shield::
 	:alt: Requirements Status
@@ -85,7 +85,7 @@ This is a GitHub action, Python package and command line script that copies dist
 	:alt: GitHub top language
 
 .. |commits-since| github-shield::
-	:commits-since: v0.0.2
+	:commits-since: v0.2.1
 	:alt: GitHub commits since tagged version
 
 .. |commits-latest| github-shield::
@@ -97,6 +97,9 @@ This is a GitHub action, Python package and command line script that copies dist
 
 .. |pre_commit| pre-commit-shield::
 	:alt: pre-commit
+
+.. |pre_commit_ci| pre-commit-ci-shield::
+	:alt: pre-commit.ci status
 
 .. end shields
 

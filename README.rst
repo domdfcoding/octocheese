@@ -19,7 +19,7 @@ This is a GitHub action, Python package and command line script that copies dist
 	* - Docs
 	  - |docs| |docs_check|
 	* - Tests
-	  - |travis| |actions_windows| |actions_macos| |coveralls| |codefactor|
+	  - |actions_linux| |actions_windows| |actions_macos| |coveralls| |codefactor| |pre_commit_ci|
 	* - PyPI
 	  - |pypi-version| |supported-versions| |supported-implementations| |wheel|
 	* - Activity
@@ -28,24 +28,24 @@ This is a GitHub action, Python package and command line script that copies dist
 	  - |license| |language| |requires| |pre_commit|
 
 .. |docs| image:: https://img.shields.io/readthedocs/octocheese/latest?logo=read-the-docs
-	:target: https://octocheese.readthedocs.io/en/latest/?badge=latest
+	:target: https://octocheese.readthedocs.io/en/latest
 	:alt: Documentation Build Status
 
 .. |docs_check| image:: https://github.com/domdfcoding/octocheese/workflows/Docs%20Check/badge.svg
 	:target: https://github.com/domdfcoding/octocheese/actions?query=workflow%3A%22Docs+Check%22
 	:alt: Docs Check Status
 
-.. |travis| image:: https://img.shields.io/travis/com/domdfcoding/octocheese/master?logo=travis
-	:target: https://travis-ci.com/domdfcoding/octocheese
-	:alt: Travis Build Status
+.. |actions_linux| image:: https://github.com/domdfcoding/octocheese/workflows/Linux%20Tests/badge.svg
+	:target: https://github.com/domdfcoding/octocheese/actions?query=workflow%3A%22Linux+Tests%22
+	:alt: Linux Test Status
 
 .. |actions_windows| image:: https://github.com/domdfcoding/octocheese/workflows/Windows%20Tests/badge.svg
 	:target: https://github.com/domdfcoding/octocheese/actions?query=workflow%3A%22Windows+Tests%22
-	:alt: Windows Tests Status
+	:alt: Windows Test Status
 
 .. |actions_macos| image:: https://github.com/domdfcoding/octocheese/workflows/macOS%20Tests/badge.svg
 	:target: https://github.com/domdfcoding/octocheese/actions?query=workflow%3A%22macOS+Tests%22
-	:alt: macOS Tests Status
+	:alt: macOS Test Status
 
 .. |requires| image:: https://requires.io/github/domdfcoding/octocheese/requirements.svg?branch=master
 	:target: https://requires.io/github/domdfcoding/octocheese/requirements/?branch=master
@@ -82,7 +82,7 @@ This is a GitHub action, Python package and command line script that copies dist
 .. |language| image:: https://img.shields.io/github/languages/top/domdfcoding/octocheese
 	:alt: GitHub top language
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/domdfcoding/octocheese/v0.0.2
+.. |commits-since| image:: https://img.shields.io/github/commits-since/domdfcoding/octocheese/v0.2.1
 	:target: https://github.com/domdfcoding/octocheese/pulse
 	:alt: GitHub commits since tagged version
 
@@ -96,6 +96,10 @@ This is a GitHub action, Python package and command line script that copies dist
 .. |pre_commit| image:: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white
 	:target: https://github.com/pre-commit/pre-commit
 	:alt: pre-commit
+
+.. |pre_commit_ci| image:: https://results.pre-commit.ci/badge/github/domdfcoding/octocheese/master.svg
+	:target: https://results.pre-commit.ci/latest/github/domdfcoding/octocheese/master
+	:alt: pre-commit.ci status
 
 .. end shields
 
