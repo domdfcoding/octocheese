@@ -31,8 +31,9 @@ from typing import Union
 # 3rd party
 import click
 from apeye import URL
+from click import Context, Option
 from consolekit import click_command
-from consolekit.options import auto_default_option, flag_option
+from consolekit.options import auto_default_option, flag_option, version_option
 from domdf_python_tools.secrets import Secret
 
 __all__ = ["main", "run", "token_var"]
@@ -40,7 +41,36 @@ __all__ = ["main", "run", "token_var"]
 token_var = "GITHUB_TOKEN"
 
 
-@click.argument("pypi_name", type=click.STRING)
+def _version_callback(ctx: Context, param: Option, value: int):
+	# this package
+	from octocheese import __version__
+
+	if not value or ctx.resilient_parsing:
+		return
+
+	print(f"octocheese version {__version__}")
+	sys.exit(0)
+
+
+@version_option(_version_callback)
+@flag_option(
+		"--no-self-promotion",
+		help="Don't show information about OctoCheese at the bottom of the release message.",
+		)
+@flag_option("-T", "--traceback", help="Show the full traceback on error.")
+@auto_default_option(
+		"-n",
+		"--max-tags",
+		type=click.INT,
+		help="The maximum number of tags to process, starting with the most recent.",
+		show_default=True,
+		)
+@auto_default_option(
+		"-r",
+		"--repo",
+		type=click.STRING,
+		help="The repository name (in the format <username>/<repository>) or the complete GitHub URL.",
+		)
 @click.option(
 		"-t",
 		"--token",
@@ -52,24 +82,7 @@ token_var = "GITHUB_TOKEN"
 		envvar=token_var,
 		required=True,
 		)
-@auto_default_option(
-		"-r",
-		"--repo",
-		type=click.STRING,
-		help="The repository name (in the format <username>/<repository>) or the complete GitHub URL.",
-		)
-@flag_option(
-		"--no-self-promotion",
-		help="Don't show information about OctoCheese at the bottom of the release message.",
-		)
-@auto_default_option(
-		"-n",
-		"--max-tags",
-		type=click.INT,
-		help="The maximum number of tags to process, starting with the most recent.",
-		show_default=True,
-		)
-@flag_option("-T", "--traceback", help="Show the full traceback on error.")
+@click.argument("pypi_name", type=click.STRING)
 @click_command()
 def main(
 		pypi_name: str,

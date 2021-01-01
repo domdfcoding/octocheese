@@ -9,10 +9,13 @@ from domdf_python_tools.testing import check_file_regression
 from pytest_regressions.file_regression import FileRegressionFixture
 
 # this package
+import octocheese
 from octocheese.__main__ import main
 
 
 def run_test(file_regression: FileRegressionFixture, exit_code: int, *args: str, extension: str = ".txt"):
+	__tracebackhide__ = False
+
 	with tempfile.TemporaryDirectory() as tmpdir:
 		with in_directory(tmpdir):
 			runner = CliRunner()
@@ -45,6 +48,11 @@ def test_main_no_args(file_regression: FileRegressionFixture):
 @pytest.mark.parametrize("args", [["-h"], ["--help"]])
 def test_main_help(args, file_regression: FileRegressionFixture):
 	run_test(file_regression, 0, *args)
+
+
+def test_main_version(file_regression: FileRegressionFixture, monkeypatch):
+	monkeypatch.setattr(octocheese, "__version__", "0.2.1")
+	run_test(file_regression, 0, "--version")
 
 
 def test_main_missing_token(file_regression: FileRegressionFixture):
