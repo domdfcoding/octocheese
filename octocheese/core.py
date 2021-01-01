@@ -5,7 +5,7 @@
 The main logic of octocheese.
 """
 #
-#  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#  Copyright (c) 2020-2021 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU Lesser General Public License as published by
@@ -327,7 +327,7 @@ class UTCDateTime(datetime):  # pragma: no cover
 		return d.astimezone(timezone.utc)
 
 	@classmethod
-	def strptime(cls, date_string, format):
+	def strptime(cls, date_string, format):  # noqa: A002  # pylint: disable=redefined-builtin
 		return super().strptime(date_string, format).astimezone(timezone.utc)
 
 	@classmethod
