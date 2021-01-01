@@ -9,6 +9,11 @@ inputs:
     description:
       The name of the project on PyPI.
     required: true
+  max_tags:
+    description:
+      The maximum number of tags to process, starting with the most recent. Set to -1 to process all tags.
+    default: "-1"
+    required: false
 runs:
   using: 'docker'
   image: 'Dockerfile'

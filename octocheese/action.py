@@ -43,7 +43,8 @@ if __name__ == "__main__":
 	gh_token = Secret(os.environ["GITHUB_TOKEN"])
 	github_username, repo_name = os.environ["GITHUB_REPOSITORY"].split('/')
 	pypi_name = os.environ["INPUT_PYPI_NAME"]
+	max_tags = int(os.environ.get("INPUT_MAX_TAGS", -1))
 
-	run(gh_token, github_username, repo_name, pypi_name)
+	run(gh_token, github_username, repo_name, pypi_name, max_tags=max_tags)
 
 	sys.exit(0)
