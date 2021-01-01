@@ -30,13 +30,10 @@ from typing import Union
 
 # 3rd party
 import click
-import github
 from apeye import URL
 from consolekit import click_command
+from consolekit.options import auto_default_option, flag_option
 from domdf_python_tools.secrets import Secret
-
-# this package
-from octocheese.core import copy_pypi_2_github
 
 __all__ = ["main", "run", "token_var"]
 
@@ -62,12 +59,22 @@ token_var = "GITHUB_TOKEN"
 		default=None,
 		help="The repository name (in the format <username>/<repository>) or the complete GitHub URL.",
 		)
-@click.option(
+@flag_option(
 		"--no-self-promotion",
-		is_flag=True,
-		default=False,
 		help="Don't show information about OctoCheese at the bottom of the release message.",
+		)
+@auto_default_option(
+		"-n",
+		"--max-tags",
+		type=click.INT,
+		default=-1,
+		help="The maximum number of tags to process, starting with the most recent.",
 		show_default=True,
+		)
+@flag_option(
+		"-T",
+		"--traceback",
+		help="Show the full traceback on error.",
 		)
 @click_command()
 def main(
@@ -75,6 +82,8 @@ def main(
 		token: str,
 		repo: Union[str, URL, None] = None,
 		no_self_promotion: bool = False,
+		max_tags: int = -1,
+		traceback: bool = False,
 		):
 	"""
 	Copy PyPI Packages to GitHub Releases.
@@ -85,7 +94,7 @@ def main(
 	import dulwich.errors
 	from consolekit.utils import abort
 	from dulwich.repo import Repo
-	from github.GithubException import BadCredentialsException
+	from github3.exceptions import AuthenticationFailed
 
 	gh_token = Secret(token)
 
@@ -107,11 +116,21 @@ def main(
 	github_username = repo.parent.name or repo.domain.domain
 
 	try:
-		run(gh_token, github_username, repo_name, pypi_name, self_promotion=not no_self_promotion)
-	except BadCredentialsException:
+		run(
+				gh_token,
+				github_username,
+				repo_name,
+				pypi_name,
+				self_promotion=not no_self_promotion,
+				max_tags=max_tags
+				)
+	except AuthenticationFailed:
 		raise click.UsageError("Invalid credentials for GitHub REST API.")
 	except Exception as e:  # pragma: no cover
-		raise abort(f"An error occurred: {e}")
+		if traceback:
+			raise
+		else:
+			raise abort(f"An error occurred: {e}")
 
 
 def run(
@@ -120,6 +139,7 @@ def run(
 		repo_name: str,
 		pypi_name: str,
 		self_promotion=True,
+		max_tags: int = -1,
 		):
 	"""
 	Helper function for when running as script or action.
@@ -131,25 +151,39 @@ def run(
 	:param repo_name: The name of the GitHub repository.
 	:param pypi_name: The name of the package on PyPI.
 	:param self_promotion: Show information about OctoCheese at the bottom of the release message.
+	:param max_tags: The maximum number of tags to process, starting with the most recent.
+		Set to ``-1`` to process all tags.
 
 	.. versionchanged:: 0.1.0
 
 		Added the ``self_promotion`` option.
+
+	.. versionchanged:: 0.3.0
+
+		Added the ``max_tags`` option.
 	"""
 
-	g = github.Github(github_token.value)
+	# 3rd party
+	from github3 import GitHub
+	from github3_utils import echo_rate_limit
+
+	# this package
+	from octocheese.core import copy_pypi_2_github
+
+	g = GitHub(token=github_token.value)
 
 	click.echo(f"Running for repo {github_username}/{repo_name}")
 
-	rate = g.get_rate_limit()
-	remaining_requests = rate.core.remaining
-	click.echo(f"{remaining_requests} requests available.")
+	with echo_rate_limit(g, True):
 
-	copy_pypi_2_github(g, repo_name, github_username, pypi_name=pypi_name, self_promotion=self_promotion)
-
-	rate = g.get_rate_limit()
-	used_requests = remaining_requests - rate.core.remaining
-	click.echo(f"Used {used_requests} requests. {rate.core.remaining} remaining. Resets at {rate.core.reset}")
+		copy_pypi_2_github(
+				g,
+				repo_name,
+				github_username,
+				pypi_name=pypi_name,
+				self_promotion=self_promotion,
+				max_tags=max_tags,
+				)
 
 
 if __name__ == "__main__":

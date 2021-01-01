@@ -4,6 +4,11 @@ API Reference
 
 .. contents:: Table of Contents
 
+.. versionchanged:: 0.3.0
+
+	All methods now take and return `github3.py <https://github3py.readthedocs.io/en/master/>`_ objects
+	in place of their `PyGithub <https://pygithub.readthedocs.io/en/latest/introduction.html>`_ counterparts.
+
 
 :mod:`octocheese.__main__`
 ------------------------------------

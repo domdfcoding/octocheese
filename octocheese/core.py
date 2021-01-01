@@ -24,19 +24,22 @@ The main logic of octocheese.
 #
 
 # stdlib
-import os
+import functools
 import pathlib
-import re
 import tempfile
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, timezone
+from functools import partial
 from typing import Iterable, Optional, Union
 
 # 3rd party
-import github
-import github.GitRelease
-import github.Repository
+import click
 from apeye import URL
+from domdf_python_tools.paths import PathPlus
 from domdf_python_tools.stringlist import StringList
+from github3 import GitHub
+from github3.exceptions import NotFoundError
+from github3.repos import Repository
+from github3.repos.release import Release
 from shippinglabel.checksum import check_sha256_hash
 from shippinglabel.pypi import FileURL, get_file_from_pypi, get_releases_with_digests
 from typing_extensions import Literal
@@ -48,58 +51,75 @@ __all__ = ["update_github_release", "copy_pypi_2_github", "make_release_message"
 
 
 def update_github_release(
-		repo: github.Repository.Repository,
+		repo: Repository,
 		tag_name: str,
-		release_name: str,
-		release_message: str,
-		file_urls: Union[Iterable[str], Iterable[FileURL]] = ()
-		) -> github.GitRelease.GitRelease:
+		pypi_name: str,
+		changelog: str = '',
+		self_promotion: bool = True,
+		file_urls: Union[Iterable[str], Iterable[FileURL]] = (),
+		traceback: bool = False,
+		) -> Release:
 	"""
 	Update the given release on GitHub with the new name, message, and files.
 
 	:param repo:
 	:param tag_name:
-	:param release_name:
-	:param release_message:
+	:param pypi_name: The name of the project on PyPI.
+	:param changelog: The changelog entry for the release.
+	:param self_promotion: Show information about OctoCheese at the bottom of the release message.
 	:param file_urls: The files to download from PyPI and add to the release.
 		Either the files URLs themselves, or mappings giving the URL and its sha256 checksum.
+	:param traceback: Show the full traceback on error.
 
 	:return: The release, and a list of URLs for the current assets.
 
 	.. versionchanged:: 0.3.0
 
-		* Added the optional ``file_urls`` parameter.
-		* Now returns only the :class:`github.GitRelease.GitRelease` object.
+		Now takes a very different set of parameters to the previous version.
+		Please read the current documentation carefully.
 	"""
+
+	version = tag_name.lstrip('v')
+	release_name = f"Version {version}"
+
+	message_maker = partial(
+			make_release_message,
+			pypi_name,
+			version,
+			changelog=changelog,
+			self_promotion=self_promotion,
+			)
 
 	current_assets = []
 
 	# TODO: List checksums in release message.
 
 	try:
-		release: github.GitRelease.GitRelease = repo.get_release(tag_name)
+		release: Release = repo.release_from_tag(tag_name)
 
 		# Check if and when last updated.
-		m = re.match(".*<!-- Octocheese: Last Updated (.*) -->.*", release.body, re.DOTALL)
+		created_at: datetime = release.created_at.astimezone(timezone.utc)
+		# last_updated = UTCDatetime.strptime(release.last_modified, "%a, %d %b %Y %H:%M:%S %Z")
 
-		if m:
-			last_updated = datetime.strptime(m.group(1), "%Y-%m-%d")
-			if last_updated < (datetime.now() - timedelta(days=7)):
-				# Don't update release message if last touched more than 7 days ago.
-				return release
-			elif last_updated < datetime(year=2020, month=12, day=6):
-				return release
+		if (UTCDatetime.utcnow() - timedelta(days=7)) > created_at > UTCDatetime(2021, 1, 1):
+			# Don't update release message if created more than 7 days ago.
+			click.echo(f"Skipping tag {tag_name} as it is more than 7 days old.")
+			return release
 
 		# Update existing release
-		release.update_release(name=release_name, message=release_message)
+		release.edit(name=release_name, body=message_maker(release_date=created_at))
 
 		# Get list of current assets for release
-		for asset in release.get_assets():
+		for asset in release.assets():
 			current_assets.append(asset.name)
 
-	except github.UnknownObjectException:
+	except NotFoundError:
 		# Create the release
-		release = repo.create_git_release(tag=tag_name, name=release_name, message=release_message)
+		release = repo.create_release(
+				tag_name=tag_name,
+				name=release_name,
+				body=message_maker(release_date=date.today()),
+				)
 
 	if not file_urls:
 		return release
@@ -126,23 +146,32 @@ def update_github_release(
 					raise ValueError(f"The checksums for {filename} do not match!")
 
 				success(f"Copying {filename} from PyPI to GitHub Releases.")
-				release.upload_asset(os.path.join(tmpdir, filename))
+				release.upload_asset(
+						content_type="application/binary",
+						name=filename,
+						asset=(PathPlus(tmpdir) / filename).read_bytes()
+						)
 
 			except OSError as e:
-				error(f"{e} Skipping.")
-				continue
+				if traceback:
+					raise
+				else:
+					error(f"{e} Skipping.")
+					continue
 
 	return release
 
 
 def copy_pypi_2_github(
-		g: github.Github,
+		g: GitHub,
 		repo_name: str,
 		github_username: str,
 		*,
 		changelog: str = '',
 		pypi_name: Optional[str] = None,
 		self_promotion=True,
+		max_tags: int = -1,
+		traceback: bool = False,
 		):
 	"""
 	The main function for ``OctoCheese``.
@@ -154,10 +183,18 @@ def copy_pypi_2_github(
 	:param pypi_name: The name of the project on PyPI.
 	:default pypi_name: The value of ``repo_name``.
 	:param self_promotion: Show information about OctoCheese at the bottom of the release message.
+	:param max_tags: The maximum number of tags to process, starting with the most recent.
+		Set to ``-1`` to process all tags.
+	:param traceback: Show the full traceback on error.
 
 	.. versionchanged:: 0.1.0
 
 		Added the ``self_promotion`` option.
+
+	.. versionchanged:: 0.3.0
+
+		* Added the optional ``max_tags`` option.
+		* Added the optional ``traceback`` parameter.
 	"""
 
 	repo_name = str(repo_name)
@@ -170,9 +207,9 @@ def copy_pypi_2_github(
 
 	pypi_releases = get_releases_with_digests(pypi_name)
 
-	repo = g.get_repo(f"{github_username}/{repo_name}")
+	repo: Repository = g.repository(github_username, repo_name)
 
-	for tag in repo.get_tags():
+	for tag in repo.tags(max_tags):
 		version = tag.name.lstrip('v')
 		if version not in pypi_releases:
 			warning(f"No PyPI release found for tag '{tag.name}'. Skipping.")
@@ -183,18 +220,27 @@ def copy_pypi_2_github(
 		update_github_release(
 				repo=repo,
 				tag_name=tag.name,
-				release_name=f"Version {version}",
-				release_message=make_release_message(pypi_name, version, changelog, self_promotion=self_promotion),
+				pypi_name=pypi_name,
+				changelog=changelog,
+				self_promotion=self_promotion,
 				file_urls=pypi_releases[version],
+				traceback=traceback
 				)
 
 
-def make_release_message(name: str, version: Union[str, float], changelog: str = '', self_promotion=True) -> str:
+def make_release_message(
+		name: str,
+		version: Union[str, float],
+		release_date: date,
+		changelog: str = '',
+		self_promotion=True,
+		) -> str:
 	"""
 	Create a release message.
 
 	:param name: The name of the software.
 	:param version: The version number of the new release.
+	:param release_date: The date of the release.
 	:param changelog: Optional block of text detailing changes made since the previous release.
 	:no-default changelog:
 	:param self_promotion: Show information about OctoCheese at the bottom of the release message.
@@ -219,7 +265,7 @@ def make_release_message(name: str, version: Union[str, float], changelog: str =
 		buf.append("---")
 		buf.blankline(ensure_single=True)
 		buf.append("Powered by OctoCheese\\")
-		buf.append(make_footer_links("domdfcoding", "octocheese"))
+		buf.append(make_footer_links("domdfcoding", "octocheese", release_date))
 		buf.blankline(ensure_single=True)
 
 	buf.append(f"<!-- Octocheese: Last Updated {today()} -->")
@@ -242,6 +288,7 @@ _FooterType = Literal["marketplace", "app"]
 def make_footer_links(
 		owner: str,
 		name: str,
+		release_date: date,
 		type: _FooterType = "marketplace",  # noqa: A002  # pylint: disable=redefined-builtin
 		) -> str:
 	"""
@@ -252,7 +299,7 @@ def make_footer_links(
 	:param type:
 	"""
 
-	if TODAY.month == 12:  # pragma: no cover
+	if release_date.month == 12 or (release_date.month == 1 and release_date.day <= 6):  # pragma: no cover
 		docs_emoji = '🎄'
 		repo_emoji = '☃'
 		issues_emoji = '🎅'
@@ -269,3 +316,19 @@ def make_footer_links(
 			f"[{issues_emoji} issues](https://github.com/{owner}/{name}/issues)",
 			f"[{marketplace_emoji} marketplace](https://github.com/{type}/{name})",
 			))
+
+
+class UTCDatetime(datetime):
+
+	@functools.wraps(datetime.__new__)
+	def __new__(cls, *args, **kwargs):
+		d = datetime(*args, **kwargs)
+		return d.astimezone(timezone.utc)
+
+	@classmethod
+	def strptime(cls, date_string, format):
+		return super().strptime(date_string, format).astimezone(timezone.utc)
+
+	@classmethod
+	def utcnow(cls):
+		return super().utcnow().astimezone(timezone.utc)
