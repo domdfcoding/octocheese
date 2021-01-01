@@ -99,9 +99,10 @@ def update_github_release(
 
 		# Check if and when last updated.
 		created_at: datetime = release.created_at.astimezone(timezone.utc)
-		# last_updated = UTCDatetime.strptime(release.last_modified, "%a, %d %b %Y %H:%M:%S %Z")
+		# last_updated = UTCDateTime.strptime(release.last_modified, "%a, %d %b %Y %H:%M:%S %Z")
 
-		if (UTCDatetime.utcnow() - timedelta(days=7)) > created_at > UTCDatetime(2021, 1, 1):
+		if (UTCDateTime.utcnow() - timedelta(days=7)) > created_at > UTCDateTime(2021, 1, 1):
+			# TODO: some time around easter remove the min date and update the tests accordingly.
 			# Don't update release message if created more than 7 days ago.
 			click.echo(f"Skipping tag {tag_name} as it is more than 7 days old.")
 			return release
@@ -215,7 +216,7 @@ def copy_pypi_2_github(
 			warning(f"No PyPI release found for tag '{tag.name}'. Skipping.")
 			continue
 
-		print(f"Processing release for {version}")
+		click.echo(f"Processing release for {version}")
 
 		update_github_release(
 				repo=repo,
@@ -318,7 +319,7 @@ def make_footer_links(
 			))
 
 
-class UTCDatetime(datetime):
+class UTCDateTime(datetime):  # pragma: no cover
 
 	@functools.wraps(datetime.__new__)
 	def __new__(cls, *args, **kwargs):

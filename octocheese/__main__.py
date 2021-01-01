@@ -52,11 +52,10 @@ token_var = "GITHUB_TOKEN"
 		envvar=token_var,
 		required=True,
 		)
-@click.option(
+@auto_default_option(
 		"-r",
 		"--repo",
 		type=click.STRING,
-		default=None,
 		help="The repository name (in the format <username>/<repository>) or the complete GitHub URL.",
 		)
 @flag_option(
@@ -67,15 +66,10 @@ token_var = "GITHUB_TOKEN"
 		"-n",
 		"--max-tags",
 		type=click.INT,
-		default=-1,
 		help="The maximum number of tags to process, starting with the most recent.",
 		show_default=True,
 		)
-@flag_option(
-		"-T",
-		"--traceback",
-		help="Show the full traceback on error.",
-		)
+@flag_option("-T", "--traceback", help="Show the full traceback on error.")
 @click_command()
 def main(
 		pypi_name: str,
@@ -175,7 +169,6 @@ def run(
 	click.echo(f"Running for repo {github_username}/{repo_name}")
 
 	with echo_rate_limit(g, True):
-
 		copy_pypi_2_github(
 				g,
 				repo_name,

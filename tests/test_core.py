@@ -69,8 +69,26 @@ def test_get_file_from_pypi(data_regression: DataRegressionFixture):
 			data_regression.check(sorted({f.name for f in tar.getmembers()}))
 
 
+changelog = """\
+* Added something
+* Something was removed
+* Something got deprecated
+* It now works!
+* Now encrypts data with [1024-bit RSA](https://www.bbc.co.uk/news/technology-55475433)
+"""
+
+
+@pytest.mark.parametrize("changelog", ['', pytest.param(changelog, id="content")])
 @pytest.mark.parametrize("self_promotion", [True, False])
-def test_make_release_message(file_regression: FileRegressionFixture, self_promotion, monkeypatch):
+def test_make_release_message(file_regression: FileRegressionFixture, self_promotion, monkeypatch, changelog):
 	monkeypatch.setattr(octocheese.core, "TODAY", date(2020, 7, 4))
-	release_message = octocheese.core.make_release_message("octocat", "1.2.3", self_promotion=self_promotion)
+
+	release_message = octocheese.core.make_release_message(
+			"octocat",
+			"1.2.3",
+			date(2020, 7, 4),
+			changelog=changelog,
+			self_promotion=self_promotion,
+			)
+
 	check_file_regression(release_message, file_regression, extension=".md")

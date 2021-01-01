@@ -31,13 +31,14 @@ import os
 import sys
 
 # 3rd party
+import click
 from domdf_python_tools.secrets import Secret
 
 # this package
 from octocheese.__main__ import run
 
 if __name__ == "__main__":
-	print("[octocheese] Starting octocheese.")
+	click.echo("[octocheese] Starting octocheese.")
 
 	gh_token = Secret(os.environ["GITHUB_TOKEN"])
 	github_username, repo_name = os.environ["GITHUB_REPOSITORY"].split('/')
