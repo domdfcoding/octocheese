@@ -36,10 +36,10 @@ import click
 from apeye import URL
 from domdf_python_tools.paths import PathPlus
 from domdf_python_tools.stringlist import StringList
-from github3 import GitHub
-from github3.exceptions import NotFoundError
-from github3.repos import Repository
-from github3.repos.release import Release
+from github3 import GitHub  # type: ignore
+from github3.exceptions import NotFoundError  # type: ignore
+from github3.repos import Repository  # type: ignore
+from github3.repos.release import Release  # type: ignore
 from shippinglabel.checksum import check_sha256_hash
 from shippinglabel.pypi import FileURL, get_file_from_pypi, get_releases_with_digests
 from typing_extensions import Literal

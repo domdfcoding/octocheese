@@ -101,7 +101,7 @@ def main(
 	import dulwich.errors
 	from consolekit.utils import abort
 	from dulwich.repo import Repo
-	from github3.exceptions import AuthenticationFailed
+	from github3.exceptions import AuthenticationFailed  # type: ignore
 
 	gh_token = Secret(token)
 
@@ -171,7 +171,7 @@ def run(
 	"""
 
 	# 3rd party
-	from github3 import GitHub
+	from github3 import GitHub  # type: ignore
 	from github3_utils import echo_rate_limit
 
 	# this package

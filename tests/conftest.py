@@ -1,9 +1,9 @@
 # 3rd party
 import pytest
 from _pytest.fixtures import FixtureRequest
-from betamax import Betamax
+from betamax import Betamax  # type: ignore
 from domdf_python_tools.paths import PathPlus
-from github3 import GitHub
+from github3 import GitHub  # type: ignore
 
 pytest_plugins = ("pytest_docker_tools", "domdf_python_tools.testing")
 
