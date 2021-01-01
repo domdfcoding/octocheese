@@ -37,3 +37,8 @@ classifiers:
 
 extra_sphinx_extensions:
   - cli
+
+keywords:
+  - github
+  - github-action
+  - pypi
