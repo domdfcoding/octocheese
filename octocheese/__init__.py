@@ -5,7 +5,7 @@
 Copy PyPI Packages to GitHub Releases.
 """
 #
-#  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#  Copyright (c) 2020-2021 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU Lesser General Public License as published by
@@ -28,7 +28,7 @@ Copy PyPI Packages to GitHub Releases.
 from octocheese.core import copy_pypi_2_github, get_file_from_pypi, update_github_release
 
 __author__: str = "Dominic Davis-Foster"
-__copyright__: str = "2020 Dominic Davis-Foster"
+__copyright__: str = "2020-2021 Dominic Davis-Foster"
 __license__: str = "GNU Lesser General Public License v3 or later (LGPLv3+)"
 __version__: str = "0.2.1"
 __email__: str = "dominic@davis-foster.co.uk"
