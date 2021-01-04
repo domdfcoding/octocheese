@@ -46,7 +46,7 @@ extensions = [
 		"sphinxcontrib.default_values",
 		"sphinxcontrib.toctree_plus",
 		"seed_intersphinx_mapping",
-		"cli",
+		"sphinx_click",
 		]
 
 sphinxemoji_style = "twemoji"
@@ -63,6 +63,8 @@ pygments_style = "default"
 intersphinx_mapping = {
 		"python": ("https://docs.python.org/3/", None),
 		"sphinx": ("https://www.sphinx-doc.org/en/stable/", None),
+		"github3": ("https://github3py.readthedocs.io/en/master/", None),
+		"click": ("https://click.palletsprojects.com/en/7.x/", None),
 		}
 
 html_theme = "domdf_sphinx_theme"

@@ -36,7 +36,12 @@ classifiers:
   - 'Topic :: Utilities'
 
 extra_sphinx_extensions:
-  - cli
+#  - cli
+  - sphinx_click
+
+intersphinx_mapping:
+  - '"github3": ("https://github3py.readthedocs.io/en/master/", None)'
+  - "'click': ('https://click.palletsprojects.com/en/7.x/', None)"
 
 keywords:
   - github
