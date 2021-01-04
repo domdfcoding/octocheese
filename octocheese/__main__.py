@@ -35,6 +35,7 @@ from click import Context, Option
 from consolekit import click_command
 from consolekit.options import auto_default_option, flag_option, version_option
 from domdf_python_tools.secrets import Secret
+from github3_utils.click import token_option
 
 __all__ = ["main", "run", "token_var"]
 
@@ -71,17 +72,7 @@ def _version_callback(ctx: Context, param: Option, value: int):
 		type=click.STRING,
 		help="The repository name (in the format <username>/<repository>) or the complete GitHub URL.",
 		)
-@click.option(
-		"-t",
-		"--token",
-		type=click.STRING,
-		help=(
-				"The token to authenticate with the GitHub API. "
-				f"Can also be provided via the '{token_var}' environment variable."
-				),
-		envvar=token_var,
-		required=True,
-		)
+@token_option(token_var)
 @click.argument("pypi_name", type=click.STRING)
 @click_command()
 def main(

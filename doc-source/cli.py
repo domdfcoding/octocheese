@@ -43,11 +43,9 @@ from sphinx.domains.std import GenericObject, StandardDomain
 from sphinx.errors import ExtensionError
 from sphinx.roles import XRefRole
 from sphinx_toolbox.utils import OptionSpec
+from typing_extensions import TypedDict
 
 __all__ = ["CLIArgument", "register_cli", "setup"]
-
-# 3rd party
-from typing_extensions import TypedDict
 
 
 class ArgumentMetadata(TypedDict):
