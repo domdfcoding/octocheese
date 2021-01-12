@@ -24,10 +24,10 @@ The main logic of octocheese.
 #
 
 # stdlib
+import datetime
 import functools
 import pathlib
 import tempfile
-from datetime import date, datetime, timedelta, timezone
 from functools import partial
 from typing import Iterable, Optional, Union
 
@@ -98,10 +98,10 @@ def update_github_release(
 		release: Release = repo.release_from_tag(tag_name)
 
 		# Check if and when last updated.
-		created_at: datetime = release.created_at.astimezone(timezone.utc)
+		created_at: datetime = release.created_at.astimezone(datetime.timezone.utc)
 		# last_updated = UTCDateTime.strptime(release.last_modified, "%a, %d %b %Y %H:%M:%S %Z")
 
-		if (UTCDateTime.utcnow() - timedelta(days=7)) > created_at > UTCDateTime(2021, 1, 1):
+		if (UTCDateTime.utcnow() - datetime.timedelta(days=7)) > created_at > UTCDateTime(2021, 1, 1):
 			# TODO: some time around easter remove the min date and update the tests accordingly.
 			# Don't update release message if created more than 7 days ago.
 			click.echo(f"Skipping tag {tag_name} as it is more than 7 days old.")
@@ -119,7 +119,7 @@ def update_github_release(
 		release = repo.create_release(
 				tag_name=tag_name,
 				name=release_name,
-				body=message_maker(release_date=date.today()),
+				body=message_maker(release_date=datetime.date.today()),
 				)
 
 	if not file_urls:
@@ -232,7 +232,7 @@ def copy_pypi_2_github(
 def make_release_message(
 		name: str,
 		version: Union[str, float],
-		release_date: date,
+		release_date: datetime.date,
 		changelog: str = '',
 		self_promotion=True,
 		) -> str:
@@ -276,7 +276,7 @@ def make_release_message(
 
 
 #: Under normal circumstances returns :meth:`datetime.date.today`.
-TODAY: date = date.today()
+TODAY: datetime.date = datetime.date.today()
 
 
 def today() -> str:
@@ -289,7 +289,7 @@ _FooterType = Literal["marketplace", "app"]
 def make_footer_links(
 		owner: str,
 		name: str,
-		release_date: date,
+		release_date: datetime.date,
 		type: _FooterType = "marketplace",  # noqa: A002  # pylint: disable=redefined-builtin
 		) -> str:
 	"""
@@ -319,17 +319,17 @@ def make_footer_links(
 			))
 
 
-class UTCDateTime(datetime):  # pragma: no cover
+class UTCDateTime(datetime.datetime):  # pragma: no cover
 
-	@functools.wraps(datetime.__new__)
+	@functools.wraps(datetime.datetime.__new__)
 	def __new__(cls, *args, **kwargs):
-		d = datetime(*args, **kwargs)
-		return d.astimezone(timezone.utc)
+		d = datetime.datetime(*args, **kwargs)
+		return d.astimezone(datetime.timezone.utc)
 
 	@classmethod
 	def strptime(cls, date_string, format):  # noqa: A002  # pylint: disable=redefined-builtin
-		return super().strptime(date_string, format).astimezone(timezone.utc)
+		return datetime.datetime.strptime(date_string, format).astimezone(datetime.timezone.utc)
 
 	@classmethod
 	def utcnow(cls):
-		return super().utcnow().astimezone(timezone.utc)
+		return datetime.datetime.now().astimezone(datetime.timezone.utc)
