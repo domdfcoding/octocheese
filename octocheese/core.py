@@ -98,7 +98,7 @@ def update_github_release(
 		release: Release = repo.release_from_tag(tag_name)
 
 		# Check if and when last updated.
-		created_at: datetime = release.created_at.astimezone(datetime.timezone.utc)
+		created_at: datetime.datetime = release.created_at.astimezone(datetime.timezone.utc)
 		# last_updated = UTCDateTime.strptime(release.last_modified, "%a, %d %b %Y %H:%M:%S %Z")
 
 		if (UTCDateTime.utcnow() - datetime.timedelta(days=7)) > created_at > UTCDateTime(2021, 1, 1):
