@@ -269,7 +269,7 @@ def make_release_message(
 				"octocheese",
 				event_date=release_date,
 				docs_url="https://octocheese.readthedocs.io",
-				),
+				)
 
 		buf.extend(["---", '', "Powered by OctoCheese\\", footer_links])
 		buf.blankline(ensure_single=True)
