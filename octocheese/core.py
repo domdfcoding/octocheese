@@ -40,6 +40,7 @@ from github3 import GitHub  # type: ignore
 from github3.exceptions import NotFoundError  # type: ignore
 from github3.repos import Repository  # type: ignore
 from github3.repos.release import Release  # type: ignore
+from github3_utils.apps import make_footer_links
 from shippinglabel.checksum import check_sha256_hash
 from shippinglabel.pypi import FileURL, get_file_from_pypi, get_releases_with_digests
 from typing_extensions import Literal
@@ -263,10 +264,14 @@ def make_release_message(
 	buf.blankline(ensure_single=True)
 
 	if self_promotion:
-		buf.append("---")
-		buf.blankline(ensure_single=True)
-		buf.append("Powered by OctoCheese\\")
-		buf.append(make_footer_links("domdfcoding", "octocheese", release_date))
+		footer_links = make_footer_links(
+				"domdfcoding",
+				"octocheese",
+				event_date=release_date,
+				docs_url="https://octocheese.readthedocs.io",
+				),
+
+		buf.extend(["---", '', "Powered by OctoCheese\\", footer_links])
 		buf.blankline(ensure_single=True)
 
 	buf.append(f"<!-- Octocheese: Last Updated {today()} -->")
@@ -284,39 +289,6 @@ def today() -> str:
 
 
 _FooterType = Literal["marketplace", "app"]
-
-
-def make_footer_links(
-		owner: str,
-		name: str,
-		release_date: datetime.date,
-		type: _FooterType = "marketplace",  # noqa: A002  # pylint: disable=redefined-builtin
-		) -> str:
-	"""
-	Create the markdown footer links.
-
-	:param owner: The owner of the repository.
-	:param name: The name of the repository.
-	:param type:
-	"""
-
-	if release_date.month == 12 or (release_date.month == 1 and release_date.day <= 6):  # pragma: no cover
-		docs_emoji = '🎄'
-		repo_emoji = '☃'
-		issues_emoji = '🎅'
-		marketplace_emoji = '🎁'
-	else:  # pragma: no cover
-		docs_emoji = '📝'
-		repo_emoji = ":octocat:"
-		issues_emoji = '🙋'
-		marketplace_emoji = '🏪'
-
-	return " | ".join((
-			f"[{docs_emoji} docs](https://{name}.readthedocs.io)",
-			f"[{repo_emoji} repo](https://github.com/{owner}/{name})",
-			f"[{issues_emoji} issues](https://github.com/{owner}/{name}/issues)",
-			f"[{marketplace_emoji} marketplace](https://github.com/{type}/{name})",
-			))
 
 
 class UTCDateTime(datetime.datetime):  # pragma: no cover
