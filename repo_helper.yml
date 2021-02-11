@@ -1,3 +1,5 @@
+# Configuration for 'repo_helper' (https://github.com/domdfcoding/repo_helper)
+---
 modname: OctoCheese
 import_name: octocheese
 repo_name: octocheese
@@ -11,39 +13,40 @@ username: "domdfcoding"
 license: 'LGPLv3+'
 short_desc: '🐙 🧀 – Copy PyPI Packages to GitHub Releases'
 
-enable_conda: False
+enable_conda: false
 
 console_scripts:
-  - "octocheese = octocheese.__main__:main"
+ - "octocheese = octocheese.__main__:main"
 
 python_deploy_version: 3.6
 
 # Versions to run tests for
 python_versions:
-  - '3.6'
-  - '3.7'
-  - '3.8'
-  - '3.9'
-  - '3.10-dev'
+ - '3.6'
+ - '3.7'
+ - '3.8'
+ - '3.9'
+ - 3.10-dev
+ - pypy3
 
 classifiers:
-  - 'Development Status :: 4 - Beta'
+ - 'Development Status :: 4 - Beta'
 #  - "Development Status :: 5 - Production/Stable"
 #  - "Development Status :: 6 - Mature"
 #  - "Development Status :: 7 - Inactive"
-  - 'Intended Audience :: Developers'
-  - 'Operating System :: OS Independent'
-  - 'Topic :: Utilities'
+ - 'Intended Audience :: Developers'
+ - 'Operating System :: OS Independent'
+ - 'Topic :: Utilities'
 
 extra_sphinx_extensions:
 #  - cli
-  - sphinx_click
+ - sphinx_click
 
 intersphinx_mapping:
-  - '"github3": ("https://github3py.readthedocs.io/en/master/", None)'
-  - "'click': ('https://click.palletsprojects.com/en/7.x/', None)"
+ - '"github3": ("https://github3py.readthedocs.io/en/master/", None)'
+ - "'click': ('https://click.palletsprojects.com/en/7.x/', None)"
 
 keywords:
-  - github
-  - github-action
-  - pypi
+ - github
+ - github-action
+ - pypi
