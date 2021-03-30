@@ -64,7 +64,7 @@ def test_get_file_from_pypi(advanced_data_regression: AdvancedDataRegressionFixt
 
 		with tarfile.open(the_file, "r:gz") as tar:
 			assert {f.name for f in tar.getmembers()} == listing
-			data_regression.check(sorted({f.name for f in tar.getmembers()}))
+			advanced_data_regression.check(sorted({f.name for f in tar.getmembers()}))
 
 
 changelog = """\
@@ -79,7 +79,7 @@ changelog = """\
 @pytest.mark.parametrize("changelog", ['', pytest.param(changelog, id="content")])
 @pytest.mark.parametrize("self_promotion", [True, False])
 def test_make_release_message(
-		advanced_data_regression: AdvancedFileRegressionFixture,
+		advanced_file_regression: AdvancedFileRegressionFixture,
 		self_promotion: bool,
 		monkeypatch,
 		changelog: str,
@@ -94,4 +94,4 @@ def test_make_release_message(
 			self_promotion=self_promotion,
 			)
 
-	advanced_data_regression.check(release_message, extension=".md")
+	advanced_file_regression.check(release_message, extension=".md")
