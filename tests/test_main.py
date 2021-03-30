@@ -4,8 +4,8 @@ import tempfile
 # 3rd party
 import pytest
 from click.testing import CliRunner, Result
+from coincidence.regressions import check_file_regression
 from domdf_python_tools.paths import in_directory
-from domdf_python_tools.testing import check_file_regression
 from pytest_regressions.file_regression import FileRegressionFixture
 
 # this package

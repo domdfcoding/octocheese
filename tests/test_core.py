@@ -8,16 +8,14 @@ from datetime import date
 
 # 3rd party
 import pytest
-from domdf_python_tools.testing import check_file_regression
-from pytest_regressions.data_regression import DataRegressionFixture
-from pytest_regressions.file_regression import FileRegressionFixture
+from coincidence.regressions import AdvancedDataRegressionFixture, AdvancedFileRegressionFixture
 from shippinglabel.pypi import get_file_from_pypi
 
 # this package
 import octocheese.core
 
 
-def test_get_file_from_pypi(data_regression: DataRegressionFixture):
+def test_get_file_from_pypi(advanced_data_regression: AdvancedDataRegressionFixture):
 	with tempfile.TemporaryDirectory() as tmpdir_:
 		tmpdir = pathlib.Path(tmpdir_)
 
@@ -80,7 +78,12 @@ changelog = """\
 
 @pytest.mark.parametrize("changelog", ['', pytest.param(changelog, id="content")])
 @pytest.mark.parametrize("self_promotion", [True, False])
-def test_make_release_message(file_regression: FileRegressionFixture, self_promotion, monkeypatch, changelog):
+def test_make_release_message(
+		advanced_data_regression: AdvancedFileRegressionFixture,
+		self_promotion: bool,
+		monkeypatch,
+		changelog: str,
+		):
 	monkeypatch.setattr(octocheese.core, "TODAY", date(2020, 7, 4))
 
 	release_message = octocheese.core.make_release_message(
@@ -91,4 +94,4 @@ def test_make_release_message(file_regression: FileRegressionFixture, self_promo
 			self_promotion=self_promotion,
 			)
 
-	check_file_regression(release_message, file_regression, extension=".md")
+	advanced_data_regression.check(release_message, extension=".md")

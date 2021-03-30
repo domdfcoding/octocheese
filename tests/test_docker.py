@@ -3,7 +3,7 @@ import sys
 
 # 3rd party
 import pytest
-from domdf_python_tools.testing import not_docker, not_macos, not_windows
+from coincidence.selectors import not_docker, not_macos, not_windows
 
 
 @not_docker(reason="Can't run if already in Docker.")

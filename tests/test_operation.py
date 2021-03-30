@@ -7,7 +7,7 @@ from io import StringIO
 
 # 3rd party
 import pytest
-from domdf_python_tools.testing import check_file_regression, with_fixed_datetime
+from coincidence import check_file_regression, with_fixed_datetime
 
 # this package
 from octocheese import copy_pypi_2_github
