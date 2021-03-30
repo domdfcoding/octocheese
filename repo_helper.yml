@@ -22,12 +22,13 @@ console_scripts:
 
 # Versions to run tests for
 python_versions:
- - '3.6'
- - '3.7'
- - '3.8'
- - '3.9'
+ - 3.6
+ - 3.7
+ - 3.8
+ - 3.9
  - 3.10-dev
- - pypy3
+ - pypy36
+ - pypy37
 
 classifiers:
  - 'Development Status :: 4 - Beta'
@@ -39,7 +40,6 @@ classifiers:
  - 'Topic :: Utilities'
 
 extra_sphinx_extensions:
-#  - cli
  - sphinx_click
 
 intersphinx_mapping:
