@@ -1,3 +1,28 @@
 [build-system]
 requires = [ "setuptools>=40.6.0", "wheel>=0.34.2",]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "octocheese"
+version = "0.2.1"
+description = "🐙 🧀 – Copy PyPI Packages to GitHub Releases"
+readme = "README.rst"
+keywords = [ "github", "github-action", "pypi",]
+dynamic = [ "requires-python", "classifiers", "dependencies",]
+
+[[project.authors]]
+email = "dominic@davis-foster.co.uk"
+name = "Dominic Davis-Foster"
+
+
+[project.license]
+file = "LICENSE"
+
+[project.urls]
+Homepage = "https://github.com/domdfcoding/octocheese"
+"Issue Tracker" = "https://github.com/domdfcoding/octocheese/issues"
+"Source Code" = "https://github.com/domdfcoding/octocheese"
+Documentation = "https://octocheese.readthedocs.io/en/latest"
+
+[project.scripts]
+octocheese = "octocheese.__main__:main"
