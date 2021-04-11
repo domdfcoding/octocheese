@@ -102,8 +102,7 @@ def update_github_release(
 		created_at: datetime.datetime = release.created_at.astimezone(datetime.timezone.utc)
 		# last_updated = UTCDateTime.strptime(release.last_modified, "%a, %d %b %Y %H:%M:%S %Z")
 
-		if (UTCDateTime.utcnow() - datetime.timedelta(days=7)) > created_at > UTCDateTime(2021, 1, 1):
-			# TODO: some time around easter remove the min date and update the tests accordingly.
+		if (UTCDateTime.utcnow() - datetime.timedelta(days=7)) > created_at:
 			# Don't update release message if created more than 7 days ago.
 			click.echo(f"Skipping tag {tag_name} as it is more than 7 days old.")
 			return release

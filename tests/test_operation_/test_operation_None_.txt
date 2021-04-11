@@ -2,134 +2,90 @@ Processing release for 1.8.4
 [32mCopying sphinx_toolbox-1.8.4-py3-none-any.whl from PyPI to GitHub Releases.[39m
 [32mCopying sphinx-toolbox-1.8.4.tar.gz from PyPI to GitHub Releases.[39m
 Processing release for 1.8.3
-[33mFile 'sphinx_toolbox-1.8.3-py3-none-any.whl' already exists for release 'v1.8.3'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.8.3.tar.gz' already exists for release 'v1.8.3'. Skipping.[39m
+Skipping tag v1.8.3 as it is more than 7 days old.
 Processing release for 1.8.2
-[33mFile 'sphinx_toolbox-1.8.2-py3-none-any.whl' already exists for release 'v1.8.2'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.8.2.tar.gz' already exists for release 'v1.8.2'. Skipping.[39m
+Skipping tag v1.8.2 as it is more than 7 days old.
 Processing release for 1.8.1
-[33mFile 'sphinx_toolbox-1.8.1-py3-none-any.whl' already exists for release 'v1.8.1'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.8.1.tar.gz' already exists for release 'v1.8.1'. Skipping.[39m
+Skipping tag v1.8.1 as it is more than 7 days old.
 Processing release for 1.8.0
-[33mFile 'sphinx_toolbox-1.8.0-py3-none-any.whl' already exists for release 'v1.8.0'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.8.0.tar.gz' already exists for release 'v1.8.0'. Skipping.[39m
+Skipping tag v1.8.0 as it is more than 7 days old.
 Processing release for 1.7.5
-[33mFile 'sphinx_toolbox-1.7.5-py3-none-any.whl' already exists for release 'v1.7.5'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.7.5.tar.gz' already exists for release 'v1.7.5'. Skipping.[39m
+Skipping tag v1.7.5 as it is more than 7 days old.
 Processing release for 1.7.4
-[33mFile 'sphinx_toolbox-1.7.4-py3-none-any.whl' already exists for release 'v1.7.4'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.7.4.tar.gz' already exists for release 'v1.7.4'. Skipping.[39m
+Skipping tag v1.7.4 as it is more than 7 days old.
 Processing release for 1.7.3
-[33mFile 'sphinx_toolbox-1.7.3-py3-none-any.whl' already exists for release 'v1.7.3'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.7.3.tar.gz' already exists for release 'v1.7.3'. Skipping.[39m
+Skipping tag v1.7.3 as it is more than 7 days old.
 Processing release for 1.7.2
-[33mFile 'sphinx_toolbox-1.7.2-py3-none-any.whl' already exists for release 'v1.7.2'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.7.2.tar.gz' already exists for release 'v1.7.2'. Skipping.[39m
+Skipping tag v1.7.2 as it is more than 7 days old.
 Processing release for 1.7.1
-[33mFile 'sphinx_toolbox-1.7.1-py3-none-any.whl' already exists for release 'v1.7.1'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.7.1.tar.gz' already exists for release 'v1.7.1'. Skipping.[39m
+Skipping tag v1.7.1 as it is more than 7 days old.
 Processing release for 1.7.0
-[33mFile 'sphinx_toolbox-1.7.0-py3-none-any.whl' already exists for release 'v1.7.0'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.7.0.tar.gz' already exists for release 'v1.7.0'. Skipping.[39m
+Skipping tag v1.7.0 as it is more than 7 days old.
 Processing release for 1.6.2
-[33mFile 'sphinx_toolbox-1.6.2-py3-none-any.whl' already exists for release 'v1.6.2'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.6.2.tar.gz' already exists for release 'v1.6.2'. Skipping.[39m
+Skipping tag v1.6.2 as it is more than 7 days old.
 Processing release for 1.6.1
-[33mFile 'sphinx_toolbox-1.6.1-py3-none-any.whl' already exists for release 'v1.6.1'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.6.1.tar.gz' already exists for release 'v1.6.1'. Skipping.[39m
+Skipping tag v1.6.1 as it is more than 7 days old.
 Processing release for 1.6.0
-[33mFile 'sphinx_toolbox-1.6.0-py3-none-any.whl' already exists for release 'v1.6.0'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.6.0.tar.gz' already exists for release 'v1.6.0'. Skipping.[39m
+Skipping tag v1.6.0 as it is more than 7 days old.
 Processing release for 1.5.1
-[33mFile 'sphinx_toolbox-1.5.1-py3-none-any.whl' already exists for release 'v1.5.1'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.5.1.tar.gz' already exists for release 'v1.5.1'. Skipping.[39m
+Skipping tag v1.5.1 as it is more than 7 days old.
 Processing release for 1.5.0
-[33mFile 'sphinx_toolbox-1.5.0-py3-none-any.whl' already exists for release 'v1.5.0'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.5.0.tar.gz' already exists for release 'v1.5.0'. Skipping.[39m
+Skipping tag v1.5.0 as it is more than 7 days old.
 Processing release for 1.4.1
-[33mFile 'sphinx_toolbox-1.4.1-py3-none-any.whl' already exists for release 'v1.4.1'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.4.1.tar.gz' already exists for release 'v1.4.1'. Skipping.[39m
+Skipping tag v1.4.1 as it is more than 7 days old.
 Processing release for 1.4.0
-[33mFile 'sphinx_toolbox-1.4.0-py3-none-any.whl' already exists for release 'v1.4.0'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.4.0.tar.gz' already exists for release 'v1.4.0'. Skipping.[39m
+Skipping tag v1.4.0 as it is more than 7 days old.
 Processing release for 1.3.1
-[33mFile 'sphinx_toolbox-1.3.1-py3-none-any.whl' already exists for release 'v1.3.1'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.3.1.tar.gz' already exists for release 'v1.3.1'. Skipping.[39m
+Skipping tag v1.3.1 as it is more than 7 days old.
 Processing release for 1.3.0
-[33mFile 'sphinx_toolbox-1.3.0-py3-none-any.whl' already exists for release 'v1.3.0'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.3.0.tar.gz' already exists for release 'v1.3.0'. Skipping.[39m
+Skipping tag v1.3.0 as it is more than 7 days old.
 Processing release for 1.2.2
-[33mFile 'sphinx_toolbox-1.2.2-py3-none-any.whl' already exists for release 'v1.2.2'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.2.2.tar.gz' already exists for release 'v1.2.2'. Skipping.[39m
+Skipping tag v1.2.2 as it is more than 7 days old.
 Processing release for 1.2.1
-[33mFile 'sphinx_toolbox-1.2.1-py3-none-any.whl' already exists for release 'v1.2.1'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.2.1.tar.gz' already exists for release 'v1.2.1'. Skipping.[39m
+Skipping tag v1.2.1 as it is more than 7 days old.
 Processing release for 1.2.0
-[33mFile 'sphinx_toolbox-1.2.0-py3-none-any.whl' already exists for release 'v1.2.0'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.2.0.tar.gz' already exists for release 'v1.2.0'. Skipping.[39m
+Skipping tag v1.2.0 as it is more than 7 days old.
 Processing release for 1.1.2
-[33mFile 'sphinx_toolbox-1.1.2-py3-none-any.whl' already exists for release 'v1.1.2'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.1.2.tar.gz' already exists for release 'v1.1.2'. Skipping.[39m
+Skipping tag v1.1.2 as it is more than 7 days old.
 Processing release for 1.1.1
-[33mFile 'sphinx_toolbox-1.1.1-py3-none-any.whl' already exists for release 'v1.1.1'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.1.1.tar.gz' already exists for release 'v1.1.1'. Skipping.[39m
+Skipping tag v1.1.1 as it is more than 7 days old.
 Processing release for 1.1.0
-[33mFile 'sphinx_toolbox-1.1.0-py3-none-any.whl' already exists for release 'v1.1.0'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.1.0.tar.gz' already exists for release 'v1.1.0'. Skipping.[39m
+Skipping tag v1.1.0 as it is more than 7 days old.
 Processing release for 1.0.0
-[33mFile 'sphinx_toolbox-1.0.0-py3-none-any.whl' already exists for release 'v1.0.0'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.0.0.tar.gz' already exists for release 'v1.0.0'. Skipping.[39m
+Skipping tag v1.0.0 as it is more than 7 days old.
 Processing release for 0.9.2
-[33mFile 'sphinx_toolbox-0.9.2-py3-none-any.whl' already exists for release 'v0.9.2'. Skipping.[39m
-[33mFile 'sphinx-toolbox-0.9.2.tar.gz' already exists for release 'v0.9.2'. Skipping.[39m
+Skipping tag v0.9.2 as it is more than 7 days old.
 Processing release for 0.9.1
-[33mFile 'sphinx_toolbox-0.9.1-py3-none-any.whl' already exists for release 'v0.9.1'. Skipping.[39m
-[33mFile 'sphinx-toolbox-0.9.1.tar.gz' already exists for release 'v0.9.1'. Skipping.[39m
+Skipping tag v0.9.1 as it is more than 7 days old.
 Processing release for 0.9.0
-[33mFile 'sphinx_toolbox-0.9.0-py3-none-any.whl' already exists for release 'v0.9.0'. Skipping.[39m
-[33mFile 'sphinx-toolbox-0.9.0.tar.gz' already exists for release 'v0.9.0'. Skipping.[39m
+Skipping tag v0.9.0 as it is more than 7 days old.
 Processing release for 0.8.1
-[33mFile 'sphinx_toolbox-0.8.1-py3-none-any.whl' already exists for release 'v0.8.1'. Skipping.[39m
-[33mFile 'sphinx-toolbox-0.8.1.tar.gz' already exists for release 'v0.8.1'. Skipping.[39m
+Skipping tag v0.8.1 as it is more than 7 days old.
 Processing release for 0.8.0
-[33mFile 'sphinx_toolbox-0.8.0-py3-none-any.whl' already exists for release 'v0.8.0'. Skipping.[39m
-[33mFile 'sphinx-toolbox-0.8.0.tar.gz' already exists for release 'v0.8.0'. Skipping.[39m
+Skipping tag v0.8.0 as it is more than 7 days old.
 Processing release for 0.7.0
-[33mFile 'sphinx_toolbox-0.7.0-py3-none-any.whl' already exists for release 'v0.7.0'. Skipping.[39m
-[33mFile 'sphinx-toolbox-0.7.0.tar.gz' already exists for release 'v0.7.0'. Skipping.[39m
+Skipping tag v0.7.0 as it is more than 7 days old.
 Processing release for 0.6.0
-[33mFile 'sphinx_toolbox-0.6.0-py3-none-any.whl' already exists for release 'v0.6.0'. Skipping.[39m
-[33mFile 'sphinx-toolbox-0.6.0.tar.gz' already exists for release 'v0.6.0'. Skipping.[39m
+Skipping tag v0.6.0 as it is more than 7 days old.
 Processing release for 0.5.1
-[33mFile 'sphinx_toolbox-0.5.1-py3-none-any.whl' already exists for release 'v0.5.1'. Skipping.[39m
-[33mFile 'sphinx-toolbox-0.5.1.tar.gz' already exists for release 'v0.5.1'. Skipping.[39m
+Skipping tag v0.5.1 as it is more than 7 days old.
 Processing release for 0.5.0
-[33mFile 'sphinx_toolbox-0.5.0-py3-none-any.whl' already exists for release 'v0.5.0'. Skipping.[39m
-[33mFile 'sphinx-toolbox-0.5.0.tar.gz' already exists for release 'v0.5.0'. Skipping.[39m
+Skipping tag v0.5.0 as it is more than 7 days old.
 Processing release for 0.4.0
-[33mFile 'sphinx_toolbox-0.4.0-py3-none-any.whl' already exists for release 'v0.4.0'. Skipping.[39m
-[33mFile 'sphinx-toolbox-0.4.0.tar.gz' already exists for release 'v0.4.0'. Skipping.[39m
+Skipping tag v0.4.0 as it is more than 7 days old.
 Processing release for 0.3.3
-[33mFile 'sphinx_toolbox-0.3.3-py3-none-any.whl' already exists for release 'v0.3.3'. Skipping.[39m
-[33mFile 'sphinx-toolbox-0.3.3.tar.gz' already exists for release 'v0.3.3'. Skipping.[39m
+Skipping tag v0.3.3 as it is more than 7 days old.
 Processing release for 0.3.2
-[33mFile 'sphinx_toolbox-0.3.2-py3-none-any.whl' already exists for release 'v0.3.2'. Skipping.[39m
-[33mFile 'sphinx-toolbox-0.3.2.tar.gz' already exists for release 'v0.3.2'. Skipping.[39m
+Skipping tag v0.3.2 as it is more than 7 days old.
 Processing release for 0.3.1
-[33mFile 'sphinx_toolbox-0.3.1-py3-none-any.whl' already exists for release 'v0.3.1'. Skipping.[39m
-[33mFile 'sphinx-toolbox-0.3.1.tar.gz' already exists for release 'v0.3.1'. Skipping.[39m
+Skipping tag v0.3.1 as it is more than 7 days old.
 Processing release for 0.3.0
-[33mFile 'sphinx_toolbox-0.3.0-py3-none-any.whl' already exists for release 'v0.3.0'. Skipping.[39m
-[33mFile 'sphinx-toolbox-0.3.0.tar.gz' already exists for release 'v0.3.0'. Skipping.[39m
+Skipping tag v0.3.0 as it is more than 7 days old.
 Processing release for 0.2.1
-[33mFile 'sphinx_toolbox-0.2.1-py3-none-any.whl' already exists for release 'v0.2.1'. Skipping.[39m
-[33mFile 'sphinx-toolbox-0.2.1.tar.gz' already exists for release 'v0.2.1'. Skipping.[39m
+Skipping tag v0.2.1 as it is more than 7 days old.
 Processing release for 0.2.0
-[33mFile 'sphinx_toolbox-0.2.0-py3-none-any.whl' already exists for release 'v0.2.0'. Skipping.[39m
-[33mFile 'sphinx-toolbox-0.2.0.tar.gz' already exists for release 'v0.2.0'. Skipping.[39m
+Skipping tag v0.2.0 as it is more than 7 days old.
 Processing release for 0.1.1
-[33mFile 'sphinx_toolbox-0.1.1-py3-none-any.whl' already exists for release 'v0.1.1'. Skipping.[39m
-[33mFile 'sphinx-toolbox-0.1.1.tar.gz' already exists for release 'v0.1.1'. Skipping.[39m
+Skipping tag v0.1.1 as it is more than 7 days old.
 Processing release for 0.1.0
-[33mFile 'sphinx_toolbox-0.1.0-py3-none-any.whl' already exists for release 'v0.1.0'. Skipping.[39m
-[33mFile 'sphinx-toolbox-0.1.0.tar.gz' already exists for release 'v0.1.0'. Skipping.[39m
+Skipping tag v0.1.0 as it is more than 7 days old.
