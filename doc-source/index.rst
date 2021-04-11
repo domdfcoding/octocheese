@@ -27,7 +27,7 @@ This is a GitHub action, Python package and command line script that copies dist
 		* - Activity
 		  - |commits-latest| |commits-since| |maintained| |pypi-downloads|
 		* - QA
-		  - |codefactor| |actions_flake8| |actions_mypy| |pre_commit_ci|
+		  - |codefactor| |actions_flake8| |actions_mypy|
 		* - Other
 		  - |license| |language| |requires|
 
@@ -111,9 +111,6 @@ This is a GitHub action, Python package and command line script that copies dist
 		:project: octocheese
 		:downloads: month
 		:alt: PyPI - Downloads
-
-	.. |pre_commit_ci| pre-commit-ci-shield::
-		:alt: pre-commit.ci status
 
 .. end shields
 
