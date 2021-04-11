@@ -25,7 +25,7 @@ This is a GitHub action, Python package and command line script that copies dist
 	* - Activity
 	  - |commits-latest| |commits-since| |maintained| |pypi-downloads|
 	* - QA
-	  - |codefactor| |actions_flake8| |actions_mypy| |pre_commit_ci|
+	  - |codefactor| |actions_flake8| |actions_mypy|
 	* - Other
 	  - |license| |language| |requires|
 
@@ -106,10 +106,6 @@ This is a GitHub action, Python package and command line script that copies dist
 .. |pypi-downloads| image:: https://img.shields.io/pypi/dm/octocheese
 	:target: https://pypi.org/project/octocheese/
 	:alt: PyPI - Downloads
-
-.. |pre_commit_ci| image:: https://results.pre-commit.ci/badge/github/domdfcoding/octocheese/master.svg
-	:target: https://results.pre-commit.ci/latest/github/domdfcoding/octocheese/master
-	:alt: pre-commit.ci status
 
 .. end shields
 
