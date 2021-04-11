@@ -16,6 +16,7 @@ short_desc: '🐙 🧀 – Copy PyPI Packages to GitHub Releases'
 use_whey: true
 python_deploy_version: 3.6
 enable_conda: false
+min_coverage: 93
 
 console_scripts:
  - "octocheese = octocheese.__main__:main"
