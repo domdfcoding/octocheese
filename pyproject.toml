@@ -4,7 +4,7 @@ build-backend = "whey"
 
 [project]
 name = "octocheese"
-version = "0.2.1"
+version = "0.3.0"
 description = "🐙 🧀 – Copy PyPI Packages to GitHub Releases"
 readme = "README.rst"
 keywords = [ "github", "github-action", "pypi",]
