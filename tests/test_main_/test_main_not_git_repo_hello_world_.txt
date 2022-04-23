@@ -1,3 +1,4 @@
 Usage: main [OPTIONS] PYPI_NAME
+Try 'main -h' for help.
 
 Error: No git repository was found at .
