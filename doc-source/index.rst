@@ -5,6 +5,7 @@ OctoCheese
 .. start short_desc
 
 .. documentation-summary::
+	:meta:
 
 .. end short_desc
 
@@ -59,7 +60,8 @@ This is a GitHub action, Python package and command line script that copies dist
 		:workflow: mypy
 		:alt: mypy status
 
-	.. |requires| requires-io-shield::
+	.. |requires| image:: https://dependency-dash.herokuapp.com/github/domdfcoding/octocheese/badge.svg
+		:target: https://dependency-dash.herokuapp.com/github/domdfcoding/octocheese/
 		:alt: Requirements Status
 
 	.. |coveralls| coveralls-shield::
@@ -104,7 +106,7 @@ This is a GitHub action, Python package and command line script that copies dist
 		:last-commit:
 		:alt: GitHub last commit
 
-	.. |maintained| maintained-shield:: 2021
+	.. |maintained| maintained-shield:: 2022
 		:alt: Maintenance
 
 	.. |pypi-downloads| pypi-shield::
@@ -148,12 +150,18 @@ Installing as a Python package and script
 	contributing
 	Source
 
+.. sidebar-links::
+	:caption: Links
+	:github:
+	:pypi: octocheese
+
+
 .. start links
 
 .. only:: html
 
 	View the :ref:`Function Index <genindex>` or browse the `Source Code <_modules/index.html>`__.
 
-	`Browse the GitHub Repository <https://github.com/domdfcoding/octocheese>`__
+	:github:repo:`Browse the GitHub Repository <domdfcoding/octocheese>`
 
 .. end links

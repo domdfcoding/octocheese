@@ -4,6 +4,18 @@ name: Linux
 
 on:
   push:
+    branches-ignore:
+      - 'repo-helper-update'
+      - 'pre-commit-ci-update-config'
+      - 'imgbot'
+    tags:
+      - '*'
+  pull_request:
+
+permissions:
+  actions: write
+  issues: write
+  contents: read
 
 jobs:
   tests:
@@ -26,12 +38,25 @@ jobs:
       - name: Checkout 🛎️
         uses: "actions/checkout@v2"
 
+      - name: Check for changed files
+        if: startsWith(github.ref, 'refs/tags/') != true
+        uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          list-files: "json"
+          filters: |
+            code:
+              - '!(doc-source/**|CONTRIBUTING.rst|.imgbotconfig|.pre-commit-config.yaml|.pylintrc|.readthedocs.yml)'
+
       - name: Setup Python 🐍
+        id: setup-python
+        if: ${{ steps.changes.outputs.code == 'true' || steps.changes.outcome == 'skipped' }}
         uses: "actions/setup-python@v2"
         with:
           python-version: "${{ matrix.config.python-version }}"
 
       - name: Install dependencies 🔧
+        if: steps.setup-python.outcome == 'success'
         run: |
           python -VV
           python -m site
@@ -40,11 +65,12 @@ jobs:
           python -m pip install --upgrade coverage_pyver_pragma
 
       - name: "Run Tests for Python ${{ matrix.config.python-version }}"
-        run: python -m tox -e "${{ matrix.config.testenvs }}"
+        if: steps.setup-python.outcome == 'success'
+        run: python -m tox -e "${{ matrix.config.testenvs }}" -s false
 
       - name: "Upload Coverage 🚀"
         uses: actions/upload-artifact@v2
-        if: ${{ always() }}
+        if: ${{ always() && steps.setup-python.outcome == 'success' }}
         with:
           name: "coverage-${{ matrix.config.python-version }}"
           path: .coverage
@@ -73,21 +99,26 @@ jobs:
           path: coverage
 
       - name: Display structure of downloaded files
+        id: show
         run: ls -R
         working-directory: coverage
+        continue-on-error: true
 
       - name: Combine Coverage 👷
+        if: ${{ steps.show.outcome != 'failure' }}
         run: |
           shopt -s globstar
           python -m coverage combine coverage/**/.coverage
 
       - name: "Upload Combined Coverage Artefact 🚀"
+        if: ${{ steps.show.outcome != 'failure' }}
         uses: actions/upload-artifact@v2
         with:
           name: "combined-coverage"
           path: .coverage
 
       - name: "Upload Combined Coverage to Coveralls"
+        if: ${{ steps.show.outcome != 'failure' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -104,21 +135,21 @@ jobs:
 
       - name: Setup Python 🐍
         uses: "actions/setup-python@v2"
+        if: startsWith(github.ref, 'refs/tags/')
         with:
           python-version: 3.8
-        if: startsWith(github.ref, 'refs/tags/')
 
       - name: Install dependencies 🔧
+        if: startsWith(github.ref, 'refs/tags/')
         run: |
           python -m pip install --upgrade pip setuptools wheel
           python -m pip install --upgrade tox
-        if: startsWith(github.ref, 'refs/tags/')
 
       - name: Build distributions 📦
+        if: startsWith(github.ref, 'refs/tags/')
         run: |
           tox -e build
 
-        if: startsWith(github.ref, 'refs/tags/')
 
       - name: Upload distribution to PyPI 🚀
         if: startsWith(github.ref, 'refs/tags/')
@@ -127,3 +158,11 @@ jobs:
           user: __token__
           password: ${{ secrets.PYPI_TOKEN }}
           skip_existing: true
+
+      - name: Close milestone 🚪
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          python -m pip install --upgrade github3.py packaging
+          python .github/milestones.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
