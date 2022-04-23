@@ -49,3 +49,20 @@ def test_operation_max_tags(cassette, github_client, file_regression, max_tags):
 						)
 
 	check_file_regression(captured_out.getvalue(), file_regression)
+
+
+def test_operation_prerelease(cassette, github_client, file_regression):
+	captured_out = StringIO()
+
+	with redirect_stderr(captured_out):
+		with redirect_stdout(captured_out):
+
+			copy_pypi_2_github(
+					github_client,
+					"octocheese-demo",
+					"domdfcoding",
+					pypi_name="sphinx-toolbox",
+					self_promotion=True,
+					)
+
+	check_file_regression(captured_out.getvalue(), file_regression)

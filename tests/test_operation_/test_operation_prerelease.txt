@@ -1,0 +1,15 @@
+Processing release for 3.0.0a1
+[32mCopying sphinx_toolbox-3.0.0a1-py3-none-any.whl from PyPI to GitHub Releases.[39m
+[32mCopying sphinx_toolbox-3.0.0a1.tar.gz from PyPI to GitHub Releases.[39m
+Processing release for 2.18.2
+[32mCopying sphinx_toolbox-2.18.2-py3-none-any.whl from PyPI to GitHub Releases.[39m
+[32mCopying sphinx_toolbox-2.18.2.tar.gz from PyPI to GitHub Releases.[39m
+Processing release for 2.18.1
+[32mCopying sphinx_toolbox-2.18.1-py3-none-any.whl from PyPI to GitHub Releases.[39m
+[32mCopying sphinx_toolbox-2.18.1.tar.gz from PyPI to GitHub Releases.[39m
+Processing release for 2.18.0
+[32mCopying sphinx_toolbox-2.18.0-py3-none-any.whl from PyPI to GitHub Releases.[39m
+[32mCopying sphinx_toolbox-2.18.0.tar.gz from PyPI to GitHub Releases.[39m
+Processing release for 2.17.0
+[32mCopying sphinx_toolbox-2.17.0-py3-none-any.whl from PyPI to GitHub Releases.[39m
+[32mCopying sphinx_toolbox-2.17.0.tar.gz from PyPI to GitHub Releases.[39m
