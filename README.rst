@@ -57,8 +57,8 @@ This is a GitHub action, Python package and command line script that copies dist
 	:target: https://github.com/domdfcoding/octocheese/actions?query=workflow%3A%22mypy%22
 	:alt: mypy status
 
-.. |requires| image:: https://requires.io/github/domdfcoding/octocheese/requirements.svg?branch=master
-	:target: https://requires.io/github/domdfcoding/octocheese/requirements/?branch=master
+.. |requires| image:: https://dependency-dash.herokuapp.com/github/domdfcoding/octocheese/badge.svg
+	:target: https://dependency-dash.herokuapp.com/github/domdfcoding/octocheese/
 	:alt: Requirements Status
 
 .. |coveralls| image:: https://img.shields.io/coveralls/github/domdfcoding/octocheese/master?logo=coveralls
@@ -100,7 +100,7 @@ This is a GitHub action, Python package and command line script that copies dist
 	:target: https://github.com/domdfcoding/octocheese/commit/master
 	:alt: GitHub last commit
 
-.. |maintained| image:: https://img.shields.io/maintenance/yes/2021
+.. |maintained| image:: https://img.shields.io/maintenance/yes/2022
 	:alt: Maintenance
 
 .. |pypi-downloads| image:: https://img.shields.io/pypi/dm/octocheese
