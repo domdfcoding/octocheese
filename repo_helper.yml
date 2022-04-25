@@ -17,6 +17,7 @@ use_whey: true
 python_deploy_version: 3.6
 enable_conda: false
 min_coverage: 93
+standalone_contrib_guide: true
 
 console_scripts:
  - "octocheese = octocheese.__main__:main"
@@ -40,6 +41,7 @@ classifiers:
 
 extra_sphinx_extensions:
  - sphinx_click
+ - local_extension
 
 intersphinx_mapping:
  - '"github3": ("https://github3py.readthedocs.io/en/master/", None)'

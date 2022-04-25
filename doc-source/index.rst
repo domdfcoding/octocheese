@@ -129,6 +129,13 @@ Installing as a Python package and script
 
 .. end installation
 
+
+Contents
+-----------
+
+.. html-section::
+
+
 .. toctree::
 	:hidden:
 
@@ -136,19 +143,13 @@ Installing as a Python package and script
 
 .. toctree::
 	:maxdepth: 3
-	:caption: Documentation
 
 	action
 	usage
 	API Reference<docs>
-
-
-.. toctree::
-	:maxdepth: 3
-	:caption: Contributing
-
 	contributing
 	Source
+	license
 
 .. sidebar-links::
 	:caption: Links

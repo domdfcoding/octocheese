@@ -17,13 +17,6 @@ API Reference
 	:members:
 
 
-:mod:`octocheese.action`
-------------------------------------
-
-.. automodule:: octocheese.action
-	:members:
-
-
 :mod:`octocheese.colours`
 ------------------------------------
 
