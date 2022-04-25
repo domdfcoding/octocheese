@@ -28,6 +28,7 @@ import datetime
 import functools
 import pathlib
 import tempfile
+from contextlib import suppress
 from functools import partial
 from typing import Iterable, Optional, Union
 
@@ -41,6 +42,7 @@ from github3.exceptions import NotFoundError  # type: ignore
 from github3.repos import Repository  # type: ignore
 from github3.repos.release import Release  # type: ignore
 from github3_utils.apps import make_footer_links
+from packaging.version import InvalidVersion, Version
 from shippinglabel.checksum import check_sha256_hash
 from shippinglabel.pypi import FileURL, get_file_from_pypi, get_releases_with_digests
 from typing_extensions import Literal
@@ -91,6 +93,10 @@ def update_github_release(
 			self_promotion=self_promotion,
 			)
 
+	prerelease: bool = False
+	with suppress(InvalidVersion):
+		prerelease = Version(tag_name).is_prerelease
+
 	current_assets = []
 
 	# TODO: List checksums in release message.
@@ -108,7 +114,11 @@ def update_github_release(
 			return release
 
 		# Update existing release
-		release.edit(name=release_name, body=message_maker(release_date=created_at))
+		release.edit(
+				name=release_name,
+				body=message_maker(release_date=created_at),
+				prerelease=prerelease,
+				)
 
 		# Get list of current assets for release
 		for asset in release.assets():
@@ -120,6 +130,7 @@ def update_github_release(
 				tag_name=tag_name,
 				name=release_name,
 				body=message_maker(release_date=datetime.date.today()),
+				prerelease=prerelease,
 				)
 
 	if not file_urls:
