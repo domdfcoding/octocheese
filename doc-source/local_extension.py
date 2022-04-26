@@ -2,10 +2,8 @@
 from typing import Optional
 
 # 3rd party
-from sphinx.application import Sphinx
-
-# this package
 from domdf_python_tools.paths import PathPlus
+from sphinx.application import Sphinx
 
 
 def replace_emoji(app: Sphinx, exception: Optional[Exception] = None):
