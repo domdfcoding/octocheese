@@ -26,8 +26,6 @@ The main logic of octocheese.
 # stdlib
 import datetime
 import functools
-import pathlib
-import tempfile
 from contextlib import suppress
 from functools import partial
 from typing import Iterable, Optional, Union
@@ -35,7 +33,7 @@ from typing import Iterable, Optional, Union
 # 3rd party
 import click
 from apeye import URL
-from domdf_python_tools.paths import PathPlus
+from domdf_python_tools.paths import PathPlus, TemporaryPathPlus
 from domdf_python_tools.stringlist import StringList
 from github3 import GitHub  # type: ignore
 from github3.exceptions import NotFoundError  # type: ignore
@@ -43,8 +41,8 @@ from github3.repos import Repository  # type: ignore
 from github3.repos.release import Release  # type: ignore
 from github3_utils.apps import make_footer_links
 from packaging.version import InvalidVersion, Version
+from pypi_json import FileURL, PyPIJSON
 from shippinglabel.checksum import check_sha256_hash
-from shippinglabel.pypi import FileURL, get_file_from_pypi, get_releases_with_digests
 from typing_extensions import Literal
 
 # this package
@@ -136,7 +134,7 @@ def update_github_release(
 	if not file_urls:
 		return release
 
-	with tempfile.TemporaryDirectory() as tmpdir:
+	with TemporaryPathPlus() as tmpdir:
 
 		for pypi_url in file_urls:
 			if isinstance(pypi_url, dict):
@@ -151,25 +149,32 @@ def update_github_release(
 				warning(f"File '{filename}' already exists for release '{tag_name}'. Skipping.")
 				continue
 
-			try:
-				get_file_from_pypi(pypi_url, pathlib.Path(tmpdir))
+			with PyPIJSON() as client:
 
-				if checksum is not None and not check_sha256_hash(pathlib.Path(tmpdir) / filename, checksum):
-					raise ValueError(f"The checksums for {filename} do not match!")
+				try:
+					response = client.download_file(pypi_url)
+					if response.status_code != 200:  # pragma: no cover
+						raise OSError(f"Unable to download '{filename}' from PyPI.")
 
-				success(f"Copying {filename} from PyPI to GitHub Releases.")
-				release.upload_asset(
-						content_type="application/binary",
-						name=filename,
-						asset=(PathPlus(tmpdir) / filename).read_bytes()
-						)
+					downloaded_file = tmpdir / filename
+					downloaded_file.write_bytes(response.content)
 
-			except OSError as e:
-				if traceback:
-					raise
-				else:
-					error(f"{e} Skipping.")
-					continue
+					if checksum is not None and not check_sha256_hash(downloaded_file, checksum):
+						raise ValueError(f"The checksums for {filename} do not match!")
+
+					success(f"Copying {filename} from PyPI to GitHub Releases.")
+					release.upload_asset(
+							content_type="application/binary",
+							name=filename,
+							asset=(PathPlus(tmpdir) / filename).read_bytes()
+							)
+
+				except OSError as e:
+					if traceback:
+						raise
+					else:
+						error(f"{e} Skipping.")
+						continue
 
 	return release
 
@@ -217,7 +222,8 @@ def copy_pypi_2_github(
 
 	pypi_name = str(pypi_name)
 
-	pypi_releases = get_releases_with_digests(pypi_name)
+	with PyPIJSON() as client:
+		pypi_releases = client.get_metadata(pypi_name).get_releases_with_digests()
 
 	repo: Repository = g.repository(github_username, repo_name)
 
