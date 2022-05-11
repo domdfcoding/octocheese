@@ -48,6 +48,7 @@ known_third_party = [
     "importlib_metadata",
     "packaging",
     "pygithub",
+    "pypi_json",
     "pytest",
     "pytest_cov",
     "pytest_docker_tools",
