@@ -35,10 +35,10 @@ import click
 from apeye import URL
 from domdf_python_tools.paths import PathPlus, TemporaryPathPlus
 from domdf_python_tools.stringlist import StringList
-from github3 import GitHub  # type: ignore
-from github3.exceptions import NotFoundError  # type: ignore
-from github3.repos import Repository  # type: ignore
-from github3.repos.release import Release  # type: ignore
+from github3 import GitHub
+from github3.exceptions import NotFoundError
+from github3.repos import Repository
+from github3.repos.release import Release
 from github3_utils.apps import make_footer_links
 from packaging.version import InvalidVersion, Version
 from pypi_json import FileURL, PyPIJSON
@@ -149,32 +149,33 @@ def update_github_release(
 				warning(f"File '{filename}' already exists for release '{tag_name}'. Skipping.")
 				continue
 
-			with PyPIJSON() as client:
+			try:
 
-				try:
+				with PyPIJSON() as client:
 					response = client.download_file(pypi_url)
-					if response.status_code != 200:  # pragma: no cover
-						raise OSError(f"Unable to download '{filename}' from PyPI.")
 
-					downloaded_file = tmpdir / filename
-					downloaded_file.write_bytes(response.content)
+				if response.status_code != 200:  # pragma: no cover
+					raise OSError(f"Unable to download '{filename}' from PyPI.")
 
-					if checksum is not None and not check_sha256_hash(downloaded_file, checksum):
-						raise ValueError(f"The checksums for {filename} do not match!")
+				downloaded_file = tmpdir / filename
+				downloaded_file.write_bytes(response.content)
 
-					success(f"Copying {filename} from PyPI to GitHub Releases.")
-					release.upload_asset(
-							content_type="application/binary",
-							name=filename,
-							asset=(PathPlus(tmpdir) / filename).read_bytes()
-							)
+				if checksum is not None and not check_sha256_hash(downloaded_file, checksum):
+					raise ValueError(f"The checksums for {filename} do not match!")
 
-				except OSError as e:
-					if traceback:
-						raise
-					else:
-						error(f"{e} Skipping.")
-						continue
+				success(f"Copying {filename} from PyPI to GitHub Releases.")
+				release.upload_asset(
+						content_type="application/binary",
+						name=filename,
+						asset=(PathPlus(tmpdir) / filename).read_bytes()
+						)
+
+			except OSError as e:
+				if traceback:
+					raise
+				else:
+					error(f"{e} Skipping.")
+					continue
 
 	return release
 
