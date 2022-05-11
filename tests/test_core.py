@@ -9,7 +9,7 @@ from datetime import date
 # 3rd party
 import pytest
 from coincidence.regressions import AdvancedDataRegressionFixture, AdvancedFileRegressionFixture
-from shippinglabel.pypi import get_file_from_pypi
+from pypi_json import PyPIJSON
 
 # this package
 import octocheese.core
@@ -24,15 +24,20 @@ def test_get_file_from_pypi(advanced_data_regression: AdvancedDataRegressionFixt
 				"/d301018af3f22bdbf34b624037e851561914c244a26add8278e4e7273578/octocheese-0.0.2.tar.gz"
 				)
 
-		get_file_from_pypi(url, tmpdir)
+		with PyPIJSON() as client:
+			response = client.download_file(url)
 
-		the_file = tmpdir / "octocheese-0.0.2.tar.gz"
-		assert the_file.is_file()
+		assert response.status_code == 200
+
+		downloaded_file = tmpdir / "octocheese-0.0.2.tar.gz"
+		downloaded_file.write_bytes(response.content)
+
+		assert downloaded_file.is_file()
 
 		# Check it isn't a wheel or Windows-built sdist
-		assert not zipfile.is_zipfile(the_file)
+		assert not zipfile.is_zipfile(downloaded_file)
 
-		with gzip.open(the_file, 'r'):
+		with gzip.open(downloaded_file, 'r'):
 			# Check can be opened as gzip file
 			assert True
 
@@ -62,7 +67,7 @@ def test_get_file_from_pypi(advanced_data_regression: AdvancedDataRegressionFixt
 				"octocheese-0.0.2/setup.py",
 				}
 
-		with tarfile.open(the_file, "r:gz") as tar:
+		with tarfile.open(downloaded_file, "r:gz") as tar:
 			assert {f.name for f in tar.getmembers()} == listing
 			advanced_data_regression.check(sorted({f.name for f in tar.getmembers()}))
 
