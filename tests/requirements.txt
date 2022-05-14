@@ -6,7 +6,7 @@ importlib-metadata>=3.6.0
 iniconfig!=1.1.0,>=1.0.1
 pytest>=6.0.0
 pytest-cov>=2.8.1
-pytest-docker-tools>=1.0.0
+pytest-docker-tools>=1.0.0; platform_system == "Linux"
 pytest-randomly>=3.7.0
 pytest-regressions>=2.0.1
 pytest-timeout>=1.4.2
