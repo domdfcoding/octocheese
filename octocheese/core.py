@@ -32,7 +32,7 @@ from typing import Iterable, Optional, Union
 
 # 3rd party
 import click
-from apeye import URL
+from apeye_core import URL
 from domdf_python_tools.paths import PathPlus, TemporaryPathPlus
 from domdf_python_tools.stringlist import StringList
 from github3 import GitHub

@@ -29,7 +29,7 @@ from typing import Union
 
 # 3rd party
 import click
-from apeye import URL
+from apeye_core import URL
 from click import Context, Option
 from consolekit import click_command
 from consolekit.options import auto_default_option, flag_option, version_option
