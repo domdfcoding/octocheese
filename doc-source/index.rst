@@ -60,8 +60,8 @@ This is a GitHub action, Python package and command line script that copies dist
 		:workflow: mypy
 		:alt: mypy status
 
-	.. |requires| image:: https://dependency-dash.herokuapp.com/github/domdfcoding/octocheese/badge.svg
-		:target: https://dependency-dash.herokuapp.com/github/domdfcoding/octocheese/
+	.. |requires| image:: https://dependency-dash.repo-helper.uk/github/domdfcoding/octocheese/badge.svg
+		:target: https://dependency-dash.repo-helper.uk/github/domdfcoding/octocheese/
 		:alt: Requirements Status
 
 	.. |coveralls| coveralls-shield::
