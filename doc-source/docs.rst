@@ -6,7 +6,7 @@ API Reference
 
 .. versionchanged:: 0.3.0
 
-	All methods now take and return `github3.py <https://github3py.readthedocs.io/en/master/>`_ objects
+	All methods now take and return `github3.py <https://github3.readthedocs.io/en/latest/>`_ objects
 	in place of their `PyGithub <https://pygithub.readthedocs.io/en/latest/introduction.html>`_ counterparts.
 
 
