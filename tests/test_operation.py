@@ -6,8 +6,10 @@ from contextlib import redirect_stderr, redirect_stdout
 from io import StringIO
 
 # 3rd party
+import pypi_json
 import pytest
 from coincidence import check_file_regression, with_fixed_datetime
+from domdf_python_tools.paths import PathPlus
 
 # this package
 from octocheese import copy_pypi_2_github
@@ -51,7 +53,9 @@ def test_operation_max_tags(cassette, github_client, file_regression, max_tags):
 	check_file_regression(captured_out.getvalue(), file_regression)
 
 
-def test_operation_prerelease(cassette, github_client, file_regression):
+def test_operation_prerelease(cassette, github_client, file_regression, monkeypatch):
+	mock_response = PathPlus("tests/sphinx_toolbox_pypi_mock_response.json").load_json()
+	monkeypatch.setattr(pypi_json.ProjectMetadata, "get_releases_with_digests", lambda self: mock_response)
 	captured_out = StringIO()
 
 	with redirect_stderr(captured_out):

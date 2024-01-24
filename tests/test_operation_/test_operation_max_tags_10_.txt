@@ -1,30 +1,30 @@
-Processing release for 1.8.4
-[33mFile 'sphinx_toolbox-1.8.4-py3-none-any.whl' already exists for release 'v1.8.4'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.8.4.tar.gz' already exists for release 'v1.8.4'. Skipping.[39m
-Processing release for 1.8.3
-[33mFile 'sphinx_toolbox-1.8.3-py3-none-any.whl' already exists for release 'v1.8.3'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.8.3.tar.gz' already exists for release 'v1.8.3'. Skipping.[39m
-Processing release for 1.8.2
-[33mFile 'sphinx_toolbox-1.8.2-py3-none-any.whl' already exists for release 'v1.8.2'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.8.2.tar.gz' already exists for release 'v1.8.2'. Skipping.[39m
-Processing release for 1.8.1
-[33mFile 'sphinx_toolbox-1.8.1-py3-none-any.whl' already exists for release 'v1.8.1'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.8.1.tar.gz' already exists for release 'v1.8.1'. Skipping.[39m
-Processing release for 1.8.0
-[33mFile 'sphinx_toolbox-1.8.0-py3-none-any.whl' already exists for release 'v1.8.0'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.8.0.tar.gz' already exists for release 'v1.8.0'. Skipping.[39m
-Processing release for 1.7.5
-[33mFile 'sphinx_toolbox-1.7.5-py3-none-any.whl' already exists for release 'v1.7.5'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.7.5.tar.gz' already exists for release 'v1.7.5'. Skipping.[39m
-Processing release for 1.7.4
-[33mFile 'sphinx_toolbox-1.7.4-py3-none-any.whl' already exists for release 'v1.7.4'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.7.4.tar.gz' already exists for release 'v1.7.4'. Skipping.[39m
-Processing release for 1.7.3
-[33mFile 'sphinx_toolbox-1.7.3-py3-none-any.whl' already exists for release 'v1.7.3'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.7.3.tar.gz' already exists for release 'v1.7.3'. Skipping.[39m
-Processing release for 1.7.2
-[33mFile 'sphinx_toolbox-1.7.2-py3-none-any.whl' already exists for release 'v1.7.2'. Skipping.[39m
-[33mFile 'sphinx-toolbox-1.7.2.tar.gz' already exists for release 'v1.7.2'. Skipping.[39m
 Processing release for 1.7.1
 [33mFile 'sphinx_toolbox-1.7.1-py3-none-any.whl' already exists for release 'v1.7.1'. Skipping.[39m
 [33mFile 'sphinx-toolbox-1.7.1.tar.gz' already exists for release 'v1.7.1'. Skipping.[39m
+Processing release for 1.7.2
+[33mFile 'sphinx_toolbox-1.7.2-py3-none-any.whl' already exists for release 'v1.7.2'. Skipping.[39m
+[33mFile 'sphinx-toolbox-1.7.2.tar.gz' already exists for release 'v1.7.2'. Skipping.[39m
+Processing release for 1.7.3
+[33mFile 'sphinx_toolbox-1.7.3-py3-none-any.whl' already exists for release 'v1.7.3'. Skipping.[39m
+[33mFile 'sphinx-toolbox-1.7.3.tar.gz' already exists for release 'v1.7.3'. Skipping.[39m
+Processing release for 1.7.4
+[33mFile 'sphinx_toolbox-1.7.4-py3-none-any.whl' already exists for release 'v1.7.4'. Skipping.[39m
+[33mFile 'sphinx-toolbox-1.7.4.tar.gz' already exists for release 'v1.7.4'. Skipping.[39m
+Processing release for 1.7.5
+[33mFile 'sphinx_toolbox-1.7.5-py3-none-any.whl' already exists for release 'v1.7.5'. Skipping.[39m
+[33mFile 'sphinx-toolbox-1.7.5.tar.gz' already exists for release 'v1.7.5'. Skipping.[39m
+Processing release for 1.8.0
+[33mFile 'sphinx_toolbox-1.8.0-py3-none-any.whl' already exists for release 'v1.8.0'. Skipping.[39m
+[33mFile 'sphinx-toolbox-1.8.0.tar.gz' already exists for release 'v1.8.0'. Skipping.[39m
+Processing release for 1.8.1
+[33mFile 'sphinx_toolbox-1.8.1-py3-none-any.whl' already exists for release 'v1.8.1'. Skipping.[39m
+[33mFile 'sphinx-toolbox-1.8.1.tar.gz' already exists for release 'v1.8.1'. Skipping.[39m
+Processing release for 1.8.2
+[33mFile 'sphinx_toolbox-1.8.2-py3-none-any.whl' already exists for release 'v1.8.2'. Skipping.[39m
+[33mFile 'sphinx-toolbox-1.8.2.tar.gz' already exists for release 'v1.8.2'. Skipping.[39m
+Processing release for 1.8.3
+[33mFile 'sphinx_toolbox-1.8.3-py3-none-any.whl' already exists for release 'v1.8.3'. Skipping.[39m
+[33mFile 'sphinx-toolbox-1.8.3.tar.gz' already exists for release 'v1.8.3'. Skipping.[39m
+Processing release for 1.8.4
+[33mFile 'sphinx_toolbox-1.8.4-py3-none-any.whl' already exists for release 'v1.8.4'. Skipping.[39m
+[33mFile 'sphinx-toolbox-1.8.4.tar.gz' already exists for release 'v1.8.4'. Skipping.[39m

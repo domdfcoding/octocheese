@@ -228,17 +228,17 @@ def copy_pypi_2_github(
 
 	repo: Repository = g.repository(github_username, repo_name)
 
-	for tag in repo.tags(max_tags):
-		version = tag.name.lstrip('v')
+	for tag in reversed([tag.name for tag in repo.tags(max_tags)]):
+		version = tag.lstrip('v')
 		if version not in pypi_releases:
-			warning(f"No PyPI release found for tag '{tag.name}'. Skipping.")
+			warning(f"No PyPI release found for tag '{tag}'. Skipping.")
 			continue
 
 		click.echo(f"Processing release for {version}")
 
 		update_github_release(
 				repo=repo,
-				tag_name=tag.name,
+				tag_name=tag,
 				pypi_name=pypi_name,
 				changelog=changelog,
 				self_promotion=self_promotion,
