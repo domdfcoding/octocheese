@@ -100,11 +100,11 @@ This is a GitHub action, Python package and command line script that copies dist
 	:target: https://github.com/domdfcoding/octocheese/commit/master
 	:alt: GitHub last commit
 
-.. |maintained| image:: https://img.shields.io/maintenance/yes/2025
+.. |maintained| image:: https://img.shields.io/maintenance/yes/2026
 	:alt: Maintenance
 
 .. |pypi-downloads| image:: https://img.shields.io/pypi/dm/octocheese
-	:target: https://pypi.org/project/octocheese/
+	:target: https://pypistats.org/packages/octocheese
 	:alt: PyPI - Downloads
 
 .. end shields
