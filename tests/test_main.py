@@ -5,7 +5,7 @@ from typing import List
 # 3rd party
 import pytest
 from coincidence.regressions import check_file_regression
-from consolekit.testing import CliRunner, Result
+from consolekit.testing import CliRunner, Result, click_version
 from domdf_python_tools.paths import in_directory
 from pytest_regressions.file_regression import FileRegressionFixture
 
@@ -46,8 +46,26 @@ dash_r = pytest.mark.parametrize(
 				],
 		)
 
+_click_84_param = pytest.mark.parametrize(
+		"click_version",
+		[
+				pytest.param(
+						"pre_84",
+						marks=pytest.mark.skipif(click_version >= (8, 4), reason="Output differs on click 8.4"),
+						),
+				pytest.param(
+						"84",
+						marks=pytest.mark.skipif(click_version < (8, 4), reason="Output differs on click 8.4"),
+						),
+				],
+		)
 
-def test_main_no_args(file_regression: FileRegressionFixture):
+
+@_click_84_param
+def test_main_no_args(
+		click_version: str,
+		file_regression: FileRegressionFixture,
+		):
 	run_test(file_regression, 2)
 
 
@@ -61,16 +79,20 @@ def test_main_version(file_regression: FileRegressionFixture, monkeypatch):
 	run_test(file_regression, 0, "--version")
 
 
-def test_main_missing_token(file_regression: FileRegressionFixture):
+@_click_84_param
+def test_main_missing_token(
+		click_version: str,
+		file_regression: FileRegressionFixture,
+		):
 	run_test(file_regression, 2, "octocat/hello_world")
 
 
 @pytest.mark.usefixtures("fake_token")
-@pytest.mark.parametrize("pypi_name", ["hello_world"])
 @pytest.mark.parametrize("dash_t", [["-t", "1234"], ["-t1234"], ["--token", "1234"]])
+@_click_84_param
 @dash_r
 def test_main_invalid_credentials(
-		pypi_name: str,
+		click_version: str,
 		dash_t: str,
 		dash_r: str,
 		file_regression: FileRegressionFixture,
@@ -80,10 +102,10 @@ def test_main_invalid_credentials(
 
 
 @pytest.mark.usefixtures("fake_token")
-@pytest.mark.parametrize("pypi_name", ["hello_world"])
+@_click_84_param
 @dash_r
 def test_main_invalid_credentials_env(
-		pypi_name: str,
+		click_version: str,
 		dash_r: str,
 		file_regression: FileRegressionFixture,
 		):
@@ -91,6 +113,6 @@ def test_main_invalid_credentials_env(
 
 
 @pytest.mark.usefixtures("fake_token")
-@pytest.mark.parametrize("pypi_name", ["hello_world"])
-def test_main_not_git_repo(pypi_name: str, file_regression: FileRegressionFixture):
+@_click_84_param
+def test_main_not_git_repo(click_version: str, file_regression: FileRegressionFixture):
 	run_test(file_regression, 2, "octocat/hello_world")
