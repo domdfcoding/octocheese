@@ -4,7 +4,7 @@ from typing import List
 
 # 3rd party
 import pytest
-from coincidence.regressions import check_file_regression
+from coincidence.regressions import AdvancedFileRegressionFixture
 from consolekit.testing import CliRunner, Result, click_version
 from domdf_python_tools.paths import in_directory
 from pytest_regressions.file_regression import FileRegressionFixture
@@ -15,7 +15,7 @@ from octocheese.__main__ import main
 
 
 def run_test(
-		file_regression: FileRegressionFixture,
+		file_regression: AdvancedFileRegressionFixture,
 		exit_code: int,
 		*args: str,
 		extension: str = ".txt",
@@ -28,7 +28,7 @@ def run_test(
 			result: Result = runner.invoke(main, catch_exceptions=False, args=args)
 
 			assert result.exit_code == exit_code
-			check_file_regression(result.stdout.rstrip(), file_regression, extension=extension)
+			file_regression.check(result.stdout.rstrip(), extension=extension)
 
 
 dash_r = pytest.mark.parametrize(
@@ -64,27 +64,27 @@ _click_84_param = pytest.mark.parametrize(
 @_click_84_param
 def test_main_no_args(
 		click_version: str,
-		file_regression: FileRegressionFixture,
+		advanced_file_regression: AdvancedFileRegressionFixture,
 		):
-	run_test(file_regression, 2)
+	run_test(advanced_file_regression, 2)
 
 
 @pytest.mark.parametrize("args", [["-h"], ["--help"]])
-def test_main_help(args: List[str], file_regression: FileRegressionFixture):
-	run_test(file_regression, 0, *args)
+def test_main_help(args: List[str], advanced_file_regression: AdvancedFileRegressionFixture):
+	run_test(advanced_file_regression, 0, *args)
 
 
-def test_main_version(file_regression: FileRegressionFixture, monkeypatch):
+def test_main_version(advanced_file_regression: AdvancedFileRegressionFixture, monkeypatch):
 	monkeypatch.setattr(octocheese, "__version__", "0.2.1")
-	run_test(file_regression, 0, "--version")
+	run_test(advanced_file_regression, 0, "--version")
 
 
 @_click_84_param
 def test_main_missing_token(
 		click_version: str,
-		file_regression: FileRegressionFixture,
+		advanced_file_regression: AdvancedFileRegressionFixture,
 		):
-	run_test(file_regression, 2, "octocat/hello_world")
+	run_test(advanced_file_regression, 2, "octocat/hello_world")
 
 
 @pytest.mark.usefixtures("fake_token")
@@ -95,10 +95,10 @@ def test_main_invalid_credentials(
 		click_version: str,
 		dash_t: str,
 		dash_r: str,
-		file_regression: FileRegressionFixture,
+		advanced_file_regression: AdvancedFileRegressionFixture,
 		):
-	run_test(file_regression, 2, "octocat/hello_world", *dash_t, *dash_r, extension="._t_r.txt")
-	run_test(file_regression, 2, "octocat/hello_world", *dash_r, *dash_t, extension="._r_t.txt")
+	run_test(advanced_file_regression, 2, "octocat/hello_world", *dash_t, *dash_r, extension="._t_r.txt")
+	run_test(advanced_file_regression, 2, "octocat/hello_world", *dash_r, *dash_t, extension="._r_t.txt")
 
 
 @pytest.mark.usefixtures("fake_token")
@@ -107,12 +107,12 @@ def test_main_invalid_credentials(
 def test_main_invalid_credentials_env(
 		click_version: str,
 		dash_r: str,
-		file_regression: FileRegressionFixture,
+		advanced_file_regression: AdvancedFileRegressionFixture,
 		):
-	run_test(file_regression, 2, "octocat/hello_world", *dash_r)
+	run_test(advanced_file_regression, 2, "octocat/hello_world", *dash_r)
 
 
 @pytest.mark.usefixtures("fake_token")
 @_click_84_param
-def test_main_not_git_repo(click_version: str, file_regression: FileRegressionFixture):
-	run_test(file_regression, 2, "octocat/hello_world")
+def test_main_not_git_repo(click_version: str, advanced_file_regression: AdvancedFileRegressionFixture):
+	run_test(advanced_file_regression, 2, "octocat/hello_world")
